@@ -1,0 +1,36 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.header {
+    &__nav {
+        @include flex-column;
+        flex-direction: row;
+        gap: $gap-default;
+
+        &-hamburger,
+        &-openai,
+        &-messages,
+        &-profile {
+            @include flex;
+            @include icons-border;
+
+            &-img {
+                @include icons-size;
+            }
+        }
+
+        &-profile {
+            display: none;
+
+            @include tablet {
+                @include flex-vertical;
+                text-decoration: none;
+                gap: 0.5rem;
+
+                &-greeting {
+                    color: $prim-color-1;
+                }
+            }
+        }
+    }
+}
