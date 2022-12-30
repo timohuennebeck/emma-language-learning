@@ -1,0 +1,56 @@
+@use "./mixins" as *;
+
+@font-face {
+    font-family: "HK Guise";
+    font-weight: 400;
+    src: url(../../assets//fonts/HKGuiseRegular.otf);
+}
+
+@font-face {
+    font-family: "HK Guise";
+    font-weight: 600;
+    src: url(../../assets/fonts/HKGuiseBold.otf);
+}
+
+* {
+    font-family: "HK Guise";
+}
+
+h1 {
+    font-size: 1.45rem;
+    line-height: 2rem;
+    font-weight: 600;
+
+    @include tablet {
+        font-size: 2.0625rem;
+        line-height: 2.75rem;
+    }
+}
+
+h2 {
+    font-size: 1.15rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    font-weight: 600;
+
+    @include tablet {
+        font-size: 0.875rem;
+        line-height: 1.375rem;
+    }
+}
+
+p {
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    font-weight: 400;
+
+    @include tablet {
+        font-size: 0.875rem;
+        line-height: 1.375rem;
+    }
+}

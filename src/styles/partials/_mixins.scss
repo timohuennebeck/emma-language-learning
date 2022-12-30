@@ -1,0 +1,36 @@
+@use "./variables" as *;
+
+// Tablet and Desktop Breakpoints
+
+@mixin tablet {
+    @media screen and (min-width: $tablet-breakpoint) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media screen and (min-width: $desktop-breakpoint) {
+        @content;
+    }
+}
+
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-horizontal {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin flex-vertical {
+    display: flex;
+    align-items: center;
+}

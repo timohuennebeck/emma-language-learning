@@ -1,0 +1,11 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+html {
+    max-width: 42.5rem;
+    margin: auto;
+
+    @include desktop {
+        max-width: 160rem;
+    }
+}
