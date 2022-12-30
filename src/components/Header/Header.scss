@@ -2,6 +2,13 @@
 @use "../../styles/partials/mixins" as *;
 
 .header {
+    @include flex-column;
+    gap: $gap-default;
+
+    &__logo {
+        display: none;
+    }
+
     &__nav {
         @include flex-column;
         flex-direction: row;
@@ -31,6 +38,43 @@
                     color: $prim-color-1;
                 }
             }
+        }
+    }
+
+    &__search {
+        @include flex-vertical;
+        gap: $gap-default;
+
+        &-bar {
+            @include flex-vertical;
+            @include icons-border;
+            gap: $gap-default;
+            width: 100%;
+
+            &-img {
+                @include icons-size;
+            }
+
+            &-input {
+                border: none;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+
+        &-mobile {
+            @include flex;
+            @include icons-border;
+
+            &-img {
+                @include icons-size;
+            }
+        }
+
+        &-desktop {
+            display: none;
         }
     }
 }

@@ -1,0 +1,187 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.tutor {
+    @include components-border;
+    @include flex-column;
+    gap: 1rem;
+
+    @include tablet {
+        flex-direction: row;
+    }
+
+    &__profile {
+        @include flex-column;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1rem;
+
+        @include tablet {
+            @include flex-horizontal;
+            flex: 0.175 1 0;
+        }
+
+        &-avatar {
+            &-img {
+                max-width: 2.5rem;
+                max-height: 2.5rem;
+                border-radius: 50%;
+                border-radius: 25%;
+                flex: 1 1 0;
+
+                @include tablet {
+                    max-width: 3.25rem;
+                    max-height: 3.25rem;
+                }
+            }
+
+            &-review {
+                display: none;
+
+                @include tablet {
+                    display: flex;
+                    gap: 0.25rem;
+
+                    &-img {
+                        width: 1rem;
+                        height: 1rem;
+                    }
+
+                    &-rating {
+                        color: #ffd012;
+                        font-weight: 700;
+                    }
+                }
+            }
+
+            &-lessons {
+                display: none;
+
+                @include tablet {
+                    display: block;
+                    font-size: 0.725rem;
+                }
+            }
+        }
+
+        &-info {
+            flex: 1 1 0;
+            @include flex-column;
+            gap: 0.5rem;
+
+            @include tablet {
+                display: none;
+            }
+
+            &-name {
+                font-size: 0.925rem;
+
+                &-fade {
+                    opacity: 50%;
+                }
+            }
+
+            &-sessions {
+                display: flex;
+                width: 100%;
+
+                &-reviews {
+                    @include flex-column;
+                    gap: 0.5rem;
+                    width: 100%;
+
+                    &-rating {
+                        font-weight: 700;
+                    }
+
+                    &-amount {
+                        font-size: 11px;
+                    }
+
+                    &-ctn {
+                        @include flex-vertical;
+
+                        &-img {
+                            width: 1rem;
+                        }
+                    }
+                }
+
+                &-pricing {
+                    @include flex-column;
+                    gap: 0.5rem;
+                    width: 100%;
+
+                    &-amount {
+                        font-weight: 700;
+                    }
+
+                    &-time {
+                        font-size: 11px;
+                    }
+                }
+            }
+        }
+    }
+
+    &__description {
+        @include flex-column;
+        gap: 0.5rem;
+
+        @include tablet {
+            flex: 1 1 0;
+        }
+
+        &-desktop {
+            display: none;
+
+            @include tablet {
+                display: block;
+                @include flex-column;
+                gap: 0.5rem;
+            }
+
+            &-indv {
+                @include tablet {
+                    @include flex-vertical;
+                    gap: 0.5rem;
+
+                    &-name {
+                        font-size: 0.925rem;
+
+                        &-fade {
+                            opacity: 50%;
+                        }
+                    }
+
+                    &-price {
+                        font-size: 0.725rem;
+                        padding: 0.375rem;
+                        border-radius: 0.5rem;
+                        font-weight: 700;
+                        background: linear-gradient(to right, #80ff72, #7ee8fa);
+                    }
+
+                    &-location {
+                        font-size: 0.825rem;
+                    }
+                }
+            }
+        }
+
+        &-languages {
+            opacity: 50%;
+        }
+
+        &-buttons {
+            @include tablet {
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+
+        &-read-more {
+            font-weight: 700;
+        }
+    }
+}

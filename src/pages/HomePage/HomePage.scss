@@ -1,8 +1,7 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.li-interface {
+.home {
     @include flex-column;
     gap: $gap-default;
-    padding: 1.25rem;
 }
