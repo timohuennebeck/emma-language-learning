@@ -5,14 +5,19 @@
     @include flex-column;
     gap: $gap-default;
 
-    &__logo {
-        display: none;
+    @include desktop {
+        flex-direction: row;
+        justify-content: space-between;
     }
 
     &__nav {
         @include flex-column;
         flex-direction: row;
         gap: $gap-default;
+
+        @include desktop {
+            order: 1;
+        }
 
         &-hamburger,
         &-openai,
@@ -23,6 +28,12 @@
 
             &-img {
                 @include icons-size;
+            }
+        }
+
+        &-hamburger {
+            @include desktop {
+                display: none;
             }
         }
 
@@ -44,6 +55,25 @@
     &__search {
         @include flex-vertical;
         gap: $gap-default;
+
+        @include desktop {
+            order: 0;
+        }
+
+        &-logo {
+            display: none;
+
+            @include desktop {
+                @include flex;
+                @include icons-border;
+            }
+
+            &-img {
+                @include desktop {
+                    @include icons-size;
+                }
+            }
+        }
 
         &-bar {
             @include flex-vertical;
@@ -68,6 +98,10 @@
             @include flex;
             @include icons-border;
 
+            @include desktop {
+                display: none;
+            }
+
             &-img {
                 @include icons-size;
             }
@@ -75,6 +109,11 @@
 
         &-desktop {
             display: none;
+
+            @include desktop {
+                display: flex;
+                gap: $gap-default;
+            }
         }
     }
 }

@@ -1,0 +1,15 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.dropdown {
+    @include flex;
+    background-color: $prim-color-2;
+    min-height: 2rem;
+    max-height: 2rem;
+    padding: 1.25rem;
+    border-radius: $border-radius-default;
+
+    &__menu {
+        border: none;
+    }
+}

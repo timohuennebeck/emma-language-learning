@@ -16,11 +16,6 @@
         justify-content: space-between;
         gap: 1rem;
 
-        @include tablet {
-            @include flex-horizontal;
-            flex: 0.175 1 0;
-        }
-
         &-avatar {
             &-img {
                 max-width: 2.5rem;
@@ -155,11 +150,13 @@
                     }
 
                     &-price {
-                        font-size: 0.725rem;
+                        font-size: 0.5rem;
                         padding: 0.375rem;
                         border-radius: 0.5rem;
                         font-weight: 700;
-                        background: linear-gradient(to right, #80ff72, #7ee8fa);
+                        // background: linear-gradient(to right, #80ff72, #7ee8fa);
+                        background-color: $prim-color-1;
+                        color: $prim-color-2;
                     }
 
                     &-location {

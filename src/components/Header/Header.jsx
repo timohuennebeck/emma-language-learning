@@ -9,15 +9,12 @@ import searchImg from "../../assets/icons/search.svg";
 import filterImg from "../../assets/icons/slider-circle-h.svg";
 
 import { Link } from "react-router-dom";
+import Dropdown from "../Dropdown/Dropdown";
 
 export default function Header() {
     return (
         <nav className="header">
-            <div className="header__logo">
-                <img src={logoImg} alt="" />
-            </div>
-
-            <ul className="header__nav">
+            <div className="header__nav">
                 <Link to="/messages" className="header__nav-hamburger">
                     <img className="header__nav-hamburger-img" src={hambugerImg} alt="" />
                 </Link>
@@ -31,9 +28,12 @@ export default function Header() {
                     <img className="header__nav-profile-img" src={openaiImg} alt="" />
                     <p className="header__nav-profile-greeting">Hello, Madelaide!</p>
                 </Link>
-            </ul>
+            </div>
 
             <div className="header__search">
+                <div className="header__search-logo">
+                    <img className="header__search-logo-img" src={logoImg} alt="" />
+                </div>
                 <div className="header__search-bar">
                     <img className="header__search-bar-img" src={searchImg} alt="" />
                     <input
@@ -44,7 +44,11 @@ export default function Header() {
                 <div className="header__search-mobile">
                     <img className="header__search-mobile-img" src={filterImg} alt="" />
                 </div>
-                <div className="header__search-desktop"></div>
+                <div className="header__search-desktop">
+                    <Dropdown />
+                    <Dropdown />
+                    <Dropdown />
+                </div>
             </div>
         </nav>
     );

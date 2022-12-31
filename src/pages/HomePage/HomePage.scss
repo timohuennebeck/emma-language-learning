@@ -4,4 +4,18 @@
 .home {
     @include flex-column;
     gap: $gap-default;
+
+    @include desktop {
+        flex-direction: row;
+    }
+
+    &__tutors {
+        flex: 0.75 1 0;
+        @include flex-column;
+        gap: $gap-default;
+    }
+
+    &__calendar {
+        flex: 0.425 1 0;
+    }
 }
