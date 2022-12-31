@@ -13,6 +13,15 @@
         flex: 0.75 1 0;
         @include flex-column;
         gap: $gap-default;
+
+        &-reviews {
+            @include flex-column;
+            gap: $gap-default;
+
+            @include desktop {
+                flex-direction: row;
+            }
+        }
     }
 
     &__calendar {

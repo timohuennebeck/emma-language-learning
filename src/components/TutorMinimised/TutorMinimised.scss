@@ -21,12 +21,11 @@
                 max-width: 2.5rem;
                 max-height: 2.5rem;
                 border-radius: 50%;
-                border-radius: 25%;
                 flex: 1 1 0;
 
                 @include tablet {
-                    max-width: 3.25rem;
-                    max-height: 3.25rem;
+                    max-width: 3.75rem;
+                    max-height: 3.75rem;
                 }
             }
 
@@ -150,7 +149,7 @@
                     }
 
                     &-price {
-                        font-size: 0.5rem;
+                        font-size: 0.525rem;
                         padding: 0.375rem;
                         border-radius: 0.5rem;
                         font-weight: 700;

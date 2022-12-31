@@ -3,6 +3,8 @@ import "./HomePage.scss";
 // components
 import TutorMinimised from "../../components/TutorMinimised/TutorMinimised";
 import CalendarElement from "../../components/CalendarElement/CalendarElement";
+import Review from "../../components/Review/Review";
+import TutorStatistics from "../../components/TutorStatistics/TutorStatistics";
 
 export default function HomePage() {
     return (
@@ -10,6 +12,12 @@ export default function HomePage() {
             <div className="home__tutors">
                 <TutorMinimised />
                 <TutorMinimised />
+                <TutorStatistics />
+                <div className="home__tutors-reviews">
+                    <Review />
+                    <Review />
+                    <Review />
+                </div>
             </div>
             <div className="home__calendar">
                 <CalendarElement />

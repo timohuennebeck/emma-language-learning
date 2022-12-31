@@ -1,0 +1,35 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.review {
+    @include flex-column;
+    @include components-border;
+    gap: 0.75rem;
+
+    &__profile {
+        @include flex-vertical;
+        gap: $gap-default;
+
+        &-img {
+            width: 2rem;
+            height: 2rem;
+            flex-shrink: 0;
+            border-radius: 50%;
+        }
+
+        &-person {
+            &-lessons {
+                opacity: 50%;
+            }
+        }
+    }
+
+    &__text {
+        @include flex-column;
+        gap: 0.5rem;
+
+        &-date {
+            opacity: 50%;
+        }
+    }
+}
