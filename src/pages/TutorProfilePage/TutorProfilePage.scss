@@ -1,0 +1,48 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.tutor-editable {
+    @include flex-column;
+    gap: $gap-default;
+
+    @include desktop {
+        flex-direction: row;
+    }
+
+    &__left {
+        @include flex-column;
+        gap: $gap-default;
+        flex: 0.75 1 0;
+
+        &-pending,
+        &-lessons,
+        &-reviews {
+            @include flex-column;
+            gap: $gap-default;
+
+            &-header {
+                font-weight: 700;
+            }
+        }
+
+        &-container {
+            &-pending,
+            &-lessons,
+            &-reviews {
+                display: flex;
+                gap: $gap-default;
+                overflow: scroll;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    &__right {
+        @include flex-column;
+        gap: $gap-default;
+        flex: 0.425 1 0;
+    }
+}

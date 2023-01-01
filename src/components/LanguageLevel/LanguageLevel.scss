@@ -1,0 +1,23 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.language {
+    @include components-border;
+
+    &__name {
+        display: flex;
+        justify-content: space-between;
+
+        &-bold {
+            font-weight: 700;
+        }
+
+        &-img {
+            transform: rotate(45deg);
+        }
+    }
+
+    &__fade {
+        opacity: 50%;
+    }
+}

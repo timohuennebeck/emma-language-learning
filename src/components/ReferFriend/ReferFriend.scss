@@ -1,0 +1,19 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.friend {
+    @include components-border;
+
+    &__name {
+        display: flex;
+        justify-content: space-between;
+
+        &-bold {
+            font-weight: 700;
+        }
+    }
+
+    &__fade {
+        opacity: 50%;
+    }
+}

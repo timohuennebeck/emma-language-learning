@@ -5,6 +5,8 @@
     @include flex-column;
     @include components-border;
     gap: 0.75rem;
+    min-width: 17.75rem;
+    max-width: 17.75rem;
 
     &__profile {
         @include flex-vertical;

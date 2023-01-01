@@ -7,7 +7,7 @@ export default function Dropdown() {
                 <select className="dropdown__menu">
                     <option value="Argentina">Argentina</option>
                     <option value="Colombia">Colombia</option>
-                    <option value="México" selected>
+                    <option value="México" defaultValue>
                         México
                     </option>
                     <option value="Spain">Spain</option>

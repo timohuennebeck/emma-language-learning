@@ -1,0 +1,28 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.lesson {
+    @include components-border;
+    @include flex-column;
+    gap: $gap-default;
+
+    @include tablet {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    &__name {
+        @include flex-column;
+        gap: 0.5rem;
+
+        &-header {
+            font-weight: 700;
+        }
+    }
+
+    &__button {
+        @include tablet {
+            display: flex;
+        }
+    }
+}
