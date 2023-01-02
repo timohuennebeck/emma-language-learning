@@ -7,8 +7,12 @@ import openaiImg from "../../assets/icons/open-ai-logo.png";
 import logoImg from "../../assets/icons/logo-white-bg.jpg";
 import searchImg from "../../assets/icons/search.svg";
 import filterImg from "../../assets/icons/slider-circle-h.svg";
+import profileImg from "../../assets/images/fake-profile-2.jpg";
 
+// libraries
 import { Link } from "react-router-dom";
+
+// components
 import Dropdown from "../Dropdown/Dropdown";
 
 export default function Header() {
@@ -25,7 +29,7 @@ export default function Header() {
                     <img className="header__nav-openai-img" src={openaiImg} alt="" />
                 </Link>
                 <Link to="/tutor/personal" className="header__nav-profile">
-                    <img className="header__nav-profile-img" src={openaiImg} alt="" />
+                    <img className="header__nav-profile-img" src={profileImg} alt="" />
                     <p className="header__nav-profile-greeting">Hello, Madelaide!</p>
                 </Link>
             </div>

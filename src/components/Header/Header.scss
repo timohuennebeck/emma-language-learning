@@ -45,6 +45,10 @@
                 text-decoration: none;
                 gap: 0.5rem;
 
+                &-img {
+                    border-radius: 50%;
+                }
+
                 &-greeting {
                     color: $prim-color-1;
                 }
