@@ -21,10 +21,10 @@ export default function Header() {
                 <Link to="/messages" className="header__nav-messages">
                     <img className="header__nav-messages-img" src={messagesImg} alt="" />
                 </Link>
-                <Link to="/openai" className="header__nav-openai">
+                <Link to="/emma" className="header__nav-openai">
                     <img className="header__nav-openai-img" src={openaiImg} alt="" />
                 </Link>
-                <Link to="/profile" className="header__nav-profile">
+                <Link to="/tutor/personal" className="header__nav-profile">
                     <img className="header__nav-profile-img" src={openaiImg} alt="" />
                     <p className="header__nav-profile-greeting">Hello, Madelaide!</p>
                 </Link>

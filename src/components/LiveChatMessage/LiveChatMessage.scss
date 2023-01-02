@@ -1,0 +1,43 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.messages {
+    display: flex;
+    gap: $gap-default;
+
+    &__profile {
+        &-img {
+            margin-top: 2.25rem;
+            max-width: 2.5rem;
+            max-height: 2.5rem;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        &-status {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: greenyellow;
+            border-radius: 50%;
+            position: absolute;
+        }
+    }
+
+    &__content {
+        @include flex-column;
+        gap: 0.75rem;
+
+        &-name {
+            opacity: 50%;
+        }
+
+        &-text {
+            background-color: #f5f5f5;
+            padding: 1.25rem;
+            border-radius: $border-radius-default;
+            font-size: 0.75rem;
+            width: fit-content;
+            line-height: 1.15rem;
+        }
+    }
+}

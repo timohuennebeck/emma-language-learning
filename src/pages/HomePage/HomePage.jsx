@@ -13,8 +13,13 @@ export default function HomePage() {
     return (
         <div className="home">
             <div className="home__tutors" onMouseEnter={() => setShowSchedule(true)}>
-                <TutorMinimised />
-                <TutorMinimised />
+                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
+                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
+                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
+                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
+                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
+                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
+                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
             </div>
             {showSchedule && (
                 <div className="home__calendar">

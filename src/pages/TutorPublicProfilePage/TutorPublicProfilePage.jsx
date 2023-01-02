@@ -3,8 +3,6 @@ import "./TutorPublicProfilePage.scss";
 // components
 import TutorMinimised from "../../components/TutorMinimised/TutorMinimised";
 import Review from "../../components/Review/Review";
-import LanguageLevel from "../../components/LanguageLevel/LanguageLevel";
-import ReferFriend from "../../components/ReferFriend/ReferFriend";
 import TutorStatistics from "../../components/TutorStatistics/TutorStatistics";
 import CalendarElement from "../../components/CalendarElement/CalendarElement";
 import Lesson from "../../components/Lesson/Lesson";

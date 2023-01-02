@@ -1,0 +1,42 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.vc-navigation {
+    @include flex-column;
+    align-items: center;
+    gap: 0.5rem;
+    position: absolute;
+
+    &__close,
+    &__hide,
+    &__messages,
+    &__dropdown {
+        @include flex;
+        background-color: $prim-color-2;
+        border-radius: 50%;
+        padding: 0.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        cursor: pointer;
+
+        &-img {
+            @include icons-size;
+        }
+    }
+
+
+    &__time {
+        @include flex;
+        background-color: $prim-color-1;
+        border-radius: 50%;
+        padding: 0.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+
+        &-text {
+            color: $prim-color-2;
+            font-weight: 700;
+            font-size: 0.675rem;
+        }
+    }
+}

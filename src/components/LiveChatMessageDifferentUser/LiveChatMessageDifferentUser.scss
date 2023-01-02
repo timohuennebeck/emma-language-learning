@@ -1,0 +1,58 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.messages-different {
+    display: flex;
+    justify-content: flex-end;
+    gap: $gap-default;
+
+    &__profile {
+        order: 1;
+
+        &-img {
+            margin-top: 2.25rem;
+            max-width: 2.5rem;
+            max-height: 2.5rem;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        &-status {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: greenyellow;
+            border-radius: 50%;
+            position: absolute;
+        }
+    }
+
+    &__content {
+        @include flex-column;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        order: 0;
+
+        &-name {
+            opacity: 50%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        &-container {
+            @include flex-column;
+            align-items: flex-end;
+            width: 100%;
+            gap: 0.75rem;
+
+            &-text {
+                background-color: $prim-color-1;
+                color: $prim-color-2;
+                padding: 1.25rem;
+                border-radius: $border-radius-default;
+                font-size: 0.75rem;
+                width: fit-content;
+                line-height: 1.15rem;
+            }
+        }
+    }
+}

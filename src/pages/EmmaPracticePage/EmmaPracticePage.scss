@@ -1,0 +1,72 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.emma-video {
+    padding: 1.25rem;
+    background-color: $prim-color-1;
+    height: 100vh;
+
+    &__content {
+        @include flex-column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        gap: 5rem;
+
+        &-ai {
+            width: 100%;
+
+            @include tablet {
+                width: 62.5%;
+            }
+
+            @include desktop {
+                width: 32.5%;
+            }
+        }
+
+        &-subtitles {
+            width: 85%;
+            color: $prim-color-2;
+        }
+    }
+
+    &__mic {
+        @include flex-column;
+        position: absolute;
+        bottom: 12.5%;
+        left: 50%;
+        transform: translateX(-50%);
+        align-items: center;
+        width: 100%;
+        gap: 0.75rem;
+
+        @include tablet {
+            bottom: 17.5%;
+        }
+
+        &-container {
+            display: flex;
+            justify-content: center;
+            background-color: $prim-color-2;
+            border-radius: 50%;
+            padding: 0.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            cursor: pointer;
+
+            &-img {
+                @include icons-size;
+            }
+        }
+
+        &-text {
+            color: $prim-color-2;
+            font-weight: 700;
+        }
+    }
+}
+
+.not-active {
+    color: $prim-color-1;
+}

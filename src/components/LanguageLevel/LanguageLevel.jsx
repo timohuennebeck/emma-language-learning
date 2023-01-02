@@ -1,7 +1,7 @@
 import "./LanguageLevel.scss";
 
 // images
-import removeImg from "../../assets/icons/plus.svg";
+import removeImg from "../../assets/icons/remove.svg";
 
 export default function LanguageLevel() {
     return (

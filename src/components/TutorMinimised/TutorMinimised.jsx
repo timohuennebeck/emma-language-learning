@@ -7,7 +7,7 @@ import starImg from "../../assets/icons/review-star.png";
 // components
 import ButtonLink from "../ButtonLink/ButtonLink";
 
-export default function TutorMinimised() {
+export default function TutorMinimised({ link, text }) {
     return (
         <div className="tutor">
             <div className="tutor__profile">
@@ -65,7 +65,7 @@ export default function TutorMinimised() {
                 <p className="tutor__description-read-more">Read More</p>
                 <div className="tutor__description-buttons">
                     <div>
-                        <ButtonLink to="/tequila" text="Visit Madelaide's Profile" />
+                        <ButtonLink link={link} text={text} />
                     </div>
                 </div>
             </div>

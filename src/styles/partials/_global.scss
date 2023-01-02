@@ -4,8 +4,7 @@
 html {
     max-width: 42.5rem;
     margin: auto;
-    // background-color: #FAFAFA;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
 
     @include desktop {
         max-width: 92.25rem;
