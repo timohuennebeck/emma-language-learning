@@ -8,8 +8,10 @@
     position: absolute;
 
     &__close,
+    &__leave,
     &__hide,
     &__messages,
+    &__chat,
     &__dropdown {
         @include flex;
         background-color: $prim-color-2;
@@ -24,10 +26,22 @@
         }
     }
 
+    &__messages {
+        @include desktop {
+            display: none;
+        }
+    }
+
+    &__chat {
+        display: none;
+
+        @include desktop {
+            display: block;
+        }
+    }
 
     &__time {
         @include flex;
-        background-color: $prim-color-1;
         border-radius: 50%;
         padding: 0.5rem;
         width: 2.5rem;
@@ -36,7 +50,7 @@
         &-text {
             color: $prim-color-2;
             font-weight: 700;
-            font-size: 0.675rem;
+            font-size: 0.725rem;
         }
     }
 }

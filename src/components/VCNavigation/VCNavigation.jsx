@@ -11,7 +11,14 @@ import messagesImg from "../../assets/icons/send.svg";
 // libraries
 import { useState } from "react";
 
-export default function VCNavigation({ showText, setShowText }) {
+export default function VCNavigation({
+    showText,
+    setShowText,
+    modalIsOpen,
+    setModalIsOpen,
+    chatIsOpen,
+    setChatIsOpen,
+}) {
     const [showNavigation, setShowNavigation] = useState(false);
 
     return (
@@ -24,11 +31,8 @@ export default function VCNavigation({ showText, setShowText }) {
                     >
                         <img className="vc-navigation__close-img" src={closeImg} alt="" />
                     </div>
-                    <div
-                        className="vc-navigation__close"
-                        onClick={() => setShowNavigation(!showNavigation)}
-                    >
-                        <img className="vc-navigation__close-img" src={leaveImg} alt="" />
+                    <div className="vc-navigation__leave">
+                        <img className="vc-navigation__leave-img" src={leaveImg} alt="" />
                     </div>
                     {showText ? (
                         <div className="vc-navigation__hide" onClick={() => setShowText(!showText)}>
@@ -39,7 +43,16 @@ export default function VCNavigation({ showText, setShowText }) {
                             <img src={showImg} alt="" />
                         </div>
                     )}
-                    <div className="vc-navigation__messages">
+                    <div
+                        className="vc-navigation__messages"
+                        onClick={() => setModalIsOpen(!modalIsOpen)}
+                    >
+                        <img src={messagesImg} alt="" />
+                    </div>
+                    <div
+                        className="vc-navigation__chat"
+                        onClick={() => setChatIsOpen(!chatIsOpen)}
+                    >
                         <img src={messagesImg} alt="" />
                     </div>
                 </>

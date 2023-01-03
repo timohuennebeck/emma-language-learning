@@ -2,71 +2,98 @@
 @use "../../styles/partials/mixins" as *;
 
 .emma-video {
-    padding: 1.25rem;
-    background-color: $prim-color-1;
-    height: 100vh;
+    padding: 1rem;
 
-    &__content {
-        @include flex-column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        gap: 5rem;
+    @include desktop {
+        display: flex;
+        gap: $gap-default;
+    }
 
-        &-ai {
-            width: 100%;
+    &__left {
+        padding: 1.25rem;
+        background-color: $prim-color-1;
+        height: calc(100vh - 2rem);
+        border-radius: $border-radius-default;
 
-            @include tablet {
-                width: 62.5%;
+        &-content {
+            @include flex-column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            gap: 5rem;
+
+            &-ai {
+                width: 100%;
+
+                @include tablet {
+                    width: 62.5%;
+                }
+
+                @include desktop {
+                    width: 32.5%;
+                }
             }
 
-            @include desktop {
-                width: 32.5%;
+            &-subtitles {
+                width: 85%;
+                color: $prim-color-2;
             }
         }
 
-        &-subtitles {
-            width: 85%;
-            color: $prim-color-2;
+        &-mic {
+            @include flex-column;
+            position: relative;
+            bottom: 17.5%;
+            left: 50%;
+            transform: translateX(-50%);
+            align-items: center;
+            width: 100%;
+            gap: 0.75rem;
+
+            &-container {
+                display: flex;
+                justify-content: center;
+                background-color: $prim-color-2;
+                border-radius: 50%;
+                padding: 0.5rem;
+                width: 2.5rem;
+                height: 2.5rem;
+                cursor: pointer;
+
+                &-img {
+                    @include icons-size;
+                }
+            }
+
+            &-text {
+                color: $prim-color-2;
+                font-weight: 700;
+            }
         }
     }
 
-    &__mic {
-        @include flex-column;
-        position: absolute;
-        bottom: 12.5%;
-        left: 50%;
-        transform: translateX(-50%);
-        align-items: center;
-        width: 100%;
-        gap: 0.75rem;
+    &-card-modal {
+        background-color: #000;
+        max-height: 100vh;
+        min-height: 100vh;
+        outline: none;
+        overflow: scroll;
 
-        @include tablet {
-            bottom: 17.5%;
+        &::-webkit-scrollbar {
+            display: none;
         }
 
-        &-container {
-            display: flex;
-            justify-content: center;
-            background-color: $prim-color-2;
-            border-radius: 50%;
-            padding: 0.5rem;
-            width: 2.5rem;
-            height: 2.5rem;
-            cursor: pointer;
-
-            &-img {
-                @include icons-size;
-            }
-        }
-
-        &-text {
-            color: $prim-color-2;
-            font-weight: 700;
+        &-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            backdrop-filter: blur(0.5rem);
         }
     }
 }
 
 .not-active {
-    color: $prim-color-1;
+    opacity: 0;
 }

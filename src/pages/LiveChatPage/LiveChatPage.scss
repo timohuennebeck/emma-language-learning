@@ -6,7 +6,11 @@
     justify-content: space-between;
     padding: 1.25rem;
     background-color: $prim-color-2;
-    height: 100vh;
+    height: calc(100vh - 2rem);
+
+    @include desktop {
+        border-radius: $border-radius-default;
+    }
 
     &__container {
         @include flex-column;
@@ -16,13 +20,16 @@
             @include flex-vertical;
             gap: $gap-default;
 
+            &-hide,
+            &-close,
             &-messages,
             &-ai {
-                @include flex-vertical;
+                @include flex;
                 gap: 1rem;
-                padding: 1rem;
+                padding: 0.75rem;
                 border-radius: $border-radius-default;
                 background-color: #f5f5f5;
+                cursor: pointer;
 
                 &-img {
                     @include icons-size;
@@ -34,6 +41,20 @@
                     @include tablet {
                         display: block;
                     }
+                }
+            }
+
+            &-hide {
+                @include desktop {
+                    display: none;
+                }
+            }
+
+            &-close {
+                display: none;
+
+                @include desktop {
+                    display: block;
                 }
             }
         }
@@ -85,7 +106,7 @@
 
             &-message {
                 @include flex;
-                padding: 1rem;
+                padding: 0.75rem;
                 border-radius: $border-radius-default;
                 background-color: #f5f5f5;
             }

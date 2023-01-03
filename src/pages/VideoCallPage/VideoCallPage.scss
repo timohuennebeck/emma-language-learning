@@ -1,72 +1,134 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.emma-video {
-    padding: 1.25rem;
-    background-color: $prim-color-1;
-    height: 100vh;
+.video-call {
+    padding: 1rem;
 
-    &__content {
-        @include flex-column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        gap: 5rem;
+    @include desktop {
+        display: flex;
+        gap: $gap-default;
+    }
 
-        &-ai {
+    &__left {
+        position: relative;
+        background: url("../../assets/images/placeholder-video.jpg");
+        background-position: center;
+        background-size: cover;
+        padding: 1.25rem;
+        height: calc(100vh - 2rem);
+        border-radius: $border-radius-default;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.15);
+            border-radius: $border-radius-default;
+        }
+
+        &-content {
+            @include flex;
             width: 100%;
+            height: 100%;
 
-            @include tablet {
-                width: 62.5%;
-            }
+            &-subtitles {
+                position: absolute;
+                bottom: 15%;
+                width: 85%;
+                color: $prim-color-2;
+                font-weight: 700;
+                font-size: 0.825rem;
+                text-align: center;
 
-            @include desktop {
-                width: 32.5%;
+                @include desktop {
+                    position: relative;
+                    top: -45%;
+                }
             }
         }
 
-        &-subtitles {
-            width: 85%;
-            color: $prim-color-2;
+        &-nav {
+            @include flex-horizontal;
+            position: relative;
+            bottom: 5%;
+            gap: 1rem;
+
+            &-video,
+            &-mic,
+            &-share {
+                @include flex-horizontal;
+                background-color: $prim-color-2;
+                border-radius: 50%;
+                padding: 0.5rem;
+                width: 2.5rem;
+                height: 2.5rem;
+                cursor: pointer;
+
+                &-img {
+                    @include icons-size;
+                }
+            }
+        }
+
+        &-user {
+            position: absolute;
+            background-image: url("../../assets/images/vertical-photo.jpeg");
+            background-position: center;
+            background-size: cover;
+            top: 1rem;
+            right: 1rem;
+            border-radius: $border-radius-default;
+            width: 9rem;
+            height: 16rem;
+
+            @include desktop {
+                display: none;
+            }
+        }
+
+        &-bottom {
+            display: none;
+
+            @include desktop {
+                display: block;
+                position: absolute;
+                background-image: url("../../assets/images/vertical-photo.jpeg");
+                background-position: center;
+                background-size: cover;
+                bottom: 1rem;
+                right: 1rem;
+                border-radius: $border-radius-default;
+                width: 16rem;
+                height: 9rem;
+            }
         }
     }
 
-    &__mic {
-        @include flex-column;
-        position: absolute;
-        bottom: 12.5%;
-        left: 50%;
-        transform: translateX(-50%);
-        align-items: center;
-        width: 100%;
-        gap: 0.75rem;
+    &-card-modal {
+        background-color: #000;
+        max-height: 100vh;
+        min-height: 100vh;
+        outline: none;
+        overflow: scroll;
 
-        @include tablet {
-            bottom: 17.5%;
+        &::-webkit-scrollbar {
+            display: none;
         }
 
-        &-container {
-            display: flex;
-            justify-content: center;
-            background-color: $prim-color-2;
-            border-radius: 50%;
-            padding: 0.5rem;
-            width: 2.5rem;
-            height: 2.5rem;
-            cursor: pointer;
-
-            &-img {
-                @include icons-size;
-            }
-        }
-
-        &-text {
-            color: $prim-color-2;
-            font-weight: 700;
+        &-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            backdrop-filter: blur(0.5rem);
         }
     }
 }
 
 .not-active {
-    color: $prim-color-1;
+    opacity: 0;
 }
