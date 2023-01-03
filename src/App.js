@@ -12,6 +12,7 @@ import StudentPrivateProfilePage from "./pages/StudentPrivateProfilePage/Student
 import EmmaPracticePage from "./pages/EmmaPracticePage/EmmaPracticePage";
 import VCInterface from "./interfaces/VCInterface/VCInterface";
 import LiveChatPage from "./pages/LiveChatPage/LiveChatPage";
+import VideoCallPage from "./pages/VideoCallPage/VideoCallPage";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                     <Route element={<VCInterface />}>
                         <Route path="/emma" element={<EmmaPracticePage />} />
                         <Route path="/live-chat" element={<LiveChatPage />} />
+                        <Route path="/video-call" element={<VideoCallPage />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

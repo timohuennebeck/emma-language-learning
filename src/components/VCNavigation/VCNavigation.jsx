@@ -3,6 +3,7 @@ import "./VCNavigation.scss";
 // images
 import moreImg from "../../assets/icons/more-v.svg";
 import closeImg from "../../assets/icons/remove.svg";
+import leaveImg from "../../assets/icons/sign-out.svg";
 import hideImg from "../../assets/icons/eye-slash.svg";
 import showImg from "../../assets/icons/eye.svg";
 import messagesImg from "../../assets/icons/send.svg";
@@ -22,6 +23,12 @@ export default function VCNavigation({ showText, setShowText }) {
                         onClick={() => setShowNavigation(!showNavigation)}
                     >
                         <img className="vc-navigation__close-img" src={closeImg} alt="" />
+                    </div>
+                    <div
+                        className="vc-navigation__close"
+                        onClick={() => setShowNavigation(!showNavigation)}
+                    >
+                        <img className="vc-navigation__close-img" src={leaveImg} alt="" />
                     </div>
                     {showText ? (
                         <div className="vc-navigation__hide" onClick={() => setShowText(!showText)}>
