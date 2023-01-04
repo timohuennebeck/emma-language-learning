@@ -1,0 +1,29 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.invitation {
+    @include flex-column;
+    gap: $gap-default;
+
+    &__profile {
+
+        &--avatar {
+
+            &--image {
+                
+            }
+
+        }
+
+        &--info {
+
+        }
+    }
+
+    &__confirmation {
+
+        &--button {
+
+        }
+    }
+}

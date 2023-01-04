@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // components
 import LoggedInInterface from "./interfaces/LoggedInInterface/LoggedInInterface";
 import HomePage from "./pages/HomePage/HomePage";
+import LandingPage from "./pages/LandingPage/LandingPage";
 import TutorProfilePage from "./pages/TutorPrivateProfilePage/TutorPrivateProfilePage";
 import TutorPublicProfilePage from "./pages/TutorPublicProfilePage/TutorPublicProfilePage";
 import StudentPrivateProfilePage from "./pages/StudentPrivateProfilePage/StudentPrivateProfilePage";
@@ -19,6 +20,7 @@ function App() {
         <>
             <BrowserRouter>
                 <Routes>
+                    <Route path="/landing" element={<LandingPage />} />
                     <Route element={<LoggedInInterface />}>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/tutor/:id" element={<TutorPublicProfilePage />} />
