@@ -8,20 +8,26 @@ export default function LandingPage() {
     <div className="landing">
       <div className="landing__logo">
         <img className="landing__logo--img" src={WhiteLogo} alt="Emma Logo" />
-        <h2 className="landing__logo--copy">Emma</h2>
+        <h3 className="landing__logo--copy">Emma</h3>
       </div>
 
       <div className="landing__nav">
         <div className="landing__nav--left">
-          <p className="landing__nav--copy">Talk to Emma (AI)</p>
+          <a className="landing__nav--link" href="/emma">
+            Talk to Emma (AI)
+          </a>
         </div>
 
         <div className="landing__nav--centre">
-          <p className="landing__nav--copy">Find a Tutor</p>
+          <a className="landing__nav--link" href="/tutor/:id">
+            Find a Tutor
+          </a>
         </div>
 
         <div className="landing__nav--middle">
-          <p className="landing__nav--copy">Become a Tutor</p>
+          <a className="landing__nav--link" href="/tutor/:id">
+            Become a Tutor
+          </a>
         </div>
       </div>
 
@@ -30,16 +36,29 @@ export default function LandingPage() {
       </div>
 
       <div className="landing__title">
-        <h1 className="landing__title--text">Experience the future of AI-powered language learning with real-time conversations</h1>
+        <h1 className="landing__title--text">
+          Experience the <span className="text__green-gradient">future</span> of{" "}
+          <span className="text__blue-gradient">AI-powered</span> language
+          learning with real-time
+          <span className="text__mix-gradient"> conversations</span>
+        </h1>
       </div>
 
       <div className="landing__copy">
-        <p className="landing__copy--text">Emma, the advanced <b>AI language</b> tutor that can practice <b>real-time conversations</b>. Prefer a a human touch? Schedule a lesson with one of our  tutors from around the world.</p>
+        <p className="landing__copy--text">
+          Emma, the advanced <b>AI language</b> tutor that can practice{" "}
+          <b>real-time conversations</b>. Prefer a a human touch? Schedule a
+          lesson with one of our tutors from around the world.
+        </p>
       </div>
 
       <div className="landing__buttons">
-        <button className="landing__buttons--login" type="button">Log In</button>
-        <button className="landing__buttons--sign-up" type="button">Sign Up</button>
+        <button className="landing__buttons--log-in" type="button">
+          <h3>Log In</h3>
+        </button>
+        <button className="landing__buttons--sign-up" type="button">
+          <h3>Sign Up</h3>
+        </button>
       </div>
     </div>
   );
