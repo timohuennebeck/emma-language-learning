@@ -1,19 +1,19 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.AddNewLanguage {
+.friend {
     @include components-border;
 
     &__name {
         display: flex;
         justify-content: space-between;
 
-        &-bold {
-            font-weight: 700;
+        &-text {
+            opacity: 50%;
         }
-    }
 
-    &__fade {
-        opacity: 50%;
+        &-img {
+            opacity: 50%;
+        }
     }
 }

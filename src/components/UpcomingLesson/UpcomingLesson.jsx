@@ -23,7 +23,7 @@ export default function UpcomingLesson() {
                     <p className="upcoming__container-right-time">03:00PM (GMT+1)</p>
                 </div>
             </div>
-            <ButtonLink link="/profile" text="Confirm Lesson" />
+            <ButtonLink link="/profile" text="Enter Classroom" />
         </div>
     );
 }

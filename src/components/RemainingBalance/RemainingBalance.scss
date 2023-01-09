@@ -1,0 +1,24 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.balance {
+  @include components-border;
+
+  &__name {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: .25rem;
+
+    &--bold {
+      font-weight: 700;
+    }
+
+    &--recharge {
+        opacity: 50%;
+    }
+  }
+
+  &__amount {
+    opacity: 50%;
+  }
+}
