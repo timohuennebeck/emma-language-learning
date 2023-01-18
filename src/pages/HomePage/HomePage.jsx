@@ -5,21 +5,25 @@ import TutorMinimised from "../../components/TutorMinimised/TutorMinimised";
 import CalendarElement from "../../components/CalendarElement/CalendarElement";
 
 // components
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getTeachers, getUsers } from "../../utils/api";
 
 export default function HomePage() {
+    const [teachersData, setTeachersData] = useState([]);
     const [showSchedule, setShowSchedule] = useState(false);
+
+    useEffect(() => {
+        getTeachers().then(({ data }) => {
+            setTeachersData(data);
+        });
+    }, []);
 
     return (
         <div className="home">
             <div className="home__tutors" onMouseEnter={() => setShowSchedule(true)}>
-                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
-                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
-                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
-                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
-                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
-                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
-                <TutorMinimised link="/tutor/:id" text="Visit Madelaide's Profile" />
+                {teachersData.map((item) => {
+                    return <TutorMinimised data={item} key={item.id} />;
+                })}
             </div>
             {showSchedule && (
                 <div className="home__calendar">
