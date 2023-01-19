@@ -4,8 +4,8 @@
 .dropdown {
     @include flex;
     background-color: $prim-color-2;
-    min-height: 2rem;
-    max-height: 2rem;
+    min-height: 2.5rem;
+    max-height: 2.5rem;
     padding: 1.25rem;
     border-radius: $border-radius-default;
 

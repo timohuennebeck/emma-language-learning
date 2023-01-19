@@ -18,7 +18,8 @@
         &-date {
             @include flex-column;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 1.5rem;
 
             &-indv {
                 @include flex;
@@ -29,10 +30,10 @@
 
         &-week {
             @include flex-column;
-            justify-content: space-between;
+            justify-content: center;
             flex-direction: row;
             flex-wrap: wrap;
-            gap: 0.75rem;
+            gap: 1.5rem;
 
             &-paragraph {
                 @include flex;
@@ -53,12 +54,18 @@
     }
 
     &__right {
+        @include components-border;
         @include flex-column;
         gap: 0.75rem;
 
         &-choose {
             @include flex-column;
             gap: 0.75rem;
+
+            &-button {
+                display: flex;
+                gap: $gap-default;
+            }
         }
     }
 }

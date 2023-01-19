@@ -35,9 +35,6 @@ export default function Header() {
             </div>
 
             <div className="header__search">
-                <div className="header__search-logo">
-                    <img className="header__search-logo-img" src={logoImg} alt="" />
-                </div>
                 <div className="header__search-bar">
                     <img className="header__search-bar-img" src={searchImg} alt="" />
                     <input

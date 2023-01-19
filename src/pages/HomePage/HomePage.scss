@@ -19,6 +19,7 @@
         @include flex-column;
         gap: $gap-default;
         flex: 0.425 1 0;
+        max-width: 30rem;
 
         &-container {
             position: relative;

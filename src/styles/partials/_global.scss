@@ -4,9 +4,9 @@
 html {
     max-width: 42.5rem;
     margin: auto;
-    background-color: #f5f5f5;
+    background-color: #F4F7F8;
 
     @include desktop {
-        max-width: 92.25rem;
+        max-width: 98.5rem;
     }
 }

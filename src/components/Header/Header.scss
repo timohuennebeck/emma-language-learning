@@ -43,7 +43,7 @@
             @include tablet {
                 @include flex-vertical;
                 text-decoration: none;
-                gap: 0.5rem;
+                gap: $gap-default;
 
                 &-img {
                     border-radius: 50%;
@@ -62,21 +62,6 @@
 
         @include desktop {
             order: 0;
-        }
-
-        &-logo {
-            display: none;
-
-            @include desktop {
-                @include flex;
-                @include icons-border;
-            }
-
-            &-img {
-                @include desktop {
-                    @include icons-size;
-                }
-            }
         }
 
         &-bar {
