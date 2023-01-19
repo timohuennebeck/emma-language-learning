@@ -44,7 +44,7 @@ export default function TutorPublicProfilePage() {
             </div>
             <div className="tutor-public__right">
                 <div className="tutor-public__right-container">
-                    {/* <iframe
+                    <iframe
                         className="tutor-public__right-container-iframe"
                         title="intrduction"
                         src="https://www.youtube.com/embed/Jmx5Y92Tlk8"
@@ -53,7 +53,7 @@ export default function TutorPublicProfilePage() {
                         height="360"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
-                    ></iframe> */}
+                    ></iframe>
                 </div>
                 <CalendarElement />
             </div>

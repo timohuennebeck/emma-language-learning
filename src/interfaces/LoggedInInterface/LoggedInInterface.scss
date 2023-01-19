@@ -4,6 +4,9 @@
 .li-interface {
     @include flex-column;
     gap: $gap-default;
-    padding: 1.25rem;
-    height: 100vh;
+    padding-top: 1.25rem;
+
+    &__structures {
+        height: calc(100vh - 4.75rem);
+    }
 }
