@@ -12,7 +12,7 @@ export default function TutorPrivateProfilePage() {
     return (
         <div className="tutor-private">
             <div className="tutor-private__left">
-                <TutorMinimised />
+                {/* <TutorMinimised /> */}
                 <div className="tutor-private__left-pending">
                     <p className="tutor-private__left-pending-header">Invitations Pending</p>
                     <div className="tutor-private__left-container-pending">
@@ -24,17 +24,17 @@ export default function TutorPrivateProfilePage() {
                 <div className="tutor-private__left-lessons">
                     <p className="tutor-private__left-lessons-header">Upcoming Lessons</p>
                     <div className="tutor-private__left-container-lessons">
+                        {/* <UpcomingLesson />
                         <UpcomingLesson />
-                        <UpcomingLesson />
-                        <UpcomingLesson />
+                        <UpcomingLesson /> */}
                     </div>
                 </div>
                 <div className="tutor-private__left-reviews">
                     <p className="tutor-private__left-reviews-header">11 Reviews</p>
                     <div className="tutor-private__left-container-reviews">
+                        {/* <Review />
                         <Review />
-                        <Review />
-                        <Review />
+                        <Review /> */}
                     </div>
                 </div>
             </div>

@@ -1,4 +1,47 @@
 @use "./styles/partials/fonts";
 @use "./styles/partials/reset";
 @use "./styles/partials/global";
+@use "./styles/partials/mixins" as *;
 
+.modal-status {
+    @include flex;
+    text-align: center;
+    background-color: #ffbb01;
+    max-height: 100vh;
+    min-height: 100vh;
+    outline: none;
+    overflow: scroll;
+    padding: 2.5rem;
+    opacity: 75%;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    @include tablet {
+        max-width: 52.5rem;
+        margin: auto;
+    }
+
+    @include desktop {
+        position: absolute;
+        border-radius: 0.5rem;
+        left: 30%;
+        right: 30%;
+        top: 5%;
+        bottom: 5%;
+        max-width: 35rem;
+        margin: auto;
+        min-height: 0;
+        max-height: 15vh;
+    }
+
+    &__background {
+        backdrop-filter: blur(0.15rem);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}

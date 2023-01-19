@@ -13,8 +13,17 @@ import EmmaPracticePage from "./pages/EmmaPracticePage/EmmaPracticePage";
 import VCInterface from "./interfaces/VCInterface/VCInterface";
 import LiveChatPage from "./pages/LiveChatPage/LiveChatPage";
 import VideoCallPage from "./pages/VideoCallPage/VideoCallPage";
+import ReactModal from "react-modal";
+import { useState } from "react";
+import ModalMessage from "./components/ModalMessage/ModalMessage";
 
 function App() {
+    const [modalIsOpen, setModalIsOpen] = useState(true);
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
     return (
         <>
             <BrowserRouter>
@@ -32,6 +41,14 @@ function App() {
                     </Route>
                 </Routes>
             </BrowserRouter>
+            <ReactModal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                className="modal-status"
+                overlayClassName="modal-status__background"
+            >
+                <ModalMessage />
+            </ReactModal>
         </>
     );
 }
