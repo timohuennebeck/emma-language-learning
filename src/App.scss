@@ -17,24 +17,21 @@
     }
 
     @include tablet {
-        max-width: 52.5rem;
-        margin: auto;
-        min-height: 0;
-        max-height: 20vh;
-    }
-
-    @include desktop {
         position: absolute;
         border-radius: 0.5rem;
         left: 37.5%;
         right: 37.5%;
         top: 5%;
         bottom: 5%;
-        max-width: 35rem;
+        min-width: 25rem;
+        max-width: 25rem;
+        margin: auto;
+        min-height: 0;
+        max-height: 20vh;
     }
 
     &__background {
-        background-color: rgb(0 0 0 / 0.5);
+        background-color: #bfbfbf;
         position: fixed;
         top: 0;
         left: 0;
