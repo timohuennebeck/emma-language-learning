@@ -43,11 +43,10 @@ function App() {
             </BrowserRouter>
             <ReactModal
                 isOpen={modalIsOpen}
-                onRequestClose={closeModal}
                 className="modal-status"
                 overlayClassName="modal-status__background"
             >
-                <ModalMessage />
+                <ModalMessage onRequestClose={closeModal} />
             </ReactModal>
         </>
     );

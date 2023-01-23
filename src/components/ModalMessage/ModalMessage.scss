@@ -1,4 +1,25 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
 .modal-message {
-    color: #FFF;
-    font-weight: 700;
+    @include flex-column;
+    gap: $gap-default;
+
+    &__button {
+        @include flex;
+        border: none;
+        border-radius: 2.25rem;
+        width: 100%;
+        background-color: $prim-color-1;
+        color: $prim-color-2;
+        text-decoration: none;
+        padding: 0.75rem 1.25rem;
+        font-weight: 700;
+        font-size: 0.825rem;
+
+        &:hover {
+            cursor: pointer;
+            background: linear-gradient(to right, #01d0c1, #0db9fa);
+        }
+    }
 }
