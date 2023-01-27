@@ -1,13 +1,13 @@
-import CourseProgress from "../../components/CourseProgress/CourseProgress";
+import ReadingsProgress from "../../components/ReadingsProgress/ReadingsProgress";
 import "./DashboardPage.scss";
 
 export default function DashboardPage() {
     return (
         <div className="dashboard">
-            <CourseProgress />
-            <CourseProgress />
-            <CourseProgress />
-            <CourseProgress />
+            <ReadingsProgress />
+            <ReadingsProgress />
+            <ReadingsProgress />
+            <ReadingsProgress />
         </div>
     );
 }

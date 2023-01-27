@@ -1,24 +1,24 @@
-import "./SelectCourse.scss";
+import "./SelectReadings.scss";
 
 // images
 import intermediateImg from "../../assets/icons/intermediate.svg";
 import emojiImg from "../../assets/images/emoji.jpg";
 import { useState } from "react";
 
-export default function SelectCourse({ name }) {
+export default function SelectReadings({ name }) {
     const [selectText, setSelectText] = useState(false);
 
     return (
-        <div className="select-course">
-            <img src={emojiImg} alt="" className="select-course-img" />
-            <div className="select-course__right">
+        <div className="select-readings">
+            <img src={emojiImg} alt="" className="select-readings-img" />
+            <div className="select-readings__right">
                 <h3>{name}</h3>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam possimus
                     sapiente nemo illo accusamus ab...
                 </p>
                 <div
-                    className="select-course__right-level"
+                    className="select-readings__right-level"
                     onMouseEnter={() => setSelectText(true)}
                     onMouseLeave={() => setSelectText(false)}
                 >
@@ -29,7 +29,7 @@ export default function SelectCourse({ name }) {
                             <img
                                 src={intermediateImg}
                                 alt=""
-                                className="select-course__right-level-img"
+                                className="select-readings__right-level-img"
                             />
                             <p>Intermediate (B2)</p>
                         </>

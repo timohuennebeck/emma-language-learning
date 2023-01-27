@@ -7,7 +7,7 @@ import NavLinkButton from "../../components/NavLinkButton/NavLinkButton";
 // images
 import emmaLogo from "../../assets/images/emma-logo.png";
 import dashboardImg from "../../assets/icons/Discovery.svg";
-import coursesImg from "../../assets/icons/Menu.svg";
+import readingsImg from "../../assets/icons/Menu.svg";
 import flashcardsImg from "../../assets/icons/Message - 2.svg";
 import tutorsImg from "../../assets/icons/Video-coco.svg";
 import chatbotImg from "../../assets/icons/Message - 4.svg";
@@ -26,7 +26,7 @@ export default function NavigationInterface() {
                     </Link>
                     <div className="nav-interface__indv-left-nav">
                         <NavLinkButton link="/" hover="Dashboard" img={dashboardImg} />
-                        <NavLinkButton link="/courses" hover="Courses" img={coursesImg} />
+                        <NavLinkButton link="/readings" hover="Readings" img={readingsImg} />
                         <NavLinkButton link="/flashcards" hover="Flashcards" img={flashcardsImg} />
                         <NavLinkButton
                             link="/conversation"

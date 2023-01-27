@@ -1,7 +1,7 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.course-progress {
+.readings-progress {
     @include flex-column;
     @include shadow;
     gap: 1.5rem;
@@ -43,7 +43,7 @@
             color: #231048;
         }
 
-        &-course {
+        &-readings {
             font-weight: 700;
             color: #231048;
         }

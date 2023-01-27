@@ -1,7 +1,7 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.courses {
+.readings {
     @include flex-column;
     gap: $gap-default;
     height: 100%;

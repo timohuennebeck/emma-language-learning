@@ -18,8 +18,8 @@ import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import { useState } from "react";
 import ReactModal from "react-modal";
 import ModalMessage from "./components/ModalMessage/ModalMessage";
-import CoursesPage from "./pages/CoursesPage/CoursesPage";
 import FlashcardsPage from "./pages/FlashcardsPage/FlashcardsPage";
+import ReadingsPage from "./pages/ReadingsPage/ReadingsPage";
 
 function App() {
     const [modalIsOpen, setModalIsOpen] = useState(true);
@@ -34,7 +34,7 @@ function App() {
                 <Routes>
                     <Route element={<NavigationInterface />}>
                         <Route path="/" element={<DashboardPage />} />
-                        <Route path="/courses" element={<CoursesPage />} />
+                        <Route path="/readings" element={<ReadingsPage />} />
                         <Route path="/flashcards" element={<FlashcardsPage />} />
                         <Route path="/settings" element={<StudentPrivateProfilePage />} />
                         <Route element={<LoggedInInterface />}>

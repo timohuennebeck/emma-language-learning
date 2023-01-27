@@ -1,60 +1,60 @@
-import "./CoursesPage.scss";
+import "./ReadingsPage.scss";
 
 // images
 import spainImg from "../../assets/languages/spain.svg";
 import unitedKingdomImg from "../../assets/languages/united kingdom.svg";
 import germanyImg from "../../assets/languages/germany.svg";
 import franceImg from "../../assets/languages/france.svg";
-import SelectCourse from "../../components/SelectCourse/SelectCourse";
+import SelectReadings from "../../components/SelectReadings/SelectReadings";
 import searchImg from "../../assets/icons/search.svg";
 
-export default function CoursesPage() {
+export default function ReadingsPage() {
     return (
-        <div className="courses">
-            <div className="courses__left">
-                <div className="courses__left-search">
-                    <img src={searchImg} alt="" className="courses__left-search-img" />
+        <div className="readings">
+            <div className="readings__left">
+                <div className="readings__left-search">
+                    <img src={searchImg} alt="" className="readings__left-search-img" />
                     <input
                         placeholder="Let's explore some stories... (Beginner, Intermediate, or Advanced)!"
-                        className="courses__left-search-input"
+                        className="readings__left-search-input"
                     />
                 </div>
-                <div className="courses__left-languages">
-                    <div className="courses__left-languages-indv">
+                <div className="readings__left-languages">
+                    <div className="readings__left-languages-indv">
                         <img
                             src={unitedKingdomImg}
                             alt=""
-                            className="courses__left-languages-indv-flag"
+                            className="readings__left-languages-indv-flag"
                         />
                         <p>English</p>
                     </div>
-                    <div className="courses__left-languages-indv">
-                        <img src={spainImg} alt="" className="courses__left-languages-indv-flag" />
+                    <div className="readings__left-languages-indv">
+                        <img src={spainImg} alt="" className="readings__left-languages-indv-flag" />
                         <p>Spanish</p>
                     </div>
-                    <div className="courses__left-languages-indv">
+                    <div className="readings__left-languages-indv">
                         <img
                             src={germanyImg}
                             alt=""
-                            className="courses__left-languages-indv-flag"
+                            className="readings__left-languages-indv-flag"
                         />
                         <p>German</p>
                     </div>
-                    <div className="courses__left-languages-indv">
-                        <img src={franceImg} alt="" className="courses__left-languages-indv-flag" />
+                    <div className="readings__left-languages-indv">
+                        <img src={franceImg} alt="" className="readings__left-languages-indv-flag" />
                         <p>French</p>
                     </div>
                 </div>
-                <div className="courses__left-choose">
-                    <SelectCourse name="Exploring The Future of AI" />
-                    <SelectCourse name="Exploring The Future of AI" />
-                    <SelectCourse name="Exploring The Future of AI" />
-                    <SelectCourse name="Exploring The Future of AI" />
+                <div className="readings__left-choose">
+                    <SelectReadings name="Exploring The Future of AI" />
+                    <SelectReadings name="Exploring The Future of AI" />
+                    <SelectReadings name="Exploring The Future of AI" />
+                    <SelectReadings name="Exploring The Future of AI" />
                 </div>
             </div>
-            <div className="courses__right">
-                <h2 className="courses__right-header">Exploring The Future of AI (B2)</h2>
-                <p className="courses__right-paragraph">
+            <div className="readings__right">
+                <h2 className="readings__right-header">Exploring The Future of AI (B2)</h2>
+                <p className="readings__right-paragraph">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis molestias
                     porro rerum quaerat explicabo voluptatem quas iste obcaecati officia ea ex
                     quisquam, est nisi temporibus aspernatur fugit tenetur placeat optio suscipit
