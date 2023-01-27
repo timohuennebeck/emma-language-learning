@@ -1,0 +1,68 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.course-progress {
+    @include flex-column;
+    @include shadow;
+    gap: 1.5rem;
+    padding: 1.25rem;
+    background-color: $prim-color-2;
+    border-radius: $border-radius-default;
+    max-width: 20rem;
+    text-decoration: none;
+
+    &__level {
+        @include flex-vertical;
+        justify-content: space-between;
+
+        &-img {
+            width: 2.25rem;
+            height: 2.25rem;
+        }
+
+        &-cefr {
+            @include flex;
+            padding: 0.25rem;
+            min-width: 3.25rem;
+            background-color: #e7f8ff;
+            border-radius: $border-radius-default;
+
+            &-indv {
+                font-weight: 700;
+                color: #1baae7;
+            }
+        }
+    }
+
+    &__language {
+        @include flex-column;
+        gap: 0.75rem;
+
+        &-name {
+            font-weight: 700;
+            color: #231048;
+        }
+
+        &-course {
+            font-weight: 700;
+            color: #231048;
+        }
+
+        &-words {
+            color: #1baae7;
+            font-weight: 700;
+        }
+
+        &-bar {
+            background-color: #f3f4f8;
+            border-radius: $border-radius-default;
+
+            &-progress {
+                background-color: #1baae7;
+                border-radius: $border-radius-default;
+                height: 0.25rem;
+                width: 21%;
+            }
+        }
+    }
+}

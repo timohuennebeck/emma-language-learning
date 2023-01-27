@@ -25,6 +25,7 @@
         &-profile {
             @include flex;
             @include icons-border;
+            @include shadow;
 
             &-img {
                 @include icons-size;
@@ -67,6 +68,7 @@
         &-bar {
             @include flex-vertical;
             @include icons-border;
+            @include shadow;
             gap: $gap-default;
             width: 100%;
 

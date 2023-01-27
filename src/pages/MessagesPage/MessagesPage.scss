@@ -1,0 +1,15 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.messages {
+    @include flex-column;
+
+    @include desktop {
+        flex-direction: row;
+    }
+
+    &__users {
+        @include flex-column;
+        gap: $gap-default;
+    }
+}

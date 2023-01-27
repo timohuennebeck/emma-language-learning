@@ -1,0 +1,40 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.select-course {
+    @include shadow;
+    @include flex-vertical;
+    gap: $gap-default;
+    background-color: $prim-color-2;
+    border-radius: $border-radius-default;
+    padding: 1.25rem;
+
+    &-img {
+        width: 8.5rem;
+        height: 8.5rem;
+        border-radius: $border-radius-default;
+    }
+
+    &__right {
+        @include flex-column;
+        gap: $gap-default;
+
+        &-level {
+            @include flex-vertical;
+            justify-content: center;
+            padding: 0.5rem;
+            background-color: #f4f7f8;
+            gap: $gap-default;
+            border-radius: $border-radius-default;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &-img {
+                width: 0.75rem;
+                height: 0.75rem;
+            }
+        }
+    }
+}

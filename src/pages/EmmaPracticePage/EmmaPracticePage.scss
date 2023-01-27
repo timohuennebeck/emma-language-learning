@@ -10,8 +10,6 @@
     }
 
     &__left {
-        padding: 1.25rem;
-        background-color: $prim-color-1;
         height: calc(100vh - 2rem);
         border-radius: $border-radius-default;
 
@@ -36,7 +34,7 @@
 
             &-subtitles {
                 width: 85%;
-                color: $prim-color-2;
+                color: $prim-color-1;
             }
         }
 
@@ -53,7 +51,7 @@
             &-container {
                 display: flex;
                 justify-content: center;
-                background-color: $prim-color-2;
+                background-color: $prim-color-1;
                 border-radius: 50%;
                 padding: 0.5rem;
                 width: 2.5rem;
@@ -66,7 +64,7 @@
             }
 
             &-text {
-                color: $prim-color-2;
+                color: $prim-color-1;
                 font-weight: 700;
             }
         }

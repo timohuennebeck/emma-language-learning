@@ -1,0 +1,45 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.nav-link {
+    @include flex-vertical;
+    position: relative;
+
+    &__button {
+        &-link {
+            @include flex-vertical;
+            gap: $gap-default;
+            border-radius: 50%;
+            padding: 0.75rem;
+            text-decoration: none;
+            color: $prim-color-1;
+            position: relative;
+
+            &:hover {
+                background-color: $prim-color-2;
+            }
+
+            &-img {
+                filter: brightness(0) invert(1);
+            }
+        }
+    }
+
+    &-hide {
+        position: absolute;
+        padding: 0.75rem;
+        border-radius: $border-radius-default;
+        left: 4.25rem;
+        background-color: $prim-color-1;
+        color: #fff;
+        white-space: nowrap;
+    }
+}
+
+.active-hover {
+    filter: brightness(1) invert(0);
+}
+
+.no-element {
+    opacity: 0;
+}

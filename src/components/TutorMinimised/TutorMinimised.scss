@@ -4,6 +4,7 @@
 .tutor {
     @include components-border;
     @include flex-column;
+    @include shadow;
     gap: 1rem;
 
     @include tablet {

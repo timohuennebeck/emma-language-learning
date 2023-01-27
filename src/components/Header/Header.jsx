@@ -1,11 +1,11 @@
 import "./Header.scss";
 
 // images
-import hambugerImg from "../../assets/icons/hamburger-menu.svg";
+import hamburgerImg from "../../assets/icons/hamburger-menu.svg";
 import messagesImg from "../../assets/icons/send.svg";
 import openaiImg from "../../assets/icons/open-ai-logo.png";
 import logoImg from "../../assets/icons/logo-white-bg.jpg";
-import searchImg from "../../assets/icons/search.svg";
+import searchImg from "../../assets/icons/Search.svg";
 import filterImg from "../../assets/icons/slider-circle-h.svg";
 import profileImg from "../../assets/images/fake-profile-2.jpg";
 
@@ -20,20 +20,9 @@ export default function Header() {
         <nav className="header">
             <div className="header__nav">
                 <Link to="/messages" className="header__nav-hamburger">
-                    <img className="header__nav-hamburger-img" src={hambugerImg} alt="" />
-                </Link>
-                <Link to="/messages" className="header__nav-messages">
-                    <img className="header__nav-messages-img" src={messagesImg} alt="" />
-                </Link>
-                <Link to="/emma" className="header__nav-openai">
-                    <img className="header__nav-openai-img" src={openaiImg} alt="" />
-                </Link>
-                <Link to="/tutor/personal" className="header__nav-profile">
-                    <img className="header__nav-profile-img" src={profileImg} alt="" />
-                    <p className="header__nav-profile-greeting">Hello, Madelaide!</p>
+                    <img className="header__nav-hamburger-img" src={hamburgerImg} alt="" />
                 </Link>
             </div>
-
             <div className="header__search">
                 <div className="header__search-bar">
                     <img className="header__search-bar-img" src={searchImg} alt="" />

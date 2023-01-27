@@ -4,7 +4,7 @@
 .transparent {
     @include flex;
     border: 1px solid $prim-color-1;
-    border-radius: 2.25rem;
+    border-radius: 0.75rem;
     width: 100%;
     color: $prim-color-1;
     text-decoration: none;

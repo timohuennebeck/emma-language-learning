@@ -1,4 +1,4 @@
-import "./HomePage.scss";
+import "./BrowseTutorsPage.scss";
 
 // components
 import TutorMinimised from "../../components/TutorMinimised/TutorMinimised";
@@ -8,7 +8,7 @@ import CalendarElement from "../../components/CalendarElement/CalendarElement";
 import { useEffect, useState } from "react";
 import { getTeachers, getUsers } from "../../utils/api";
 
-export default function HomePage() {
+export default function BrowseTutorsPage() {
     const [teachersData, setTeachersData] = useState([]);
     const [showSchedule, setShowSchedule] = useState(false);
 

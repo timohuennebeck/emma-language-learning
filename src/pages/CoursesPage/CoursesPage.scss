@@ -1,0 +1,91 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.courses {
+    @include flex-column;
+    gap: $gap-default;
+    height: 100%;
+
+    @include desktop {
+        flex-direction: row;
+    }
+
+    &__left {
+        @include flex-column;
+        gap: $gap-default;
+
+        @include desktop {
+            flex: 1 1 0;
+        }
+
+        &-search {
+            @include flex-vertical;
+            @include shadow;
+            gap: $gap-default;
+            background-color: $prim-color-2;
+            padding: 0.75rem;
+            border-radius: $border-radius-default;
+
+            &-img {
+                opacity: 50%;
+            }
+
+            &-input {
+                border: none;
+                outline: none;
+                width: 100%;
+            }
+        }
+
+        &-languages {
+            @include flex-vertical;
+            gap: $gap-default;
+
+            &-indv {
+                @include flex-vertical;
+                @include shadow;
+                gap: $gap-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+                border-radius: $border-radius-default;
+                cursor: pointer;
+
+                &-flag {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+        }
+
+        &-choose {
+            @include flex-column;
+            gap: $gap-default;
+        }
+    }
+
+    &__right {
+        @include flex-column;
+        @include shadow;
+        gap: $gap-default;
+        background-color: $prim-color-2;
+        padding: 1.25rem;
+        border-radius: $border-radius-default;
+        margin-top: 8rem;
+
+        @include desktop {
+            flex: 1 1 0;
+        }
+
+        &-header {
+            text-align: center;
+            padding: 0.75rem;
+            background-color: #f4f7f8;
+            gap: $gap-default;
+            border-radius: $border-radius-default;
+        }
+
+        &-paragraph {
+            line-height: 1.75rem;
+        }
+    }
+}

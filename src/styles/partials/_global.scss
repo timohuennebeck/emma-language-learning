@@ -4,9 +4,10 @@
 body {
     max-width: 42.5rem;
     margin: auto;
-    background-color: #F4F7F8;
+    background-color: #f4f7f8;
+    overflow-x: hidden;
 
     @include desktop {
-        max-width: 98.5rem;
+        max-width: 157.5rem;
     }
 }

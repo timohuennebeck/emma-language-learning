@@ -4,6 +4,7 @@
 .calendar {
     @include components-border;
     @include flex-column;
+    @include shadow;
     gap: 1.75rem;
 
     &__left {

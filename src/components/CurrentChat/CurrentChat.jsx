@@ -1,14 +1,14 @@
-import "./LiveChatPage.scss";
+import "./CurrentChat.scss";
 
 // images
 import hideImg from "../../assets/icons/eye-slash.svg";
 import messagesImg from "../../assets/icons/send.svg";
 import aiImg from "../../assets/icons/open-ai-logo.png";
-import LiveChatMessage from "../../components/LiveChatMessage/LiveChatMessage";
-import LiveChatMessageDifferentUser from "../../components/LiveChatMessageDifferentUser/LiveChatMessageDifferentUser";
+import LiveChatMessage from "../LiveChatMessage/LiveChatMessage";
+import LiveChatMessageDifferentUser from "../LiveChatMessageDifferentUser/LiveChatMessageDifferentUser";
 import moreImg from "../../assets/icons/more-v.svg";
 
-export default function LiveChatPage({ modalIsOpen, setModalIsOpen, chatIsOpen, setChatIsOpen }) {
+export default function CurrentChat({ modalIsOpen, setModalIsOpen, chatIsOpen, setChatIsOpen }) {
     return (
         <div className="live-chat">
             <div className="live-chat__container">
@@ -20,7 +20,7 @@ export default function LiveChatPage({ modalIsOpen, setModalIsOpen, chatIsOpen, 
                         <img className="live-chat__container-nav-hide-img" src={hideImg} alt="" />
                         <p className="live-chat__container-nav-hide-text">Hide</p>
                     </div>
-                    
+
                     <div
                         className="live-chat__container-nav-close"
                         onClick={() => setChatIsOpen(!chatIsOpen)}

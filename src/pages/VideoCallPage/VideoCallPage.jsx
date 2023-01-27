@@ -8,7 +8,7 @@ import shareImg from "../../assets/icons/broadcast.svg";
 
 // components
 import VCNavigation from "../../components/VCNavigation/VCNavigation";
-import LiveChatPage from "../LiveChatPage/LiveChatPage";
+import CurrentChat from "../../components/CurrentChat/CurrentChat";
 
 // libraries
 import { useState } from "react";
@@ -84,7 +84,7 @@ export default function VideoCallPage() {
                     <div className="video-call__left-bottom"></div>
                 </div>
                 {chatIsOpen && (
-                    <LiveChatPage chatIsOpen={chatIsOpen} setChatIsOpen={setChatIsOpen} />
+                    <CurrentChat chatIsOpen={chatIsOpen} setChatIsOpen={setChatIsOpen} />
                 )}
             </div>
             <ReactModal
@@ -93,7 +93,7 @@ export default function VideoCallPage() {
                 className="video-call-card-modal"
                 overlayClassName="video-call-card-modal-background"
             >
-                <LiveChatPage modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+                <CurrentChat modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
             </ReactModal>
         </>
     );

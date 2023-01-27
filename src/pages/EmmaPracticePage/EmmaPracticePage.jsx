@@ -7,7 +7,7 @@ import micUnmuteddImg from "../../assets/icons/microphone.svg";
 
 // components
 import VCNavigation from "../../components/VCNavigation/VCNavigation";
-import LiveChatPage from "../LiveChatPage/LiveChatPage";
+import CurrentChat from "../../components/CurrentChat/CurrentChat";
 
 // libraries
 import { useState } from "react";
@@ -80,7 +80,7 @@ export default function EmmaPracticePage() {
                     )}
                 </div>
                 {chatIsOpen && (
-                    <LiveChatPage chatIsOpen={chatIsOpen} setChatIsOpen={setChatIsOpen} />
+                    <CurrentChat chatIsOpen={chatIsOpen} setChatIsOpen={setChatIsOpen} />
                 )}
             </div>
             <ReactModal
@@ -89,7 +89,7 @@ export default function EmmaPracticePage() {
                 className="emma-video-card-modal"
                 overlayClassName="emma-video-card-modal-background"
             >
-                <LiveChatPage modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+                <CurrentChat modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
             </ReactModal>
         </>
     );
