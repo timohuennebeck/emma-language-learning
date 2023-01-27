@@ -2,6 +2,6 @@
 @use "../../styles/partials/mixins" as *;
 
 .flashcards-page {
-    // display: flex;
+    display: flex;
     gap: $gap-default;
 }

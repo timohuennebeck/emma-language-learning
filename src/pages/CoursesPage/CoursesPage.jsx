@@ -6,7 +6,7 @@ import unitedKingdomImg from "../../assets/languages/united kingdom.svg";
 import germanyImg from "../../assets/languages/germany.svg";
 import franceImg from "../../assets/languages/france.svg";
 import SelectCourse from "../../components/SelectCourse/SelectCourse";
-import searchImg from "../../assets/icons/Search.svg";
+import searchImg from "../../assets/icons/search.svg";
 
 export default function CoursesPage() {
     return (
