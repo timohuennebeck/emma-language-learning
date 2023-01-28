@@ -49,7 +49,6 @@ export default function NavigationInterface() {
                     <NavLinkButton link="/settings" hover="Settings" img={settingsImg} />
                     <NavLinkButton
                         onClick={() => logout({ returnTo: window.location.origin })}
-                        link="/log-out"
                         hover="Log Out"
                         img={logOutImg}
                     />
