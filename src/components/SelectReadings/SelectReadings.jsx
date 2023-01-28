@@ -5,18 +5,17 @@ import intermediateImg from "../../assets/icons/intermediate.svg";
 import emojiImg from "../../assets/images/emoji.jpg";
 import { useState } from "react";
 
-export default function SelectReadings({ name }) {
+export default function SelectReadings({ data }) {
     const [selectText, setSelectText] = useState(false);
+
+    console.log(data);
 
     return (
         <div className="select-readings">
             <img src={emojiImg} alt="" className="select-readings-img" />
             <div className="select-readings__right">
-                <h3>{name}</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam possimus
-                    sapiente nemo illo accusamus ab...
-                </p>
+                <h3>{data.name}</h3>
+                <p className="select-readings__right-narrative">{data.narrative}</p>
                 <div
                     className="select-readings__right-level"
                     onMouseEnter={() => setSelectText(true)}
@@ -31,7 +30,7 @@ export default function SelectReadings({ name }) {
                                 alt=""
                                 className="select-readings__right-level-img"
                             />
-                            <p>Intermediate (B2)</p>
+                            <p>{data.level}</p>
                         </>
                     )}
                 </div>

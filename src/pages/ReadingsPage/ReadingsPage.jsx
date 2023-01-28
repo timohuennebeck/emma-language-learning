@@ -7,8 +7,21 @@ import germanyImg from "../../assets/languages/germany.svg";
 import franceImg from "../../assets/languages/france.svg";
 import SelectReadings from "../../components/SelectReadings/SelectReadings";
 import searchImg from "../../assets/icons/search.svg";
+import { getReadings } from "../../utils/api";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function ReadingsPage() {
+    const [readingsData, setReadingsData] = useState([]);
+
+    useEffect(() => {
+        getReadings().then(({ data }) => {
+            setReadingsData(data);
+        });
+    }, []);
+
+    const filteredLanguages = readingsData.filter((item) => item.language === "Spanish");
+
     return (
         <div className="readings">
             <div className="readings__left">
@@ -41,15 +54,18 @@ export default function ReadingsPage() {
                         <p>German</p>
                     </div>
                     <div className="readings__left-languages-indv">
-                        <img src={franceImg} alt="" className="readings__left-languages-indv-flag" />
+                        <img
+                            src={franceImg}
+                            alt=""
+                            className="readings__left-languages-indv-flag"
+                        />
                         <p>French</p>
                     </div>
                 </div>
                 <div className="readings__left-choose">
-                    <SelectReadings name="Exploring The Future of AI" />
-                    <SelectReadings name="Exploring The Future of AI" />
-                    <SelectReadings name="Exploring The Future of AI" />
-                    <SelectReadings name="Exploring The Future of AI" />
+                    {filteredLanguages.map((item) => {
+                        return <SelectReadings data={item} />;
+                    })}
                 </div>
             </div>
             <div className="readings__right">

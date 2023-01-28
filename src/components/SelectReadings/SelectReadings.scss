@@ -19,6 +19,12 @@
         @include flex-column;
         gap: $gap-default;
 
+        &-narrative {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 2.5rem;
+        }
+
         &-level {
             @include flex-vertical;
             justify-content: center;

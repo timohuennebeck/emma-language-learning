@@ -17,3 +17,15 @@ export const getTeachersId = ({ id }) => {
 export const getReviews = () => {
     return axios.get(`${API_URL}/reviews`);
 };
+
+export const getReadings = () => {
+    return axios.get(`${API_URL}/readings`);
+};
+
+export const getDictionaries = () => {
+    return axios.get(`${API_URL}/dictionaries`);
+};
+
+export const getDictionariesWords = () => {
+    return axios.get(`${API_URL}/dictionaries_words`);
+};
