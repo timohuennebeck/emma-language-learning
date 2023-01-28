@@ -42,5 +42,17 @@
                 height: 0.75rem;
             }
         }
+
+        &-bar {
+            background-color: #f3f4f8;
+            border-radius: $border-radius-default;
+
+            &-progress {
+                background-color: #1baae7;
+                border-radius: $border-radius-default;
+                height: 0.25rem;
+                width: 21%;
+            }
+        }
     }
 }

@@ -29,3 +29,7 @@ export const getDictionaries = () => {
 export const getDictionariesWords = () => {
     return axios.get(`${API_URL}/dictionaries_words`);
 };
+
+export const addDictionariesWords = ({ userInput }) => {
+    return axios.post(`${API_URL}/dictionaries_words`, userInput);
+};

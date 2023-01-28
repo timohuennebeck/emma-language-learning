@@ -3,6 +3,7 @@
 
 .flashcards-deck {
     @include flex-column;
+    @include shadow;
     margin-top: 6.75rem;
     gap: $gap-default;
     padding: 1.25rem;
@@ -59,6 +60,8 @@
 
     &__button {
         @include flex-vertical;
+        text-decoration: none;
+        color: #000;
         gap: $gap-default;
         justify-content: center;
         background-color: #f4f7f8;

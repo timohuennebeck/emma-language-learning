@@ -1,64 +1,60 @@
 import "./FlashcardsDeck.scss";
 
-import starsImg from "../../assets/icons/Star.svg";
+import unfilledStarImg from "../../assets/icons/Star.svg";
 import starsFilledImg from "../../assets/icons/star-filled.svg";
 import editImg from "../../assets/icons/Edit.svg";
 import continueImg from "../../assets/icons/Shield - check.svg";
 import emojiImg from "../../assets/images/emoji-no-bg.png";
+import { useState } from "react";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-export default function FlashcardsDeck() {
+export default function FlashcardsDeck({ data }) {
+    console.log(data);
+
+    const [rating, setRating] = useState(0);
+
+    useEffect(() => {
+        setRating(data.rating);
+    }, []);
+
+    const stars = [];
+
+    for (let i = 0; i < 5; i++) {
+        stars.push(
+            <img
+                src={i < rating ? starsFilledImg : unfilledStarImg}
+                alt=""
+                className="flashcards-deck__header-rating-stars-img"
+            />
+        );
+    }
+
     return (
         <div className="flashcards-deck">
             <div className="flashcards-deck__header">
-                <img src={emojiImg} alt="" className="flashcards-deck__header-img" />
+                <img src={data.image_url} alt="" className="flashcards-deck__header-img" />
 
-                {/* this is just a placeholder for the avatar image */}
+                {/* acts as a placeholder for the avatar image */}
                 <div></div>
-                
+
                 <div className="flashcards-deck__header-rating">
-                    <h2>Intermediate Spanish</h2>
-                    <div className="flashcards-deck__header-rating-stars">
-                        <img
-                            src={starsFilledImg}
-                            alt=""
-                            className="flashcards-deck__header-rating-stars-img"
-                        />
-                        <img
-                            src={starsFilledImg}
-                            alt=""
-                            className="flashcards-deck__header-rating-stars-img"
-                        />
-                        <img
-                            src={starsFilledImg}
-                            alt=""
-                            className="flashcards-deck__header-rating-stars-img"
-                        />
-                        <img
-                            src={starsImg}
-                            alt=""
-                            className="flashcards-deck__header-rating-stars-img"
-                        />
-                        <img
-                            src={starsImg}
-                            alt=""
-                            className="flashcards-deck__header-rating-stars-img"
-                        />
-                    </div>
+                    <h2>{data.name}</h2>
+
+                    {/* renders the amount of stars based on the rating */}
+                    <div className="flashcards-deck__header-rating-stars">{stars}</div>
                 </div>
                 <img src={editImg} alt="" />
             </div>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam possimus sapiente
-                nemo illo accusamus ab...
-            </p>
+            <p>{data.description}</p>
             <p className="flashcards-deck__percentage">21% Finished</p>
             <div className="flashcards-deck__bar">
                 <div className="flashcards-deck__bar-progress"></div>
             </div>
-            <div className="flashcards-deck__button">
+            <Link to={`/flashcards/${data.id}`} className="flashcards-deck__button">
                 <img src={continueImg} alt="" />
                 <p>Continue Learning...</p>
-            </div>
+            </Link>
         </div>
     );
 }

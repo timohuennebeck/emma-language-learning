@@ -3,23 +3,22 @@ import "./FlashcardsPage.scss";
 import FlashcardsDeck from "../../components/FlashcardsDeck/FlashcardsDeck";
 import { useEffect } from "react";
 import { getDictionaries, getDictionariesWords } from "../../utils/api";
+import { useState } from "react";
 
 export default function FlashcardsPage() {
+    const [dictionariesData, setDictionariesData] = useState([]);
+
     useEffect(() => {
         getDictionaries().then(({ data }) => {
-            console.log(data);
-        });
-        getDictionariesWords().then(({ data }) => {
-            console.log(data);
+            setDictionariesData(data);
         });
     }, []);
 
     return (
         <div className="flashcards-page">
-            <FlashcardsDeck />
-            <FlashcardsDeck />
-            <FlashcardsDeck />
-            <FlashcardsDeck />
+            {dictionariesData.map((item) => {
+                return <FlashcardsDeck data={item} />;
+            })}
         </div>
     );
 }

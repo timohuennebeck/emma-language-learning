@@ -1,0 +1,22 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.select-language {
+    @include flex-vertical;
+    @include shadow;
+    gap: $gap-default;
+    background-color: $prim-color-2;
+    padding: 0.75rem;
+    border-radius: $border-radius-default;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $prim-color-1;
+        color: $prim-color-2;
+    }
+
+    &-flag {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}

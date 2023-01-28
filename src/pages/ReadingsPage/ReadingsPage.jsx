@@ -2,25 +2,48 @@ import "./ReadingsPage.scss";
 
 // images
 import spainImg from "../../assets/languages/spain.svg";
-import unitedKingdomImg from "../../assets/languages/united kingdom.svg";
 import germanyImg from "../../assets/languages/germany.svg";
 import franceImg from "../../assets/languages/france.svg";
 import SelectReadings from "../../components/SelectReadings/SelectReadings";
 import searchImg from "../../assets/icons/search.svg";
-import { getReadings } from "../../utils/api";
+import { getDictionariesWords, getReadings } from "../../utils/api";
 import { useState } from "react";
 import { useEffect } from "react";
+import SelectLanguage from "../../components/SelectLanguage/SelectLanguage";
 
 export default function ReadingsPage() {
     const [readingsData, setReadingsData] = useState([]);
+    const [filteredLanguages, setFilteredLanguages] = useState([]);
+    const [singleData, setSingleData] = useState([]);
+    const [wholeNarrative, setWholeNarrative] = useState([]);
+    const [wordsData, setWordsData] = useState([]);
 
     useEffect(() => {
         getReadings().then(({ data }) => {
             setReadingsData(data);
+            setFilteredLanguages(data.filter((item) => item.language === "French"));
+        });
+        getDictionariesWords().then(({ data }) => {
+            setWordsData(data);
         });
     }, []);
 
-    const filteredLanguages = readingsData.filter((item) => item.language === "Spanish");
+    const handleClick = (event) => {
+        const languageName = event.currentTarget.getAttribute("name");
+        setFilteredLanguages(readingsData.filter((item) => item.language === languageName));
+    };
+
+    const handleWord = (event) => {
+        console.log(event.currentTarget.getAttribute("name"));
+    };
+
+    const getReadingsData = (event) => {
+        setSingleData(event);
+
+        const narrative = event.narrative;
+        const divideNarrative = narrative.split(" ");
+        setWholeNarrative(divideNarrative);
+    };
 
     return (
         <div className="readings">
@@ -33,56 +56,63 @@ export default function ReadingsPage() {
                     />
                 </div>
                 <div className="readings__left-languages">
-                    <div className="readings__left-languages-indv">
-                        <img
-                            src={unitedKingdomImg}
-                            alt=""
-                            className="readings__left-languages-indv-flag"
-                        />
-                        <p>English</p>
-                    </div>
-                    <div className="readings__left-languages-indv">
-                        <img src={spainImg} alt="" className="readings__left-languages-indv-flag" />
-                        <p>Spanish</p>
-                    </div>
-                    <div className="readings__left-languages-indv">
-                        <img
-                            src={germanyImg}
-                            alt=""
-                            className="readings__left-languages-indv-flag"
-                        />
-                        <p>German</p>
-                    </div>
-                    <div className="readings__left-languages-indv">
-                        <img
-                            src={franceImg}
-                            alt=""
-                            className="readings__left-languages-indv-flag"
-                        />
-                        <p>French</p>
-                    </div>
+                    <SelectLanguage name="French" flag={franceImg} onClick={handleClick} />
+                    <SelectLanguage name="Spanish" flag={spainImg} onClick={handleClick} />
+                    <SelectLanguage name="German" flag={germanyImg} onClick={handleClick} />
                 </div>
                 <div className="readings__left-choose">
                     {filteredLanguages.map((item) => {
-                        return <SelectReadings data={item} />;
+                        return (
+                            <SelectReadings data={item} onClick={getReadingsData} key={item.id} />
+                        );
                     })}
                 </div>
             </div>
             <div className="readings__right">
-                <h2 className="readings__right-header">Exploring The Future of AI (B2)</h2>
-                <p className="readings__right-paragraph">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis molestias
-                    porro rerum quaerat explicabo voluptatem quas iste obcaecati officia ea ex
-                    quisquam, est nisi temporibus aspernatur fugit tenetur placeat optio suscipit
-                    praesentium ad exercitationem. Veritatis sit saepe maiores mollitia, delectus
-                    repudiandae possimus ullam dolorum autem. Minima inventore doloremque odio quo
-                    error sit quidem voluptas accusantium laudantium et cupiditate, culpa aliquam
-                    vitae, consequuntur tempora explicabo aperiam modi voluptates? Sunt aspernatur,
-                    repudiandae quo nihil exercitationem recusandae corrupti sapiente voluptatem,
-                    officia deleniti quis! Tempore similique rem nisi repellat minus atque neque
-                    mollitia, maiores officia officiis corporis dolorem nam, quos dicta sed!
-                    Laudantium, ullam!
-                </p>
+                <h2 className="readings__right-header">
+                    {singleData.name ? singleData.name : "Let's get started...!"}
+                </h2>
+                <div className="readings__right-narrative">
+                    {wholeNarrative.length !== 0 ? (
+                        wholeNarrative.map((item) => {
+                            const wordData = wordsData.find(
+                                (word) => word.foreign_translation === item
+                            );
+
+                            let backgroundColor = "#D6F3FF";
+
+                            if (wordData) {
+                                if (wordData.level === 3) {
+                                    backgroundColor = "#FFD6D6";
+                                } else if (wordData.level === 2) {
+                                    backgroundColor = "#FFFBC2";
+                                } else if (wordData.level === 1) {
+                                    backgroundColor = "#D6FFD8";
+                                } else {
+                                    backgroundColor = "#D6F3FF";
+                                }
+                            }
+
+                            return (
+                                <span
+                                    className="readings__right-narrative-span"
+                                    style={{ backgroundColor }}
+                                    name={item}
+                                    key={item.id}
+                                    onClick={handleWord}
+                                >
+                                    {item}
+                                </span>
+                            );
+                        })
+                    ) : (
+                        <>
+                            <p className="readings__right-narrative-self">
+                                Please select a narrative to get started learning...
+                            </p>
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );
