@@ -2,6 +2,7 @@ import "./App.scss";
 
 // libraries
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // components
 import LoggedInInterface from "./interfaces/LoggedInInterface/LoggedInInterface";
@@ -20,13 +21,20 @@ import ReactModal from "react-modal";
 import ModalMessage from "./components/ModalMessage/ModalMessage";
 import FlashcardsPage from "./pages/FlashcardsPage/FlashcardsPage";
 import ReadingsPage from "./pages/ReadingsPage/ReadingsPage";
+import LoginButton from "./components/LoginButton/LoginButton";
 
 function App() {
+    const { isAuthenticated } = useAuth0();
+
     const [modalIsOpen, setModalIsOpen] = useState(true);
 
     const closeModal = () => {
         setModalIsOpen(false);
     };
+
+    if (!isAuthenticated) {
+        return <LoginButton />;
+    }
 
     return (
         <>

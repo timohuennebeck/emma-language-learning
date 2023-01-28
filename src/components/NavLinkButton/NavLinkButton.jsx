@@ -3,7 +3,7 @@ import "./NavLinkButton.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function NavLinkButton({ link, hover, img }) {
+export default function NavLinkButton({ link, hover, img, onClick }) {
     const [brightness, setBrightness] = useState(false);
 
     return (
@@ -12,6 +12,7 @@ export default function NavLinkButton({ link, hover, img }) {
                 className="nav-link__button"
                 onMouseEnter={() => setBrightness(!brightness)}
                 onMouseLeave={() => setBrightness(!brightness)}
+                onClick={onClick}
             >
                 <Link className="nav-link__button-link" to={link}>
                     <img

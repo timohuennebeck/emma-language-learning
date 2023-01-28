@@ -3,6 +3,7 @@ import "./NavigationInterface.scss";
 
 // components
 import NavLinkButton from "../../components/NavLinkButton/NavLinkButton";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // images
 import emmaLogo from "../../assets/images/emma-logo.png";
@@ -17,6 +18,8 @@ import settingsImg from "../../assets/icons/Setting - 3.svg";
 import logOutImg from "../../assets/icons/Lock.svg";
 
 export default function NavigationInterface() {
+    const { logout } = useAuth0();
+
     return (
         <div className="nav-interface">
             <div className="nav-interface__indv">
@@ -44,7 +47,12 @@ export default function NavigationInterface() {
                 <div>
                     <NavLinkButton link="/messages" hover="Messages" img={messagesImg} />
                     <NavLinkButton link="/settings" hover="Settings" img={settingsImg} />
-                    <NavLinkButton link="/log-out" hover="Log Out" img={logOutImg} />
+                    <NavLinkButton
+                        onClick={() => logout({ returnTo: window.location.origin })}
+                        link="/log-out"
+                        hover="Log Out"
+                        img={logOutImg}
+                    />
                 </div>
             </div>
             <div className="nav-interface__outlet">
