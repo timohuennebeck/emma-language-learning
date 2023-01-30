@@ -94,4 +94,29 @@
             line-height: 1.75rem;
         }
     }
+
+    &__card-modal {
+        @include shadow;
+        @include flex;
+        min-width: 25rem;
+        outline: none;
+        background-color: #f4f7f8;
+        border-radius: $border-radius-default;
+        position: absolute;
+        padding: 1.25rem;
+        top: 1.5%;
+        animation: slideInFromTop 1s;
+        @keyframes slideInFromTop {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(0%);
+            }
+        }
+
+        &-background {
+            @include flex;
+        }
+    }
 }
