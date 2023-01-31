@@ -14,6 +14,7 @@ import frenchImg from "../../assets/languages/france.svg";
 import spainImg from "../../assets/languages/spain.svg";
 import germanyImg from "../../assets/languages/germany.svg";
 import speakImg from "../../assets/icons/Volume - High.svg";
+import { addDictionariesWords } from "../../utils/api";
 
 import { useState } from "react";
 
@@ -23,6 +24,8 @@ export default function UploadNewWord({
     modalIsOpen,
     setModalIsOpen,
     singleData,
+    refreshList,
+    setRefreshList,
 }) {
     const [selectLevel, setSelectLevel] = useState(null);
 
@@ -30,17 +33,9 @@ export default function UploadNewWord({
         setSelectLevel(name);
     };
 
-    let flag;
-
-    if (singleData.language === "French") {
-        flag = frenchImg;
-    } else if (singleData.language === "Spanish") {
-        flag = spainImg;
-    } else {
-        flag = germanyImg;
-    }
-
     const foreignLanguage = (event) => {
+        speechSynthesis.cancel();
+
         const msg = new SpeechSynthesisUtterance();
         const voices = window.speechSynthesis.getVoices();
 
@@ -62,12 +57,52 @@ export default function UploadNewWord({
     };
 
     const englishLanguage = (event) => {
+        speechSynthesis.cancel();
+
         const msg = new SpeechSynthesisUtterance();
         const voices = window.speechSynthesis.getVoices();
         msg.voice = voices.find((voice) => voice.name === "Google US English");
         msg.text = event;
         speechSynthesis.speak(msg);
     };
+
+    const uploadWord = () => {
+        const highlightLevel = Number(selectLevel);
+
+        if (!highlightLevel) {
+            console.log("not working");
+        }
+
+        const userWord = {
+            dictionaries_id: 1,
+            english: translatedWord,
+            foreign_translation: selectedWord,
+            language: singleData.language,
+            level: highlightLevel,
+        };
+
+        addDictionariesWords({ userWord })
+            .then(() => {
+                console.log("Word has been uploaded!");
+            })
+            .catch((err) => {
+                console.log(`Error uploading word! ${err}`);
+            });
+
+        setModalIsOpen(!modalIsOpen);
+
+        setRefreshList(!refreshList);
+    };
+
+    let flag;
+
+    if (singleData.language === "French") {
+        flag = frenchImg;
+    } else if (singleData.language === "Spanish") {
+        flag = spainImg;
+    } else {
+        flag = germanyImg;
+    }
 
     return (
         <div className="upload-word">
@@ -154,9 +189,14 @@ export default function UploadNewWord({
                     >
                         CANCEL
                     </button>
-                    <button className="upload-word__nav-buttons-save">SAVE</button>
+                    {selectLevel ? (
+                        <button className="upload-word__nav-buttons-save" onClick={uploadWord}>
+                            SAVE
+                        </button>
+                    ) : null}
                 </div>
             </div>
+            {selectLevel ? null : <p>Please select a level!</p>}
         </div>
     );
 }

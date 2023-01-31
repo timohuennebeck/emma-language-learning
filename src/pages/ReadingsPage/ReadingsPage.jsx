@@ -27,16 +27,20 @@ export default function ReadingsPage() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [speakNarrative, setSpeakNarrative] = useState("");
     const [hoverState, setHoverState] = useState("");
+    const [refreshList, setRefreshList] = useState(false);
 
     useEffect(() => {
         getReadings().then(({ data }) => {
             setReadingsData(data);
             setFilteredLanguages(data.filter((item) => item.language === "French"));
         });
+    }, []);
+
+    useEffect(() => {
         getDictionariesWords().then(({ data }) => {
             setWordsData(data);
         });
-    }, []);
+    }, [refreshList]);
 
     const handleClick = (event) => {
         const languageName = event.currentTarget.getAttribute("name");
@@ -44,11 +48,24 @@ export default function ReadingsPage() {
     };
 
     const handleWord = (event) => {
-        const word = event.currentTarget.getAttribute("name").toUpperCase();
+        const word = event.currentTarget.getAttribute("name").replace(/[.,?]/g, "");
+
         setSelectedWord(word);
 
+        let languageCode;
+
+        if (singleData.language === "French") {
+            languageCode = "FR";
+        } else if (singleData.language === "Spanish") {
+            languageCode = "ES";
+        } else if (singleData.language === "German") {
+            languageCode = "DE";
+        } else {
+            languageCode = "EN";
+        }
+
         fetch(
-            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${word}&target_lang=EN`
+            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${word}&target_lang=EN&source_lang=${languageCode}`
         )
             .then((response) => {
                 if (!response.ok) {
@@ -219,6 +236,8 @@ export default function ReadingsPage() {
                 overlayClassName="readings__card-modal-background"
             >
                 <UploadNewWord
+                    refreshList={refreshList}
+                    setRefreshList={setRefreshList}
                     translatedWord={translatedWord}
                     selectedWord={selectedWord}
                     setModalIsOpen={setModalIsOpen}
