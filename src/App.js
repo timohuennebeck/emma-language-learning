@@ -36,6 +36,9 @@ function App() {
         return <LoginButton />;
     }
 
+    const rootElement = document.getElementById("root");
+    ReactModal.setAppElement(rootElement);
+
     return (
         <>
             <BrowserRouter>

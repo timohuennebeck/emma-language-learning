@@ -67,11 +67,30 @@
         }
 
         &-header {
-            text-align: center;
-            padding: 0.75rem;
-            background-color: #f4f7f8;
+            display: flex;
             gap: $gap-default;
-            border-radius: $border-radius-default;
+
+            &-indv {
+                width: 100%;
+                font-weight: 700;
+                text-align: center;
+                padding: 0.75rem;
+                background-color: #f4f7f8;
+                gap: $gap-default;
+                border-radius: $border-radius-default;
+            }
+
+            &-speak {
+                @include flex;
+                padding: 0.75rem;
+                background-color: #f4f7f8;
+                border-radius: $border-radius-default;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $prim-color-1;
+                }
+            }
         }
 
         &-narrative {
@@ -119,4 +138,8 @@
             @include flex;
         }
     }
+}
+
+.hover-state-speak {
+    filter: brightness(0) invert(1);
 }

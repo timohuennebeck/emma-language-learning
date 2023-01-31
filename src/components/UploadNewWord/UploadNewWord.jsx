@@ -17,11 +17,14 @@ import speakImg from "../../assets/icons/Volume - High.svg";
 
 import { useState } from "react";
 
-export default function UploadNewWord({ selectedWord, modalIsOpen, setModalIsOpen, singleData }) {
+export default function UploadNewWord({
+    selectedWord,
+    translatedWord,
+    modalIsOpen,
+    setModalIsOpen,
+    singleData,
+}) {
     const [selectLevel, setSelectLevel] = useState(null);
-    const [highlightWord, setHighlightWord] = useState("");
-
-    console.log(singleData);
 
     const handleClick = (name) => {
         setSelectLevel(name);
@@ -89,10 +92,10 @@ export default function UploadNewWord({ selectedWord, modalIsOpen, setModalIsOpe
                     <div className="upload-word__top-language-indv">
                         <img src={ukImg} alt="" className="upload-word__top-language-indv-img" />
                     </div>
-                    <div className="upload-word__top-language-name">THE DOG</div>
+                    <div className="upload-word__top-language-name">{translatedWord}</div>
                     <div
                         className="upload-word__top-language-speak"
-                        onClick={() => englishLanguage("THE DOG")}
+                        onClick={() => englishLanguage(translatedWord)}
                     >
                         <img
                             src={speakImg}
