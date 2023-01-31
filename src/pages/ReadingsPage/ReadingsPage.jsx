@@ -15,6 +15,7 @@ import ReactModal from "react-modal";
 import UploadNewWord from "../../components/UploadNewWord/UploadNewWord";
 import speakImg from "../../assets/icons/Volume - High.svg";
 import muteImg from "../../assets/icons/Volume - Slash.svg";
+import LanguageLevelDropdown from "../../components/LanguageLevelDropdown/LanguageLevelDropdown";
 
 export default function ReadingsPage() {
     const [readingsData, setReadingsData] = useState([]);
@@ -28,6 +29,8 @@ export default function ReadingsPage() {
     const [speakNarrative, setSpeakNarrative] = useState("");
     const [hoverState, setHoverState] = useState("");
     const [refreshList, setRefreshList] = useState(false);
+    const [currentLanguage, setCurrentLanguage] = useState("French");
+    const [currentLanguageLevel, setCurrentLanguageLevel] = useState("");
 
     useEffect(() => {
         getReadings().then(({ data }) => {
@@ -44,7 +47,20 @@ export default function ReadingsPage() {
 
     const handleClick = (event) => {
         const languageName = event.currentTarget.getAttribute("name");
-        setFilteredLanguages(readingsData.filter((item) => item.language === languageName));
+        setCurrentLanguage(languageName);
+
+        if (
+            currentLanguageLevel === "" ||
+            currentLanguageLevel === "Please, select a language level..."
+        ) {
+            setFilteredLanguages(readingsData.filter((item) => item.language === languageName));
+        } else {
+            setFilteredLanguages(
+                readingsData.filter(
+                    (item) => item.language === languageName && item.level === currentLanguageLevel
+                )
+            );
+        }
     };
 
     const handleWord = (event) => {
@@ -120,6 +136,20 @@ export default function ReadingsPage() {
         speechSynthesis.cancel();
     };
 
+    const handleLanguageLevel = (languageLevel) => {
+        setCurrentLanguageLevel(languageLevel);
+
+        if (languageLevel === "Please, select a language level...") {
+            setFilteredLanguages(readingsData.filter((item) => item.language === currentLanguage));
+        } else {
+            setFilteredLanguages(
+                readingsData.filter(
+                    (item) => item.level === languageLevel && item.language === currentLanguage
+                )
+            );
+        }
+    };
+
     return (
         <>
             <div className="readings">
@@ -132,20 +162,42 @@ export default function ReadingsPage() {
                         />
                     </div>
                     <div className="readings__left-languages">
-                        <SelectLanguage name="French" flag={franceImg} onClick={handleClick} />
-                        <SelectLanguage name="Spanish" flag={spainImg} onClick={handleClick} />
-                        <SelectLanguage name="German" flag={germanyImg} onClick={handleClick} />
+                        <SelectLanguage
+                            name="French"
+                            flag={franceImg}
+                            onClick={handleClick}
+                            currentLanguage={currentLanguage}
+                        />
+                        <SelectLanguage
+                            name="Spanish"
+                            flag={spainImg}
+                            onClick={handleClick}
+                            currentLanguage={currentLanguage}
+                        />
+                        <SelectLanguage
+                            name="German"
+                            flag={germanyImg}
+                            onClick={handleClick}
+                            currentLanguage={currentLanguage}
+                        />
+                        <LanguageLevelDropdown handleLanguageLevel={handleLanguageLevel} />
                     </div>
                     <div className="readings__left-choose">
-                        {filteredLanguages.map((item) => {
-                            return (
-                                <SelectReadings
-                                    data={item}
-                                    onClick={getReadingsData}
-                                    key={item.id}
-                                />
-                            );
-                        })}
+                        {filteredLanguages.length === 0 ? (
+                            <p className="readings__left-choose-none">
+                                Whoops! Seems like we still need to populate some stories here.
+                            </p>
+                        ) : (
+                            filteredLanguages.map((item) => {
+                                return (
+                                    <SelectReadings
+                                        data={item}
+                                        onClick={getReadingsData}
+                                        key={item.id}
+                                    />
+                                );
+                            })
+                        )}
                     </div>
                 </div>
                 <div className="readings__right">

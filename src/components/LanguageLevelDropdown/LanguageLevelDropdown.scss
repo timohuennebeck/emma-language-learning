@@ -1,0 +1,54 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.language-dropdown {
+    @include flex-vertical;
+    @include shadow;
+    position: relative;
+    gap: $gap-default;
+    width: 100%;
+    background-color: $prim-color-2;
+    border-radius: $border-radius-default;
+    cursor: pointer;
+
+    &__default {
+        @include flex-column;
+        background-color: $prim-color-2;
+        border-radius: $border-radius-default;
+        width: 100%;
+
+        &-indv {
+            padding: 0.75rem;
+            border-radius: $border-radius-default;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $prim-color-1;
+                color: $prim-color-2;
+            }
+        }
+    }
+
+    &__levels {
+        @include flex-column;
+        @include shadow;
+        background-color: $prim-color-2;
+        border-radius: $border-radius-default;
+        top: 0;
+        left: 0;
+        gap: $gap-default;
+        width: 100%;
+        position: absolute;
+
+        &-indv {
+            padding: 0.75rem;
+            border-radius: $border-radius-default;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $prim-color-1;
+                color: $prim-color-2;
+            }
+        }
+    }
+}
