@@ -154,13 +154,13 @@ export default function ReadingsPage() {
         <>
             <div className="readings">
                 <div className="readings__left">
-                    <div className="readings__left-search">
+                    {/* <div className="readings__left-search">
                         <img src={searchImg} alt="" className="readings__left-search-img" />
                         <input
                             placeholder="Let's explore some stories... (Beginner, Intermediate, or Advanced)!"
                             className="readings__left-search-input"
                         />
-                    </div>
+                    </div> */}
                     <div className="readings__left-languages">
                         <SelectLanguage
                             name="French"
