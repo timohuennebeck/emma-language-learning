@@ -1,5 +1,4 @@
 import "./EditFlashcard.scss";
-import InputField from "../InputField/InputField";
 
 import speakImg from "../../assets/icons/Volume - High.svg";
 

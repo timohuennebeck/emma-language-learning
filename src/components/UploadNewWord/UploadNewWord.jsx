@@ -196,7 +196,9 @@ export default function UploadNewWord({
                     ) : null}
                 </div>
             </div>
-            {selectLevel ? null : <p>Please select a level!</p>}
+            {selectLevel ? null : (
+                <p className="upload-word__select">Please, select a level to continue!</p>
+            )}
         </div>
     );
 }
