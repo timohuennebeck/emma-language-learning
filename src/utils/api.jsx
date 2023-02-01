@@ -26,6 +26,10 @@ export const getDictionaries = () => {
     return axios.get(`${API_URL}/dictionaries`);
 };
 
+export const getDictionariesId = ({ id }) => {
+    return axios.get(`${API_URL}/dictionaries/${id}`);
+};
+
 export const getDictionariesWords = () => {
     return axios.get(`${API_URL}/dictionaries_words`);
 };

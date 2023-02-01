@@ -1,16 +1,15 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.upload-word {
+.new-flashcard {
     @include flex-column;
     gap: $gap-default;
-    width: 100%;
 
-    &__top {
+    &__languages {
         @include flex-column;
         gap: $gap-default;
 
-        &-language {
+        &-foreign {
             display: flex;
             gap: $gap-default;
 
@@ -22,30 +21,8 @@
                 border-radius: $border-radius-default;
 
                 &-img {
-                    width: 1.5rem;
-                    height: 1.5rem;
-                }
-            }
-
-            &-name {
-                @include flex-vertical;
-                @include shadow;
-                width: 100%;
-                background-color: $prim-color-2;
-                padding: $padding-default;
-                border-radius: $border-radius-default;
-            }
-
-            &-speak {
-                @include flex;
-                @include shadow;
-                background-color: $prim-color-2;
-                padding: $padding-default;
-                border-radius: $border-radius-default;
-
-                &:hover {
-                    cursor: pointer;
-                    transform: scale(1.05);
+                    width: 2rem;
+                    height: 2rem;
                 }
             }
         }
@@ -60,16 +37,15 @@
             gap: $gap-default;
 
             &-indv {
-                @include flex-vertical;
                 @include shadow;
-                gap: $gap-default;
+                @include flex;
                 background-color: $prim-color-2;
                 padding: 0.75rem;
                 border-radius: $border-radius-default;
 
                 &:hover {
-                    cursor: pointer;
                     transform: scale(1.05);
+                    cursor: pointer;
                 }
 
                 &-img {
@@ -87,31 +63,16 @@
                 flex-direction: row;
             }
 
-            &-cancel {
-                @include shadow;
+            &-indv {
                 border: none;
-                padding: 0.75rem;
                 border-radius: $border-radius-default;
-                background-color: $prim-color-2;
-
-                &:hover {
-                    cursor: pointer;
-                    transform: scale(1.05);
-                }
-            }
-
-            &-save {
-                @include shadow;
-                border: none;
-                padding: 0.75rem;
-                border-radius: $border-radius-default;
-                background-color: $prim-color-1;
                 color: $prim-color-2;
-                cursor: pointer;
+                background-color: $prim-color-1;
+                padding: 0.75rem;
 
                 &:hover {
-                    cursor: pointer;
                     transform: scale(1.05);
+                    cursor: pointer;
                 }
             }
         }

@@ -1,0 +1,101 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.deck-page {
+    @include flex-column;
+    gap: 1rem;
+    justify-content: center;
+    max-width: 52.5rem;
+    margin: auto;
+
+    &__indv {
+        display: flex;
+        gap: $gap-default;
+
+        &-name {
+            @include flex-column;
+            @include shadow;
+            width: 100%;
+            gap: 0.25rem;
+            border-radius: $border-radius-default;
+            background-color: $prim-color-2;
+            padding: 0.75rem;
+
+            &-title {
+                font-size: 0.75rem;
+                opacity: 50%;
+            }
+
+            &-input {
+                font-size: 0.875rem;
+                border: none;
+                outline: none;
+            }
+        }
+
+        &-rating {
+            @include flex-column;
+            @include shadow;
+            gap: 0.25rem;
+            border-radius: $border-radius-default;
+            background-color: $prim-color-2;
+            padding: 0.75rem;
+
+            &-title {
+                font-size: 0.75rem;
+                opacity: 50%;
+            }
+
+            &-stars {
+                @include flex-vertical;
+                gap: 0.5rem;
+
+                &-img {
+                    width: 1.25rem;
+                    height: 1.25rem;
+                }
+            }
+        }
+
+        &-flag {
+            @include flex;
+            @include shadow;
+            padding: $padding-default;
+            background-color: $prim-color-2;
+            border-radius: $border-radius-default;
+
+            &-img {
+                width: 2rem;
+                height: 2rem;
+            }
+        }
+    }
+
+    &__description {
+        @include flex-column;
+        @include shadow;
+        width: 100%;
+        gap: 0.25rem;
+        border-radius: $border-radius-default;
+        background-color: $prim-color-2;
+        padding: 0.75rem;
+
+        &-title {
+            font-size: 0.75rem;
+            opacity: 50%;
+        }
+
+        &-input {
+            min-height: 4.25rem;
+            resize: none;
+            font-size: 0.875rem;
+            border: none;
+            outline: none;
+        }
+    }
+
+    &__edit {
+        @include flex-column;
+        gap: 2.75rem;
+    }
+}

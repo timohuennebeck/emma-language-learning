@@ -10,8 +10,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function FlashcardsDeck({ data }) {
-    console.log(data);
-
     const [rating, setRating] = useState(0);
 
     useEffect(() => {
@@ -33,18 +31,13 @@ export default function FlashcardsDeck({ data }) {
     return (
         <div className="flashcards-deck">
             <div className="flashcards-deck__header">
-                <img src={data.image_url} alt="" className="flashcards-deck__header-img" />
-
-                {/* acts as a placeholder for the avatar image */}
-                <div></div>
-
                 <div className="flashcards-deck__header-rating">
                     <h2>{data.name}</h2>
-
-                    {/* renders the amount of stars based on the rating */}
                     <div className="flashcards-deck__header-rating-stars">{stars}</div>
                 </div>
-                <img src={editImg} alt="" />
+                <Link to={`/flashcards/${data.id}`}>
+                    <img src={editImg} alt="" />
+                </Link>
             </div>
             <p>{data.description}</p>
             <p className="flashcards-deck__percentage">21% Finished</p>

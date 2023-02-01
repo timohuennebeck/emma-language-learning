@@ -1,17 +1,16 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.upload-word {
+.edit-flashcard {
     @include flex-column;
     gap: $gap-default;
-    width: 100%;
 
-    &__top {
+    &__languages {
         @include flex-column;
         gap: $gap-default;
 
-        &-language {
-            display: flex;
+        &-foreign {
+            @include flex-vertical;
             gap: $gap-default;
 
             &-indv {
@@ -22,23 +21,35 @@
                 border-radius: $border-radius-default;
 
                 &-img {
-                    width: 1.5rem;
-                    height: 1.5rem;
+                    width: 2rem;
+                    height: 2rem;
                 }
             }
 
-            &-name {
-                @include flex-vertical;
+            &-input {
+                @include flex-column;
                 @include shadow;
                 width: 100%;
-                background-color: $prim-color-2;
-                padding: $padding-default;
+                gap: 0.25rem;
                 border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+
+                &-title {
+                    font-size: 0.75rem;
+                    opacity: 50%;
+                }
+
+                &-indv {
+                    // font-size: 0.925rem;
+                    border: none;
+                    outline: none;
+                }
             }
 
             &-speak {
-                @include flex;
                 @include shadow;
+                @include flex;
                 background-color: $prim-color-2;
                 padding: $padding-default;
                 border-radius: $border-radius-default;
@@ -46,6 +57,11 @@
                 &:hover {
                     cursor: pointer;
                     transform: scale(1.05);
+                }
+
+                &-img {
+                    width: 1.25rem;
+                    height: 1.25rem;
                 }
             }
         }
@@ -60,16 +76,16 @@
             gap: $gap-default;
 
             &-indv {
-                @include flex-vertical;
                 @include shadow;
-                gap: $gap-default;
+                @include flex;
                 background-color: $prim-color-2;
                 padding: 0.75rem;
                 border-radius: $border-radius-default;
+                cursor: pointer;
 
                 &:hover {
-                    cursor: pointer;
                     transform: scale(1.05);
+                    cursor: pointer;
                 }
 
                 &-img {
@@ -87,31 +103,17 @@
                 flex-direction: row;
             }
 
-            &-cancel {
-                @include shadow;
-                border: none;
-                padding: 0.75rem;
-                border-radius: $border-radius-default;
-                background-color: $prim-color-2;
-
-                &:hover {
-                    cursor: pointer;
-                    transform: scale(1.05);
-                }
-            }
-
             &-save {
                 @include shadow;
                 border: none;
-                padding: 0.75rem;
                 border-radius: $border-radius-default;
-                background-color: $prim-color-1;
                 color: $prim-color-2;
-                cursor: pointer;
+                background-color: $prim-color-1;
+                padding: 0.75rem;
 
                 &:hover {
-                    cursor: pointer;
                     transform: scale(1.05);
+                    cursor: pointer;
                 }
             }
         }

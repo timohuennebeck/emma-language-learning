@@ -1,0 +1,23 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.input-field {
+    @include flex-column;
+    @include shadow;
+    width: 100%;
+    gap: 0.25rem;
+    border-radius: $border-radius-default;
+    background-color: $prim-color-2;
+    padding: 0.75rem;
+
+    &__title {
+        font-size: 0.75rem;
+        opacity: 50%;
+    }
+
+    &__input {
+        font-size: 0.875rem;
+        border: none;
+        outline: none;
+    }
+}

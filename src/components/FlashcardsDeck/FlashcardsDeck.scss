@@ -4,7 +4,6 @@
 .flashcards-deck {
     @include flex-column;
     @include shadow;
-    margin-top: 6.75rem;
     gap: $gap-default;
     padding: 1.25rem;
     background-color: $prim-color-2;
@@ -15,21 +14,10 @@
     &__header {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
-        position: relative;
-
-        &-img {
-            position: absolute;
-            top: -7.25rem;
-            left: -2rem;
-            width: 12.5rem;
-            height: 12.5rem;
-        }
 
         &-rating {
             @include flex-column;
             gap: 0.5rem;
-            padding-left: 5rem;
 
             &-stars {
                 &-img {

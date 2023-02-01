@@ -49,10 +49,7 @@ export default function ReadingsPage() {
         const languageName = event.currentTarget.getAttribute("name");
         setCurrentLanguage(languageName);
 
-        if (
-            currentLanguageLevel === "" ||
-            currentLanguageLevel === "Please, select a language level..."
-        ) {
+        if (currentLanguageLevel === "" || currentLanguageLevel === "Please, choose...") {
             setFilteredLanguages(readingsData.filter((item) => item.language === languageName));
         } else {
             setFilteredLanguages(
@@ -139,7 +136,7 @@ export default function ReadingsPage() {
     const handleLanguageLevel = (languageLevel) => {
         setCurrentLanguageLevel(languageLevel);
 
-        if (languageLevel === "Please, select a language level...") {
+        if (languageLevel === "Please, choose...") {
             setFilteredLanguages(readingsData.filter((item) => item.language === currentLanguage));
         } else {
             setFilteredLanguages(
