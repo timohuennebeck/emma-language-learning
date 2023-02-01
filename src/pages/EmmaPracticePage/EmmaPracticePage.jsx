@@ -12,6 +12,7 @@ import CurrentChat from "../../components/CurrentChat/CurrentChat";
 // libraries
 import { useState } from "react";
 import ReactModal from "react-modal";
+import { useEffect } from "react";
 
 export default function EmmaPracticePage() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -19,9 +20,61 @@ export default function EmmaPracticePage() {
     const [unmuteMicrophone, setUnmuteMicrophone] = useState(false);
     const [showText, setShowText] = useState(true);
 
+    const [transcript, setTranscript] = useState("");
+    const [language, setLanguage] = useState("es-ES");
+    const [listening, setListening] = useState(false);
+
+    useEffect(() => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+            console.error("Speech recognition is not supported in this browser.");
+            return;
+        }
+
+        let recognition = null;
+
+        const startListening = () => {
+            recognition = new SpeechRecognition();
+            recognition.lang = language;
+            recognition.interimResults = true;
+            recognition.maxAlternatives = 1;
+
+            recognition.start();
+
+            recognition.onresult = (event) => {
+                setTranscript(event.results[0][0].transcript);
+            };
+        };
+
+        const stopListening = () => {
+            recognition.stop();
+            recognition = null;
+        };
+
+        if (listening) {
+            startListening();
+        } else if (recognition) {
+            stopListening();
+        }
+
+        return () => {
+            if (recognition) {
+                stopListening();
+            }
+        };
+    }, [language, listening]);
+
     return (
         <>
             <div className="emma-video">
+                <div>
+                    <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+                        <option value="es-ES">Spanish</option>
+                        <option value="fr-FR">French</option>
+                        <option value="de-DE">German</option>
+                    </select>
+                </div>
                 <div className="emma-video__left">
                     <VCNavigation
                         showText={showText}
@@ -40,19 +93,16 @@ export default function EmmaPracticePage() {
                                     : "emma-video__left-content-subtitles not-active"
                             }
                         >
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                            ut aliquip ex ea commodo consequat...
+                            {transcript}
                         </p>
                     </div>
                     {unmuteMicrophone ? (
                         <div
                             className="emma-video__left-mic"
-                            onClick={() => setUnmuteMicrophone(!unmuteMicrophone)}
+                            onClick={() => {
+                                setUnmuteMicrophone(!unmuteMicrophone);
+                                setListening(!listening);
+                            }}
                         >
                             <div className="emma-video__left-mic-container">
                                 <img
@@ -66,7 +116,10 @@ export default function EmmaPracticePage() {
                     ) : (
                         <div
                             className="emma-video__left-mic"
-                            onClick={() => setUnmuteMicrophone(!unmuteMicrophone)}
+                            onClick={() => {
+                                setUnmuteMicrophone(!unmuteMicrophone);
+                                setListening(!listening);
+                            }}
                         >
                             <div className="emma-video__left-mic-container">
                                 <img
