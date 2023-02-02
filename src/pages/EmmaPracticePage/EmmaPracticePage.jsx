@@ -9,11 +9,11 @@ import showImg from "../../assets/icons/Eye.svg";
 import soundsWavesImg from "../../assets/images/sound-waves.png";
 
 // components
+import VCButton from "../../components/VCButton/VCButton";
 
 // libraries
 import { useState } from "react";
 import { useEffect } from "react";
-import VCButton from "../../components/VCButton/VCButton";
 import { Link } from "react-router-dom";
 
 export default function EmmaPracticePage() {

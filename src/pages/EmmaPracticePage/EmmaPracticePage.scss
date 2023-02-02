@@ -51,6 +51,8 @@
                 &:hover {
                     cursor: pointer;
                     transform: scale(1.05);
+                    background-color: $prim-color-1;
+                    color: $prim-color-2;
                 }
             }
 
@@ -74,6 +76,8 @@
                     &:hover {
                         cursor: pointer;
                         transform: scale(1.05);
+                        background-color: $prim-color-1;
+                        color: $prim-color-2;
                     }
                 }
             }
