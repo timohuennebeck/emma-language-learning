@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Flashcard from "../../components/Flashcard/Flashcard";
 import { getDictionariesWords } from "../../utils/api";
 import "./FlashcardsRevisionPage.scss";
@@ -6,9 +7,11 @@ import "./FlashcardsRevisionPage.scss";
 export default function FlashcardsRevisionPage() {
     const [dictionariesData, setDictionariesData] = useState([]);
 
+    const { id } = useParams();
+
     useEffect(() => {
         getDictionariesWords().then(({ data }) => {
-            setDictionariesData(data);
+            setDictionariesData(data.filter((item) => item.dictionaries_id === Number(id)));
         });
     }, []);
 

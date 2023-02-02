@@ -44,7 +44,7 @@ export default function FlashcardsDeck({ data }) {
             <div className="flashcards-deck__bar">
                 <div className="flashcards-deck__bar-progress"></div>
             </div>
-            <Link to={`/flashcards/${data.id}`} className="flashcards-deck__button">
+            <Link to={`/flashcards/${data.id}/revision`} className="flashcards-deck__button">
                 <img src={continueImg} alt="" />
                 <p>Continue Learning...</p>
             </Link>

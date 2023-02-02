@@ -50,7 +50,7 @@ function App() {
                         <Route path="/readings" element={<ReadingsPage />} />
                         <Route path="/flashcards" element={<FlashcardsPage />} />
                         <Route path="/flashcards/:id" element={<FlashcardsDeckPage />} />
-                        <Route path="/flashcards/revision" element={<FlashcardsRevisionPage />} />
+                        <Route path="/flashcards/:id/revision" element={<FlashcardsRevisionPage />} />
                         <Route path="/settings" element={<StudentPrivateProfilePage />} />
                         <Route element={<LoggedInInterface />}>
                             <Route path="/tutors" element={<BrowseTutorsPage />} />
