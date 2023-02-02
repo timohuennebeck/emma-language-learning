@@ -1,8 +1,12 @@
+import "./FlashcardsRevisionPage.scss";
+
+// components
+import Flashcard from "../../components/Flashcard/Flashcard";
+
+// libraries
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Flashcard from "../../components/Flashcard/Flashcard";
 import { getDictionariesWords } from "../../utils/api";
-import "./FlashcardsRevisionPage.scss";
 
 export default function FlashcardsRevisionPage() {
     const [dictionariesData, setDictionariesData] = useState([]);

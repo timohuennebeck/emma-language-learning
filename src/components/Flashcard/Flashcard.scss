@@ -1,0 +1,72 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.flashcard {
+    @include flex-column;
+    @include shadow;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $prim-color-2;
+    border-radius: $border-radius-default;
+    padding: $padding-default;
+    width: 100%;
+    min-width: 22.5rem;
+    max-width: 22.5rem;
+    min-height: 15rem;
+    max-height: 15rem;
+
+    &__speak {
+        @include flex-vertical;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+
+    &__content {
+        @include flex-vertical;
+        gap: $gap-default;
+        cursor: pointer;
+
+        &-img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    &__buttons {
+        @include flex-vertical;
+        gap: $gap-default;
+
+        &-prev {
+            @include shadow;
+            border: none;
+            padding: 0.75rem;
+            background-color: $prim-color-2;
+            color: $prim-color-1;
+            border-radius: $border-radius-default;
+            min-width: 5.75rem;
+            max-width: 5.75rem;
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.05);
+            }
+        }
+
+        &-next {
+            @include shadow;
+            border: none;
+            padding: 0.75rem;
+            background-color: $prim-color-1;
+            color: $prim-color-2;
+            border-radius: $border-radius-default;
+            min-width: 5.75rem;
+            max-width: 5.75rem;
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+

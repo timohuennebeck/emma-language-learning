@@ -1,10 +1,15 @@
 import "./FlashcardsDeck.scss";
 
+// components
+
+// images
 import unfilledStarImg from "../../assets/icons/Star.svg";
 import starsFilledImg from "../../assets/icons/star-filled.svg";
 import editImg from "../../assets/icons/Edit.svg";
 import continueImg from "../../assets/icons/Shield - check.svg";
 import emojiImg from "../../assets/images/emoji-no-bg.png";
+
+// libraries
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
