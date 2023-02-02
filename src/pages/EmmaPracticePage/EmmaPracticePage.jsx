@@ -4,8 +4,8 @@ import "./EmmaPracticePage.scss";
 import micImg from "../../assets/icons/Mic.svg";
 import mutedMicImg from "../../assets/icons/mutedMic.svg";
 import leaveImg from "../../assets/icons/Close.svg";
-import hideImg from "../../assets/icons/Eye-slash.svg";
-import showImg from "../../assets/icons/Eye.svg";
+import hideImg from "../../assets/icons/eye-slash.svg";
+import showImg from "../../assets/icons/eye.svg";
 import soundsWavesImg from "../../assets/images/sound-waves.png";
 
 // components
