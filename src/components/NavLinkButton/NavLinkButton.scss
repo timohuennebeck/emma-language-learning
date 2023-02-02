@@ -9,7 +9,7 @@
         &-link {
             @include flex-vertical;
             gap: $gap-default;
-            border-radius: 50%;
+            border-radius: $border-radius-default;
             padding: 0.75rem;
             text-decoration: none;
             color: $prim-color-1;

@@ -7,7 +7,6 @@ import micUnmuteddImg from "../../assets/icons/microphone.svg";
 import shareImg from "../../assets/icons/broadcast.svg";
 
 // components
-import VCNavigation from "../../components/VCNavigation/VCNavigation";
 import CurrentChat from "../../components/CurrentChat/CurrentChat";
 
 // libraries
@@ -24,14 +23,6 @@ export default function VideoCallPage() {
         <>
             <div className="video-call">
                 <div className="video-call__left">
-                    <VCNavigation
-                        showText={showText}
-                        setShowText={setShowText}
-                        modalIsOpen={modalIsOpen}
-                        setModalIsOpen={setModalIsOpen}
-                        chatIsOpen={chatIsOpen}
-                        setChatIsOpen={setChatIsOpen}
-                    />
                     <div className="video-call__left-content">
                         <p
                             className={

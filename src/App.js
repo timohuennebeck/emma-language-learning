@@ -12,7 +12,6 @@ import TutorProfilePage from "./pages/TutorPrivateProfilePage/TutorPrivateProfil
 import TutorPublicProfilePage from "./pages/TutorPublicProfilePage/TutorPublicProfilePage";
 import StudentPrivateProfilePage from "./pages/StudentPrivateProfilePage/StudentPrivateProfilePage";
 import EmmaPracticePage from "./pages/EmmaPracticePage/EmmaPracticePage";
-import VCInterface from "./interfaces/VCInterface/VCInterface";
 import MessagesPage from "./pages/MessagesPage/MessagesPage";
 import VideoCallPage from "./pages/VideoCallPage/VideoCallPage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
@@ -50,17 +49,19 @@ function App() {
                         <Route path="/readings" element={<ReadingsPage />} />
                         <Route path="/flashcards" element={<FlashcardsPage />} />
                         <Route path="/flashcards/:id" element={<FlashcardsDeckPage />} />
-                        <Route path="/flashcards/:id/revision" element={<FlashcardsRevisionPage />} />
+                        <Route
+                            path="/flashcards/:id/revision"
+                            element={<FlashcardsRevisionPage />}
+                        />
                         <Route path="/settings" element={<StudentPrivateProfilePage />} />
+                        <Route path="/conversation" element={<EmmaPracticePage />} />
+                        <Route path="/messages" element={<MessagesPage />} />
+                        <Route path="/video-call" element={<VideoCallPage />} />
+
                         <Route element={<LoggedInInterface />}>
                             <Route path="/tutors" element={<BrowseTutorsPage />} />
                             <Route path="/tutor/:id" element={<TutorPublicProfilePage />} />
                             <Route path="/tutor/personal" element={<TutorProfilePage />} />
-                        </Route>
-                        <Route element={<VCInterface />}>
-                            <Route path="/conversation" element={<EmmaPracticePage />} />
-                            <Route path="/messages" element={<MessagesPage />} />
-                            <Route path="/video-call" element={<VideoCallPage />} />
                         </Route>
                     </Route>
                 </Routes>

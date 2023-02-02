@@ -2,96 +2,85 @@
 @use "../../styles/partials/mixins" as *;
 
 .emma-video {
-    padding: 1rem;
+    @include flex-column;
+    gap: 4.5rem;
+    width: 75%;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: auto;
 
-    @include desktop {
+    &__ai {
+        @include flex-column;
+        gap: 5.75rem;
+        align-items: center;
+        position: relative;
+
+        &-img {
+            width: 27.5rem;
+        }
+    }
+
+    &__nav {
         display: flex;
         gap: $gap-default;
-    }
-
-    &__left {
-        height: calc(100vh - 2rem);
-        border-radius: $border-radius-default;
-
-        &-content {
-            @include flex-column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            gap: 5rem;
-
-            &-ai {
-                width: 100%;
-
-                @include tablet {
-                    width: 62.5%;
-                }
-
-                @include desktop {
-                    width: 32.5%;
-                }
-            }
-
-            &-subtitles {
-                width: 85%;
-                color: $prim-color-1;
-            }
-        }
 
         &-mic {
-            @include flex-column;
+            &-select {
+                @include shadow;
+                height: 100%;
+                padding: 0.75rem;
+                background-color: $prim-color-2;
+                border-radius: $border-radius-default;
+            }
+        }
+
+        &-languages {
             position: relative;
-            bottom: 17.5%;
-            left: 50%;
-            transform: translateX(-50%);
-            align-items: center;
-            width: 100%;
-            gap: 0.75rem;
 
-            &-container {
-                display: flex;
-                justify-content: center;
-                background-color: $prim-color-1;
-                border-radius: 50%;
-                padding: 0.5rem;
-                width: 2.5rem;
-                height: 2.5rem;
-                cursor: pointer;
+            &-current {
+                @include flex;
+                @include shadow;
+                padding: 0.75rem;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                min-width: 6.5rem;
+                max-width: 6.5rem;
+                height: 100%;
 
-                &-img {
-                    @include icons-size;
+                &:hover {
+                    cursor: pointer;
+                    transform: scale(1.05);
                 }
             }
 
-            &-text {
-                color: $prim-color-1;
-                font-weight: 700;
+            &-all {
+                @include flex-column;
+                gap: $gap-default;
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                &-indv {
+                    @include flex;
+                    @include shadow;
+                    padding: 0.75rem;
+                    border-radius: $border-radius-default;
+                    background-color: $prim-color-2;
+                    min-width: 6.5rem;
+                    max-width: 6.5rem;
+                    height: 100%;
+
+                    &:hover {
+                        cursor: pointer;
+                        transform: scale(1.05);
+                    }
+                }
             }
-        }
-    }
-
-    &-card-modal {
-        background-color: #000;
-        max-height: 100vh;
-        min-height: 100vh;
-        outline: none;
-        overflow: scroll;
-
-        &::-webkit-scrollbar {
-            display: none;
-        }
-
-        &-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            backdrop-filter: blur(0.5rem);
         }
     }
 }
 
-.not-active {
+.hide-speech {
     opacity: 0;
 }

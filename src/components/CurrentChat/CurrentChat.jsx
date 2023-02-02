@@ -1,7 +1,7 @@
 import "./CurrentChat.scss";
 
 // images
-import hideImg from "../../assets/icons/eye-slash.svg";
+import hideImg from "../../assets/icons/Eye-slash.svg";
 import messagesImg from "../../assets/icons/send.svg";
 import aiImg from "../../assets/icons/open-ai-logo.png";
 import LiveChatMessage from "../LiveChatMessage/LiveChatMessage";
