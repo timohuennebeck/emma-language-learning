@@ -1,0 +1,218 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.flashcards-writing {
+    @include flex-column;
+    gap: $gap-default;
+    width: 75%;
+    margin: auto;
+
+    &__loading {
+        @include flex-vertical;
+
+        &-box {
+            border-radius: $border-radius-default;
+            height: 0.25rem;
+            background-color: #fff;
+            width: 100%;
+
+            &-bar {
+                width: 100%;
+                border-radius: $border-radius-default;
+                height: 0.25rem;
+                background-color: $prim-color-1;
+            }
+        }
+    }
+
+    &__box {
+        display: flex;
+        gap: $gap-default;
+
+        &-number {
+            @include shadow;
+            border-radius: $border-radius-default;
+            background-color: $prim-color-2;
+            padding: 0.75rem;
+        }
+
+        &-timer {
+            display: flex;
+            justify-content: flex-start;
+
+            &-seconds {
+                @include shadow;
+                border-radius: $border-radius-default;
+                padding: 0.75rem;
+                opacity: 0;
+            }
+        }
+
+        &-volume {
+            @include flex;
+            @include shadow;
+            border-radius: $border-radius-default;
+            background-color: $prim-color-2;
+            padding: 0.75rem;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $prim-color-1;
+            }
+        }
+    }
+
+    &__languages {
+        @include flex-column;
+        gap: $gap-default;
+
+        &-english,
+        &-foreign {
+            display: flex;
+            gap: $gap-default;
+            min-width: 15rem;
+
+            &-box {
+                @include flex-vertical;
+                @include shadow;
+                gap: $gap-default;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+                width: 100%;
+
+                &-img {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+
+            &-speak {
+                @include flex;
+                @include shadow;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+
+                &:hover {
+                    background-color: $prim-color-1;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &-foreign {
+            opacity: 0;
+        }
+    }
+
+    &__input {
+        @include flex-column;
+        gap: $gap-default;
+
+        &-user {
+            @include flex-vertical;
+            gap: $gap-default;
+
+            &-box {
+                @include flex;
+                @include shadow;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+                position: relative;
+
+                &:hover {
+                    background-color: $prim-color-1;
+                    cursor: pointer;
+                }
+
+                &-solution {
+                    @include shadow;
+                    white-space: nowrap;
+                    right: 4.25rem;
+                    position: absolute;
+                    border-radius: $border-radius-default;
+                    background-color: $prim-color-2;
+                    padding: 0.75rem;
+                }
+            }
+
+            &-indv {
+                @include flex-vertical;
+                @include shadow;
+                gap: $gap-default;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+                min-width: 15rem;
+                width: 100%;
+
+                &-img {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+
+                &-user {
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+
+        &-solved {
+            display: flex;
+
+            &-box {
+                @include flex-vertical;
+                @include shadow;
+                gap: $gap-default;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+            }
+        }
+
+        &-button {
+            display: flex;
+            gap: $gap-default;
+            justify-content: flex-end;
+
+            &-message {
+                @include shadow;
+                opacity: 0;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+            }
+
+            &-next {
+                @include shadow;
+                border: none;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-1;
+                color: #fff;
+                padding: 0.75rem;
+                min-width: 7.5rem;
+
+                &:hover {
+                    cursor: pointer;
+                    transform: scale(1.05);
+                }
+            }
+        }
+    }
+}
+
+.show-solution {
+    background-color: #adff2f;
+}
+
+.toggle-help-hover {
+    filter: brightness(0) invert(1);
+}
+
+.reveal-solution {
+    opacity: 1;
+}

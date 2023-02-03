@@ -89,7 +89,7 @@ export default function FlashcardsPage() {
 
                 <Link className="flashcards-page__nav-link">
                     <img className="flashcards-page__nav-link-img" src={addImg} alt="" />
-                    <p>ADD NEW LIST</p>
+                    <p>New List</p>
                 </Link>
             </nav>
             <div className="flashcards-page__items">
