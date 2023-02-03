@@ -4,4 +4,79 @@
 .flashcards-page {
     @include flex-column;
     gap: $gap-default;
+
+    &__nav {
+        display: flex;
+        justify-content: space-between;
+
+        &-left {
+            display: flex;
+            gap: $gap-default;
+            width: 75%;
+
+            &-languages {
+                @include flex-vertical;
+                gap: $gap-default;
+
+                &-indv {
+                    @include flex-vertical;
+                    @include shadow;
+                    padding: 0.75rem;
+                    gap: $gap-default;
+                    background-color: $prim-color-2;
+                    border-radius: $border-radius-default;
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $prim-color-1;
+                        color: $prim-color-2;
+                    }
+
+                    &-img {
+                        width: 1.5rem;
+                        height: 1.5rem;
+                    }
+                }
+            }
+
+            &-search {
+                @include flex-vertical;
+                @include shadow;
+                gap: $gap-default;
+                background-color: $prim-color-2;
+                border-radius: $border-radius-default;
+                padding: 0.75rem;
+                width: 100%;
+
+                &-input {
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+
+        &-link {
+            @include flex-vertical;
+            @include shadow;
+            gap: $gap-default;
+            text-decoration: none;
+            color: #000;
+            background-color: $prim-color-1;
+            padding: 0.75rem;
+            color: $prim-color-2;
+            border-radius: $border-radius-default;
+
+            &-img {
+                filter: brightness(0) invert(1);
+            }
+        }
+    }
+
+    &__items {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: $gap-default;
+    }
 }
