@@ -15,51 +15,62 @@ import { useEffect } from "react";
 import { getDictionaries } from "../../utils/api";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import SelectLanguage from "../../components/SelectLanguage/SelectLanguage";
 
 export default function FlashcardsPage() {
     const [dictionariesData, setDictionariesData] = useState([]);
+    const [filteredLanguages, setFilteredLanguages] = useState([]);
+    const [currentLanguage, setCurrentLanguage] = useState("French");
     const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         getDictionaries().then(({ data }) => {
             setDictionariesData(data);
-            console.log(data);
+            setFilteredLanguages(data.filter((item) => item.language === "French"));
         });
     }, []);
 
-    const filteredDictionaries = dictionariesData.filter((item) => {
-        return item.name.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+    const handleClick = (event) => {
+        const languageName = event.currentTarget.getAttribute("name");
+        setCurrentLanguage(languageName);
+
+        setFilteredLanguages(dictionariesData.filter((item) => item.language === languageName));
+    };
+
+    const handleSearch = (e) => {
+        setFilteredLanguages(
+            dictionariesData.filter((item) => {
+                return (
+                    item.name.toLowerCase().includes(e.toLowerCase()) &&
+                    item.language === currentLanguage
+                );
+            })
+        );
+    };
 
     return (
         <div className="flashcards-page">
             <nav className="flashcards-page__nav">
                 <div className="flashcards-page__nav-left">
                     <div className="flashcards-page__nav-left-languages">
-                        <div className="flashcards-page__nav-left-languages-indv">
-                            <img
-                                className="flashcards-page__nav-left-languages-indv-img"
-                                src={franceImg}
-                                alt=""
-                            />
-                            <p>French</p>
-                        </div>
-                        <div className="flashcards-page__nav-left-languages-indv">
-                            <img
-                                className="flashcards-page__nav-left-languages-indv-img"
-                                src={spainImg}
-                                alt=""
-                            />
-                            <p>Spanish</p>
-                        </div>
-                        <div className="flashcards-page__nav-left-languages-indv">
-                            <img
-                                className="flashcards-page__nav-left-languages-indv-img"
-                                src={germanyImg}
-                                alt=""
-                            />
-                            <p>German</p>
-                        </div>
+                        <SelectLanguage
+                            name="French"
+                            flag={franceImg}
+                            onClick={handleClick}
+                            currentLanguage={currentLanguage}
+                        />
+                        <SelectLanguage
+                            name="Spanish"
+                            flag={spainImg}
+                            onClick={handleClick}
+                            currentLanguage={currentLanguage}
+                        />
+                        <SelectLanguage
+                            name="German"
+                            flag={germanyImg}
+                            onClick={handleClick}
+                            currentLanguage={currentLanguage}
+                        />
                     </div>
 
                     <div className="flashcards-page__nav-left-search">
@@ -71,7 +82,7 @@ export default function FlashcardsPage() {
                         <input
                             className="flashcards-page__nav-left-search-input"
                             placeholder="Search..."
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={(e) => handleSearch(e.target.value)}
                         />
                     </div>
                 </div>
@@ -82,7 +93,7 @@ export default function FlashcardsPage() {
                 </Link>
             </nav>
             <div className="flashcards-page__items">
-                {filteredDictionaries.map((item) => {
+                {filteredLanguages.map((item) => {
                     return <FlashcardsDeck data={item} />;
                 })}
             </div>

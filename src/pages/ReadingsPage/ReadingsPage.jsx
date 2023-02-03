@@ -50,7 +50,7 @@ export default function ReadingsPage() {
         const languageName = event.currentTarget.getAttribute("name");
         setCurrentLanguage(languageName);
 
-        if (currentLanguageLevel === "" || currentLanguageLevel === "Please, choose...") {
+        if (currentLanguageLevel === "" || currentLanguageLevel === "None") {
             setFilteredLanguages(readingsData.filter((item) => item.language === languageName));
         } else {
             setFilteredLanguages(
@@ -137,7 +137,7 @@ export default function ReadingsPage() {
     const handleLanguageLevel = (languageLevel) => {
         setCurrentLanguageLevel(languageLevel);
 
-        if (languageLevel === "Please, choose...") {
+        if (languageLevel === "None") {
             setFilteredLanguages(readingsData.filter((item) => item.language === currentLanguage));
         } else {
             setFilteredLanguages(
@@ -151,10 +151,18 @@ export default function ReadingsPage() {
     const handleSearch = (e) => {
         setFilteredLanguages(
             readingsData.filter((item) => {
-                return (
-                    item.name.toLowerCase().includes(e.toLowerCase()) &&
-                    item.language === currentLanguage
-                );
+                let includeItem;
+                if (currentLanguageLevel === "" || currentLanguageLevel === "None") {
+                    includeItem =
+                        item.name.toLowerCase().includes(e.toLowerCase()) &&
+                        item.language === currentLanguage;
+                } else {
+                    includeItem =
+                        item.level === currentLanguageLevel &&
+                        item.name.toLowerCase().includes(e.toLowerCase()) &&
+                        item.language === currentLanguage;
+                }
+                return includeItem;
             })
         );
     };

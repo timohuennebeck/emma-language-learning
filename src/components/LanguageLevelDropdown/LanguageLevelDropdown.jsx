@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./LanguageLevelDropdown.scss";
 
 export default function LanguageLevelDropdown({ handleLanguageLevel }) {
-    const [selectLanguage, setSelectLanguage] = useState("Please, choose...");
+    const [selectLanguage, setSelectLanguage] = useState("None");
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
     return (
@@ -15,8 +15,8 @@ export default function LanguageLevelDropdown({ handleLanguageLevel }) {
                     <p
                         className="language-dropdown__levels-indv"
                         onClick={() => {
-                            setSelectLanguage("Please, choose...");
-                            handleLanguageLevel("Please, choose...");
+                            setSelectLanguage("None");
+                            handleLanguageLevel("None");
                         }}
                     >
                         Remove Filters

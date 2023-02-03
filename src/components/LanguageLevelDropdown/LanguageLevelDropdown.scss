@@ -4,6 +4,7 @@
 .language-dropdown {
     @include flex-vertical;
     @include shadow;
+    text-align: center;
     position: relative;
     gap: $gap-default;
     width: 100%;
