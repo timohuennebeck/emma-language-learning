@@ -56,31 +56,31 @@ export default function FlashcardsWritingPage() {
     }, []);
 
     // calculates the countdown
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         // continues to the next word if the user wasn't able to solve it in time
-    //         if (seconds === 0) {
-    //             clearInterval(intervalId);
-    //             setCurrentIndex((currentIndex + 1) % dictionariesData.length);
-    //             setSeconds(45);
-    //         } else {
-    //             setSeconds(seconds - 1);
-    //         }
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            // continues to the next word if the user wasn't able to solve it in time
+            if (seconds === 0) {
+                clearInterval(intervalId);
+                setCurrentIndex((currentIndex + 1) % dictionariesData.length);
+                setSeconds(45);
+            } else {
+                setSeconds(seconds - 1);
+            }
 
-    //         // changes the background color of the countdown based on the amount of seconds left
-    //         if (seconds <= 10) {
-    //             setBackgroundColor("#FF2E2E");
-    //         } else if (seconds <= 15) {
-    //             setBackgroundColor("#FFC72E");
-    //         } else if (seconds <= 30) {
-    //             setBackgroundColor("#ADFF2F");
-    //         } else {
-    //             setBackgroundColor("white");
-    //         }
-    //     }, 1000);
+            // changes the background color of the countdown based on the amount of seconds left
+            if (seconds <= 10) {
+                setBackgroundColor("#FF2E2E");
+            } else if (seconds <= 15) {
+                setBackgroundColor("#FFC72E");
+            } else if (seconds <= 30) {
+                setBackgroundColor("#ADFF2F");
+            } else {
+                setBackgroundColor("white");
+            }
+        }, 1000);
 
-    //     return () => clearInterval(intervalId);
-    // }, [seconds]);
+        return () => clearInterval(intervalId);
+    }, [seconds]);
 
     // calculates the percentage of the progress bar
     const showProgress = (currentIndex + 1) / dictionariesData.length;
@@ -212,11 +212,7 @@ export default function FlashcardsWritingPage() {
                         style={{ width: progressPercentage }}
                     ></div>
                 </div>
-                <img
-                    className="flashcards-writing__loading-img"
-                    src={solvedBlueImg}
-                    alt=""
-                />
+                <img className="flashcards-writing__loading-img" src={solvedBlueImg} alt="" />
             </div>
             <div className="flashcards-writing__box">
                 <div
