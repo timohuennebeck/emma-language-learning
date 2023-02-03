@@ -31,11 +31,12 @@ export default function SelectReadings({ readingsData, onClick }) {
 
     const matchingWords = flashcards.filter((item) => {
         const flashcardWord = item.foreign_translation.toLowerCase();
-        return lowercaseNarrative.includes(flashcardWord) && item.level === 0;
+
+        return lowercaseNarrative.includes(flashcardWord);
     });
 
     // calculate percentage for the progress bar
-    const progressBar = matchingWords.length / flashcards.length;
+    const progressBar = matchingWords.length / lowercaseNarrative.length;
     const progressPercentage = progressBar * 100 + "%";
 
     // renders the right language leve based on the selected element
