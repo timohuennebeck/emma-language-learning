@@ -31,6 +31,7 @@ export default function ReadingsPage() {
     const [refreshList, setRefreshList] = useState(false);
     const [currentLanguage, setCurrentLanguage] = useState("French");
     const [currentLanguageLevel, setCurrentLanguageLevel] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         getReadings().then(({ data }) => {
@@ -147,17 +148,29 @@ export default function ReadingsPage() {
         }
     };
 
+    const handleSearch = (e) => {
+        setFilteredLanguages(
+            readingsData.filter((item) => {
+                return (
+                    item.name.toLowerCase().includes(e.toLowerCase()) &&
+                    item.language === currentLanguage
+                );
+            })
+        );
+    };
+
     return (
         <>
             <div className="readings">
                 <div className="readings__left">
-                    {/* <div className="readings__left-search">
+                    <div className="readings__left-search">
                         <img src={searchImg} alt="" className="readings__left-search-img" />
                         <input
-                            placeholder="Let's explore some stories... (Beginner, Intermediate, or Advanced)!"
+                            placeholder="Let's explore some stories..."
                             className="readings__left-search-input"
+                            onChange={(e) => handleSearch(e.target.value)}
                         />
-                    </div> */}
+                    </div>
                     <div className="readings__left-languages">
                         <SelectLanguage
                             name="French"
