@@ -31,7 +31,6 @@ export default function ReadingsPage() {
     const [refreshList, setRefreshList] = useState(false);
     const [currentLanguage, setCurrentLanguage] = useState("French");
     const [currentLanguageLevel, setCurrentLanguageLevel] = useState("");
-    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         getReadings().then(({ data }) => {
@@ -209,7 +208,7 @@ export default function ReadingsPage() {
                             filteredLanguages.map((item) => {
                                 return (
                                     <SelectReadings
-                                        data={item}
+                                        readingsData={item}
                                         onClick={getReadingsData}
                                         key={item.id}
                                     />

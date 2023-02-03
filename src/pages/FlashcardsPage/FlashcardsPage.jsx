@@ -21,7 +21,6 @@ export default function FlashcardsPage() {
     const [dictionariesData, setDictionariesData] = useState([]);
     const [filteredLanguages, setFilteredLanguages] = useState([]);
     const [currentLanguage, setCurrentLanguage] = useState("French");
-    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         getDictionaries().then(({ data }) => {
@@ -94,7 +93,7 @@ export default function FlashcardsPage() {
             </nav>
             <div className="flashcards-page__items">
                 {filteredLanguages.map((item) => {
-                    return <FlashcardsDeck data={item} />;
+                    return <FlashcardsDeck flashcardsData={item} key={item.id} />;
                 })}
             </div>
         </div>

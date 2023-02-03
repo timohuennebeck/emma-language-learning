@@ -86,7 +86,7 @@ export default function FlashcardsDeckPage() {
                     value={deck.description}
                 />
             </div>
-            <NewFlashcard />
+            <NewFlashcard flags={flag} />
 
             <div className="deck-page__edit">
                 {words.map((item) => {

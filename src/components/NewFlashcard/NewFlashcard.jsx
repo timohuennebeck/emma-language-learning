@@ -16,7 +16,7 @@ import advancedImg from "../../assets/icons/advanced.svg";
 import advancedWhiteImg from "../../assets/icons/advanced-white.svg";
 import { useState } from "react";
 
-export default function NewFlashcard() {
+export default function NewFlashcard({ flags }) {
     const [selectLevel, setSelectLevel] = useState("");
     const [highlightLevel, setHiglightLevel] = useState("");
 
@@ -38,7 +38,7 @@ export default function NewFlashcard() {
                     <div className="new-flashcard__languages-foreign-indv">
                         <img
                             className="new-flashcard__languages-foreign-indv-img"
-                            src={spainImg}
+                            src={flags}
                             alt=""
                         />
                     </div>

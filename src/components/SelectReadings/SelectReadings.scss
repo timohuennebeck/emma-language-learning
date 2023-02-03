@@ -43,15 +43,20 @@
             }
         }
 
-        &-bar {
-            background-color: #f3f4f8;
-            border-radius: $border-radius-default;
+        &-box {
+            @include flex-vertical;
 
             &-progress {
-                background-color: $prim-color-1;
+                background-color: #f3f4f8;
                 border-radius: $border-radius-default;
-                height: 0.25rem;
-                width: 21%;
+                width: 100%;
+
+                &-bar {
+                    background-color: $prim-color-1;
+                    border-radius: $border-radius-default;
+                    height: 0.25rem;
+                    width: 21%;
+                }
             }
         }
     }
