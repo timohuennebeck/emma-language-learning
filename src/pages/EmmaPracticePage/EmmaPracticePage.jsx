@@ -6,6 +6,8 @@ import mutedMicImg from "../../assets/icons/mutedMic.svg";
 import leaveImg from "../../assets/icons/Close.svg";
 import hideImg from "../../assets/icons/eye-slash.svg";
 import showImg from "../../assets/icons/eye.svg";
+import hideTranslationImg from "../../assets/icons/translation-stroke.svg";
+import showTranslationImg from "../../assets/icons/Chart.svg";
 import soundsWavesImg from "../../assets/images/sound-waves.png";
 
 // components
@@ -177,15 +179,15 @@ export default function EmmaPracticePage() {
                         className="emma-video__nav-translation"
                         onClick={() => setHideTranslation(!hideTranslation)}
                     >
-                        {hideText ? (
+                        {hideTranslation ? (
                             <VCButton
-                                img={showImg}
+                                img={showTranslationImg}
                                 hover="Enable Translation"
                                 onClick={() => setHideTranslation(!hideTranslation)}
                             />
                         ) : (
                             <VCButton
-                                img={hideImg}
+                                img={hideTranslationImg}
                                 hover="Disable Translation"
                                 onClick={() => setHideTranslation(!hideTranslation)}
                             />
