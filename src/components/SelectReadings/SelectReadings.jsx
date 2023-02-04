@@ -22,13 +22,16 @@ export default function SelectReadings({ readingsData, onClick }) {
         });
     }, []);
 
+    // checks if the value is undefined or not
     if (!readings.narrative) {
         return;
     }
 
+    // divides the narrative into individual words and then turns them into lower case letters
     const splitNarrative = readings.narrative.split(" ");
     const lowercaseNarrative = splitNarrative.map((item) => item.toLowerCase());
 
+    // returns all flashcards that also occur in the narrative
     const matchingWords = flashcards.filter((item) => {
         const flashcardWord = item.foreign_translation.toLowerCase();
 

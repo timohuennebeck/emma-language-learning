@@ -37,7 +37,7 @@ export default function TutorPublicProfilePage() {
                     <p className="tutor-public__left-reviews-header">11 Reviews</p>
                     <div className="tutor-public__left-container-reviews">
                         {reviewsData.map((item) => {
-                            return <Review data={item} />;
+                            return <Review data={item} key={item.id} />;
                         })}
                     </div>
                 </div>

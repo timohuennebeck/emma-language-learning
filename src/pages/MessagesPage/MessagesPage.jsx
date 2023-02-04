@@ -22,7 +22,7 @@ export default function MessagesPage() {
         <div className="messages">
             <div className="messages__users">
                 {usersData.map((item) => {
-                    return <SelectUserChat data={item} />;
+                    return <SelectUserChat data={item} key={item.id}/>;
                 })}
             </div>
             <div className="messages__live">

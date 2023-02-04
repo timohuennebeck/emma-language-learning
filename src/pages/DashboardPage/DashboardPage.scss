@@ -2,6 +2,7 @@
 @use "../../styles/partials/mixins" as *;
 
 .dashboard {
-    @include flex-column;
+    display: flex;
     gap: $gap-default;
+    flex-wrap: wrap;
 }

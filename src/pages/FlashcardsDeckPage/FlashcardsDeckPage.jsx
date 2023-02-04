@@ -90,7 +90,7 @@ export default function FlashcardsDeckPage() {
 
             <div className="deck-page__edit">
                 {words.map((item) => {
-                    return <EditFlashcard indvWords={item} flag={flag} />;
+                    return <EditFlashcard indvWords={item} flag={flag} key={item.id}/>;
                 })}
             </div>
         </div>

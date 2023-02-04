@@ -8,8 +8,13 @@
     padding: 1.25rem;
     background-color: $prim-color-2;
     border-radius: $border-radius-default;
+    min-width: 20rem;
     max-width: 20rem;
     text-decoration: none;
+
+    &:hover {
+        transform: scale(1.025);
+    }
 
     &__level {
         @include flex-vertical;
@@ -24,12 +29,10 @@
             @include flex;
             padding: 0.25rem;
             min-width: 3.25rem;
-            background-color: #e7f8ff;
             border-radius: $border-radius-default;
 
             &-indv {
                 font-weight: 700;
-                color: #1baae7;
             }
         }
     }
@@ -39,17 +42,17 @@
         gap: 0.75rem;
 
         &-name {
+            color: #000;
             font-weight: 700;
-            color: #231048;
+            opacity: 50%;
         }
 
         &-readings {
+            color: #000;
             font-weight: 700;
-            color: #231048;
         }
 
         &-words {
-            color: #1baae7;
             font-weight: 700;
         }
 
@@ -58,7 +61,6 @@
             border-radius: $border-radius-default;
 
             &-progress {
-                background-color: #1baae7;
                 border-radius: $border-radius-default;
                 height: 0.25rem;
                 width: 21%;
