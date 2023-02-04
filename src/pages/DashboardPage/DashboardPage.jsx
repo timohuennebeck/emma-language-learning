@@ -19,6 +19,7 @@ export default function DashboardPage() {
 
     return (
         <div className="dashboard">
+            {/* loops through all existing readings which can be found on the readings page */}
             {readingsData.map((item) => {
                 return <ReadingsProgress readingsData={item} key={item.id} />;
             })}

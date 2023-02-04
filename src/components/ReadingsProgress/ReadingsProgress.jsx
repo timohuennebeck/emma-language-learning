@@ -20,9 +20,12 @@ export default function ReadingsProgress({ readingsData }) {
     const [flashcards, setFlashcards] = useState([]);
 
     useEffect(() => {
+        // gets all readings
         getReadings().then(({ data }) => {
             setReadings(data.filter((item) => item.id === readingsData.id)[0]);
         });
+
+        // gets all flashcards
         getDictionariesWords().then(({ data }) => {
             setFlashcards(data.filter((item) => item.language === readingsData.language));
         });
@@ -75,7 +78,7 @@ export default function ReadingsProgress({ readingsData }) {
             break;
     }
 
-    // assigns the right flag to each language
+    // assigns the right flag, background color and font color to each language
     let languageFlag;
     let backgroundColor;
     let fontColor;
@@ -117,6 +120,7 @@ export default function ReadingsProgress({ readingsData }) {
                 <p className="readings-progress__language-words" style={{ color: fontColor }}>
                     {`${progressPercentage} Finished`}
                 </p>
+                {/* shows the process of the progress bar */}
                 <div className="readings-progress__language-bar">
                     <div
                         className="readings-progress__language-bar-progress"

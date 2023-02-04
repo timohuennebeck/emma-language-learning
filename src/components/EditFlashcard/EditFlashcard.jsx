@@ -23,39 +23,52 @@ export default function EditFlashcard({ indvWords, flag }) {
     const [englishWord, setEnglishWord] = useState(indvWords.english);
     const [foreignWord, setForeignWord] = useState(indvWords.foreign_translation);
 
+    // contains all text-to-speech APIs for all foreign languages
     const foreignLanguage = (event) => {
         speechSynthesis.cancel();
 
         const msg = new SpeechSynthesisUtterance();
         const voices = window.speechSynthesis.getVoices();
 
+        // finds the right text to speech API for each language
         let languageVoice;
 
-        if (indvWords.language === "French") {
-            languageVoice = voices.find((voice) => voice.name === "Google français");
-        } else if (indvWords.language === "Spanish") {
-            languageVoice = voices.find((voice) => voice.name === "Google español");
-        } else if (indvWords.language === "German") {
-            languageVoice = voices.find((voice) => voice.name === "Google Deutsch");
-        } else {
-            languageVoice = voices.find((voice) => voice.name === "Google US English");
+        switch (indvWords.language) {
+            case "French":
+                languageVoice = voices.find((voice) => voice.name === "Google français");
+                break;
+            case "Spanish":
+                languageVoice = voices.find((voice) => voice.name === "Google español");
+                break;
+            case "German":
+                languageVoice = voices.find((voice) => voice.name === "Google Deutsch");
+                break;
+            default:
+                languageVoice = voices.find((voice) => voice.name === "Google US English");
+                break;
         }
 
+        // assigns the to-be-spoken text to the API
         msg.voice = languageVoice;
         msg.text = event;
         speechSynthesis.speak(msg);
     };
 
+    // contains the text-to-speech API for all english words
     const englishLanguage = (event) => {
         speechSynthesis.cancel();
 
+        // creates a new instance
         const msg = new SpeechSynthesisUtterance();
         const voices = window.speechSynthesis.getVoices();
+
+        // sets the voice to the english API and inputs the words into it
         msg.voice = voices.find((voice) => voice.name === "Google US English");
         msg.text = event;
         speechSynthesis.speak(msg);
     };
 
+    // stops the code from executing if the data from indvWords is undefined
     if (!indvWords) {
         return;
     }

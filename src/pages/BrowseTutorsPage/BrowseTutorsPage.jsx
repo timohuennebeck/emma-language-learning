@@ -12,6 +12,7 @@ export default function BrowseTutorsPage() {
     const [teachersData, setTeachersData] = useState([]);
     const [showSchedule, setShowSchedule] = useState(false);
 
+    // pulls all teacher profiles from the API
     useEffect(() => {
         getTeachers().then(({ data }) => {
             setTeachersData(data);
