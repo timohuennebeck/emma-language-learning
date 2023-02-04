@@ -45,6 +45,7 @@ function App() {
         <>
             <BrowserRouter>
                 <Routes>
+                    <Route path="/conversation" element={<EmmaPracticePage />} />
                     <Route element={<NavigationInterface />}>
                         <Route path="/" element={<DashboardPage />} />
                         <Route path="/readings" element={<ReadingsPage />} />
@@ -55,7 +56,6 @@ function App() {
                             element={<FlashcardsWritingPage />}
                         />
                         <Route path="/settings" element={<StudentPrivateProfilePage />} />
-                        <Route path="/conversation" element={<EmmaPracticePage />} />
                         <Route path="/messages" element={<MessagesPage />} />
                         <Route path="/video-call" element={<VideoCallPage />} />
 

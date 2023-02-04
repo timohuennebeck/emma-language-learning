@@ -13,9 +13,7 @@ export default function VCButton({ img, hover, onClick }) {
         >
             <button className={revealHover ? "vc-button__indv toggle-hover" : "vc-button__indv"}>
                 <img
-                    className={
-                        revealHover ? "vc-button__indv-img toggle-img" : "vc-button__indv-img"
-                    }
+                    className={`vc-button__indv-img ${revealHover ? "toggle-img" : ""}`}
                     src={img}
                     alt=""
                 />

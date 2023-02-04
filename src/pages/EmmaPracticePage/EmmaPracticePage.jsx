@@ -9,6 +9,7 @@ import showImg from "../../assets/icons/eye.svg";
 import hideTranslationImg from "../../assets/icons/translation-stroke.svg";
 import showTranslationImg from "../../assets/icons/Chart.svg";
 import soundsWavesImg from "../../assets/images/sound-waves.png";
+import aiFace from "../../assets/images/ai-face.gif";
 
 // components
 import VCButton from "../../components/VCButton/VCButton";
@@ -27,6 +28,8 @@ export default function EmmaPracticePage() {
     const [currentTranslation, setCurrentTranslation] = useState("English");
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
+    const [isSpeaking, setIsSpeaking] = useState(false);
+
     // this is the text that will be shown on the screen
     const [transcript, setTranscript] = useState("");
     const [translatedTranscript, setTranslatedTranscript] = useState("");
@@ -38,6 +41,16 @@ export default function EmmaPracticePage() {
     const [listening, setListening] = useState(false);
 
     const userRef = useRef(null);
+
+    useEffect(() => {
+        if (listening) {
+            setIsSpeaking(true);
+        } else {
+            setIsSpeaking(false);
+        }
+    }, [listening, muteMicrophone]);
+
+    console.log(isSpeaking);
 
     useEffect(() => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -132,8 +145,8 @@ export default function EmmaPracticePage() {
 
     // placeholder text in case the user hasn't started speaking
     if (!transcript) {
-        userText = "Yours and the AI's speech will populate here...";
-        userTranslation = `${currentTranslation} translation will populate here...`;
+        userText = "Users and AI's Words...";
+        userTranslation = `${currentTranslation} Translation...`;
     } else {
         userText = transcript;
         userTranslation = translatedTranscript;
@@ -142,140 +155,157 @@ export default function EmmaPracticePage() {
     return (
         <>
             <div className="emma-video">
-                <div className="emma-video__ai">
-                    <img className="emma-video__ai-img" src={soundsWavesImg} alt="" />
-
-                    <div
-                        className={
-                            hideTranslation
-                                ? "emma-video__ai-translation hide-speech"
-                                : "emma-video__ai-translation"
-                        }
-                    >
-                        <div className="emma-video__ai-translation-dropdown">
-                            <LanguageFlagDropdown
-                                currentLanguage={currentLanguage}
-                                currentTranslation={currentTranslation}
-                                setCurrentTranslation={setCurrentTranslation}
-                            />
+                <div className="emma-video--bg">
+                    <div className="emma-video__ai">
+                        <div className="emma-video__ai-live">
+                            <img className="emma-video__ai-live-img" src={aiFace} alt="" />
                         </div>
-                        <p className="emma-video__ai-translation-indv" ref={userRef}>
-                            {userTranslation}
-                        </p>
-                    </div>
 
-                    <div
-                        className={
-                            hideText ? "emma-video__ai-user hide-speech" : "emma-video__ai-user"
-                        }
-                        ref={userRef}
-                    >
-                        <p className="emma-video__ai-user-indv">{userText}</p>
-                    </div>
-                </div>
-                <nav className="emma-video__nav">
-                    <Link to="/">
-                        <VCButton img={leaveImg} hover="Leave Practice" />
-                    </Link>
-                    <div className="emma-video__nav-hide" onClick={() => setHideText(!hideText)}>
-                        {hideText ? (
-                            <VCButton
-                                img={showImg}
-                                hover="Enable Text"
-                                onClick={() => setHideText(!hideText)}
-                            />
-                        ) : (
-                            <VCButton
-                                img={hideImg}
-                                hover="Disable Text"
-                                onClick={() => setHideText(!hideText)}
-                            />
-                        )}
-                    </div>
-                    <div
-                        className="emma-video__nav-translation"
-                        onClick={() => setHideTranslation(!hideTranslation)}
-                    >
-                        {hideTranslation ? (
-                            <VCButton
-                                img={showTranslationImg}
-                                hover="Enable Translation"
-                                onClick={() => setHideTranslation(!hideTranslation)}
-                            />
-                        ) : (
-                            <VCButton
-                                img={hideTranslationImg}
-                                hover="Disable Translation"
-                                onClick={() => setHideTranslation(!hideTranslation)}
-                            />
-                        )}
-                    </div>
-                    <div
-                        className="emma-video__nav-mic"
-                        onClick={() => setMuteMicrophone(!muteMicrophone)}
-                    >
-                        {currentLanguage === "None" ? (
-                            <p className="emma-video__nav-mic-select">
-                                Microphone disabled! Input required...
-                            </p>
-                        ) : muteMicrophone ? (
-                            <VCButton
-                                img={micImg}
-                                hover="Disable Microphone"
-                                onClick={() => setListening(!listening)}
-                            />
-                        ) : (
-                            <VCButton
-                                img={mutedMicImg}
-                                hover="Enable Microphone"
-                                onClick={() => setListening(!listening)}
-                            />
-                        )}
-                    </div>
-                    <div
-                        className="emma-video__nav-languages"
-                        onClick={() => setToggleDropdown(!toggleDropdown)}
-                    >
-                        <p className="emma-video__nav-languages-current">{currentLanguage}</p>
-                        {toggleDropdown ? (
-                            <div className="emma-video__nav-languages-all">
-                                <p
-                                    className="emma-video__nav-languages-all-indv"
-                                    onClick={() => setCurrentLanguage("None")}
-                                >
-                                    None
-                                </p>
-                                <p
-                                    className="emma-video__nav-languages-all-indv"
-                                    onClick={() => {
-                                        setCurrentLanguage("French");
-                                        setLanguage("fr-FR");
-                                    }}
-                                >
-                                    French
-                                </p>
-                                <p
-                                    className="emma-video__nav-languages-all-indv"
-                                    onClick={() => {
-                                        setCurrentLanguage("Spanish");
-                                        setLanguage("es-ES");
-                                    }}
-                                >
-                                    Spanish
-                                </p>
-                                <p
-                                    className="emma-video__nav-languages-all-indv"
-                                    onClick={() => {
-                                        setCurrentLanguage("German");
-                                        setLanguage("de-DE");
-                                    }}
-                                >
-                                    German
-                                </p>
+                        <div
+                            className={
+                                hideTranslation
+                                    ? "emma-video__ai-translation hide-speech"
+                                    : "emma-video__ai-translation"
+                            }
+                        >
+                            <div className="emma-video__ai-translation-dropdown">
+                                <LanguageFlagDropdown
+                                    currentLanguage={currentLanguage}
+                                    currentTranslation={currentTranslation}
+                                    setCurrentTranslation={setCurrentTranslation}
+                                />
                             </div>
-                        ) : null}
+                            <p className="emma-video__ai-translation-indv" ref={userRef}>
+                                {userTranslation}
+                            </p>
+                        </div>
+
+                        <div
+                            className={
+                                hideText ? "emma-video__ai-user hide-speech" : "emma-video__ai-user"
+                            }
+                            ref={userRef}
+                        >
+                            <p className="emma-video__ai-user-indv">{userText}</p>
+                        </div>
+                        
                     </div>
-                </nav>
+                    <nav className="emma-video__nav">
+                        <Link to="/">
+                            <VCButton img={leaveImg} hover="Leave Practice" />
+                        </Link>
+                        <div
+                            className="emma-video__nav-hide"
+                            onClick={() => setHideText(!hideText)}
+                        >
+                            {hideText ? (
+                                <VCButton
+                                    img={showImg}
+                                    hover="Enable Text"
+                                    onClick={() => setHideText(!hideText)}
+                                />
+                            ) : (
+                                <VCButton
+                                    img={hideImg}
+                                    hover="Disable Text"
+                                    onClick={() => setHideText(!hideText)}
+                                />
+                            )}
+                        </div>
+                        <div
+                            className="emma-video__nav-translation"
+                            onClick={() => setHideTranslation(!hideTranslation)}
+                        >
+                            {hideTranslation ? (
+                                <VCButton
+                                    img={showTranslationImg}
+                                    hover="Enable Translation"
+                                    onClick={() => setHideTranslation(!hideTranslation)}
+                                />
+                            ) : (
+                                <VCButton
+                                    img={hideTranslationImg}
+                                    hover="Disable Translation"
+                                    onClick={() => setHideTranslation(!hideTranslation)}
+                                />
+                            )}
+                        </div>
+                        <div
+                            className="emma-video__nav-mic"
+                            onClick={() => setMuteMicrophone(!muteMicrophone)}
+                        >
+                            {currentLanguage === "None" ? (
+                                <p className="emma-video__nav-mic-select">
+                                    Microphone disabled! Input required...
+                                </p>
+                            ) : muteMicrophone ? (
+                                <VCButton
+                                    img={micImg}
+                                    hover="Disable Microphone"
+                                    onClick={() => setListening(!listening)}
+                                />
+                            ) : (
+                                <VCButton
+                                    img={mutedMicImg}
+                                    hover="Enable Microphone"
+                                    onClick={() => setListening(!listening)}
+                                />
+                            )}
+                        </div>
+                        <div
+                            className="emma-video__nav-languages"
+                            onClick={() => setToggleDropdown(!toggleDropdown)}
+                        >
+                            <p className="emma-video__nav-languages-current">{currentLanguage}</p>
+                            {toggleDropdown ? (
+                                <div className="emma-video__nav-languages-all">
+                                    <p
+                                        className="emma-video__nav-languages-all-indv"
+                                        onClick={() => setCurrentLanguage("None")}
+                                    >
+                                        None
+                                    </p>
+                                    <p
+                                        className="emma-video__nav-languages-all-indv"
+                                        onClick={() => {
+                                            setCurrentLanguage("French");
+                                            setLanguage("fr-FR");
+                                        }}
+                                    >
+                                        French
+                                    </p>
+                                    <p
+                                        className="emma-video__nav-languages-all-indv"
+                                        onClick={() => {
+                                            setCurrentLanguage("Spanish");
+                                            setLanguage("es-ES");
+                                        }}
+                                    >
+                                        Spanish
+                                    </p>
+                                    <p
+                                        className="emma-video__nav-languages-all-indv"
+                                        onClick={() => {
+                                            setCurrentLanguage("German");
+                                            setLanguage("de-DE");
+                                        }}
+                                    >
+                                        German
+                                    </p>
+                                    <p
+                                        className="emma-video__nav-languages-all-indv"
+                                        onClick={() => {
+                                            setCurrentLanguage("English");
+                                            setLanguage("en-EN");
+                                        }}
+                                    >
+                                        English
+                                    </p>
+                                </div>
+                            ) : null}
+                        </div>
+                    </nav>
+                </div>
             </div>
         </>
     );

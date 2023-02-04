@@ -3,12 +3,18 @@
 
 .emma-video {
     @include flex-column;
+    background-color: #000;
     gap: 2.75rem;
-    width: 50%;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    margin: auto;
+    height: 100vh;
+
+    &--bg {
+        @include flex-column;
+        align-items: center;
+        gap: 2.75rem;
+        width: 50%;
+    }
 
     &__ai {
         @include flex-column;
@@ -17,8 +23,13 @@
         align-items: center;
         position: relative;
 
-        &-img {
-            width: 27.5rem;
+        &-live {
+            position: relative;
+
+            &-img {
+                width: 20rem;
+                height: 20rem;
+            }
         }
 
         &-user {
@@ -101,7 +112,7 @@
                 @include flex-column;
                 gap: $gap-default;
                 position: absolute;
-                top: 0;
+                top: 0.05rem;
                 left: 0;
 
                 &-indv {
