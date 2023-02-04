@@ -67,14 +67,19 @@ export default function ReadingsPage() {
 
         let languageCode;
 
-        if (singleData.language === "French") {
-            languageCode = "FR";
-        } else if (singleData.language === "Spanish") {
-            languageCode = "ES";
-        } else if (singleData.language === "German") {
-            languageCode = "DE";
-        } else {
-            languageCode = "EN";
+        switch (singleData.language) {
+            case "French":
+                languageCode = "FR";
+                break;
+            case "Spanish":
+                languageCode = "ES";
+                break;
+            case "German":
+                languageCode = "DE";
+                break;
+            default:
+                languageCode = "EN";
+                break;
         }
 
         fetch(

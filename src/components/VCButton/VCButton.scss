@@ -12,6 +12,11 @@
         border-radius: $border-radius-default;
         cursor: pointer;
 
+        &-img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
         &-hover {
             @include shadow;
             position: absolute;
