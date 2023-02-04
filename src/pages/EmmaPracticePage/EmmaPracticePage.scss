@@ -3,7 +3,7 @@
 
 .emma-video {
     @include flex-column;
-    gap: 4.5rem;
+    gap: 2.75rem;
     width: 75%;
     justify-content: center;
     align-items: center;
@@ -12,12 +12,28 @@
 
     &__ai {
         @include flex-column;
-        gap: 5.75rem;
+        width: 100%;
+        gap: 2.75rem;
         align-items: center;
         position: relative;
 
         &-img {
             width: 27.5rem;
+        }
+
+        &-user,
+        &-translation {
+            @include shadow;
+            width: 100%;
+            max-height: 5.75rem;
+            padding: 0.75rem;
+            border-radius: $border-radius-default;
+            background-color: $prim-color-2;
+            overflow: scroll;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
         }
     }
 
@@ -86,5 +102,5 @@
 }
 
 .hide-speech {
-    opacity: 0;
+    display: none;
 }

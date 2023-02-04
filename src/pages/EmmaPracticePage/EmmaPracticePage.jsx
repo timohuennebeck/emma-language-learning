@@ -12,13 +12,14 @@ import soundsWavesImg from "../../assets/images/sound-waves.png";
 import VCButton from "../../components/VCButton/VCButton";
 
 // libraries
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function EmmaPracticePage() {
     const [muteMicrophone, setMuteMicrophone] = useState(false);
     const [hideText, setHideText] = useState(false);
+    const [hideTranslation, setHideTranslation] = useState(false);
     const [currentLanguage, setCurrentLanguage] = useState("None");
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
@@ -27,6 +28,8 @@ export default function EmmaPracticePage() {
 
     const [language, setLanguage] = useState("es-ES");
     const [listening, setListening] = useState(false);
+
+    const userRef = useRef(null);
 
     useEffect(() => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -72,6 +75,12 @@ export default function EmmaPracticePage() {
     useEffect(() => {
         handleWord();
     }, [transcript]);
+
+    useEffect(() => {
+        if (transcript && translatedTranscript) {
+            userRef.current.scrollTop = userRef.current.scrollHeight;
+        }
+    }, [transcript, translatedTranscript]);
 
     const handleWord = () => {
         let languageCode;
@@ -122,16 +131,28 @@ export default function EmmaPracticePage() {
     return (
         <>
             <div className="emma-video">
-                <p>{userTranslation}</p>
                 <div className="emma-video__ai">
                     <img className="emma-video__ai-img" src={soundsWavesImg} alt="" />
-                    <p
+
+                    <div
                         className={
-                            hideText ? "emma-video__ai-speech hide-speech" : "emma-video__ai-speech"
+                            hideText ? "emma-video__ai-user hide-speech" : "emma-video__ai-user"
                         }
+                        ref={userRef}
                     >
-                        {userText}
-                    </p>
+                        <p className="emma-video__ai-user-indv">{userText}</p>
+                    </div>
+
+                    <div
+                        className={
+                            hideTranslation
+                                ? "emma-video__ai-translation hide-speech"
+                                : "emma-video__ai-translation"
+                        }
+                        ref={userRef}
+                    >
+                        <p className="emma-video__ai-translation-indv">{userTranslation}</p>
+                    </div>
                 </div>
                 <nav className="emma-video__nav">
                     <Link to="/">
@@ -153,12 +174,30 @@ export default function EmmaPracticePage() {
                         )}
                     </div>
                     <div
+                        className="emma-video__nav-translation"
+                        onClick={() => setHideTranslation(!hideTranslation)}
+                    >
+                        {hideText ? (
+                            <VCButton
+                                img={showImg}
+                                hover="Enable Translation"
+                                onClick={() => setHideTranslation(!hideTranslation)}
+                            />
+                        ) : (
+                            <VCButton
+                                img={hideImg}
+                                hover="Disable Translation"
+                                onClick={() => setHideTranslation(!hideTranslation)}
+                            />
+                        )}
+                    </div>
+                    <div
                         className="emma-video__nav-mic"
                         onClick={() => setMuteMicrophone(!muteMicrophone)}
                     >
                         {currentLanguage === "None" ? (
                             <p className="emma-video__nav-mic-select">
-                                Microphone disabled! Select a language to continue...
+                                Microphone disabled! Awaiting language input...
                             </p>
                         ) : muteMicrophone ? (
                             <VCButton
