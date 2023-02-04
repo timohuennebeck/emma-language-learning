@@ -133,7 +133,7 @@ export default function EmmaPracticePage() {
     // placeholder text in case the user hasn't started speaking
     if (!transcript) {
         userText = "Yours and the AI's speech will populate here...";
-        userTranslation = "Awaiting Translation...";
+        userTranslation = `${currentTranslation} translation will populate here...`;
     } else {
         userText = transcript;
         userTranslation = translatedTranscript;
