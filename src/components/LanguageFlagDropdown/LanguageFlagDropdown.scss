@@ -1,0 +1,33 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.language-flag {
+    position: relative;
+
+    &__main,
+    &__hover-box {
+        @include flex;
+        @include shadow;
+        padding: 0.75rem;
+        background-color: $prim-color-2;
+        border-radius: $border-radius-default;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $prim-color-1;
+        }
+
+        &-img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    &__hover {
+        display: flex;
+        gap: $gap-default;
+        position: absolute;
+        top: 0;
+        right: 4rem;
+    }
+}

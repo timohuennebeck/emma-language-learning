@@ -23,6 +23,8 @@ export default function EmmaPracticePage() {
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
     const [transcript, setTranscript] = useState("");
+    const [translatedTranscript, setTranslatedTranscript] = useState("");
+
     const [language, setLanguage] = useState("es-ES");
     const [listening, setListening] = useState(false);
 
@@ -67,17 +69,60 @@ export default function EmmaPracticePage() {
         };
     }, [language, listening]);
 
+    useEffect(() => {
+        handleWord();
+    }, [transcript]);
+
+    const handleWord = () => {
+        let languageCode;
+
+        switch (currentLanguage) {
+            case "French":
+                languageCode = "FR";
+                break;
+            case "Spanish":
+                languageCode = "ES";
+                break;
+            case "German":
+                languageCode = "DE";
+                break;
+            default:
+                languageCode = "EN";
+                break;
+        }
+
+        fetch(
+            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${transcript}&target_lang=EN&source_lang=${languageCode}`
+        )
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setTranslatedTranscript(data.translations[0].text);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
     let userText;
+    let userTranslation;
 
     if (!transcript) {
         userText = "Yours and the AI's speech will populate here...";
+        userTranslation = "Awaiting Translation...";
     } else {
         userText = transcript;
+        userTranslation = translatedTranscript;
     }
 
     return (
         <>
             <div className="emma-video">
+                <p>{userTranslation}</p>
                 <div className="emma-video__ai">
                     <img className="emma-video__ai-img" src={soundsWavesImg} alt="" />
                     <p
