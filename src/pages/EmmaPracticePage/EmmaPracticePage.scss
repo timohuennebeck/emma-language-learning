@@ -39,6 +39,12 @@
             width: 100%;
             display: flex;
             gap: $gap-default;
+            position: relative;
+
+            &-dropdown {
+                position: absolute;
+                left: -4rem;
+            }
 
             &-indv {
                 @include shadow;

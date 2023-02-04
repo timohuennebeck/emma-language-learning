@@ -27,10 +27,14 @@ export default function EmmaPracticePage() {
     const [currentTranslation, setCurrentTranslation] = useState("English");
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
+    // this is the text that will be shown on the screen
     const [transcript, setTranscript] = useState("");
     const [translatedTranscript, setTranslatedTranscript] = useState("");
 
+    // used to set the language code for the API call
     const [language, setLanguage] = useState("es-ES");
+
+    // enables or disables the microphone to start listening
     const [listening, setListening] = useState(false);
 
     const userRef = useRef(null);
@@ -38,6 +42,7 @@ export default function EmmaPracticePage() {
     useEffect(() => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+        // checks if the value is undefined or not
         if (!SpeechRecognition) {
             console.error("Speech recognition is not supported in this browser.");
             return;
@@ -45,6 +50,7 @@ export default function EmmaPracticePage() {
 
         let recognition = null;
 
+        // stars the microphone and listens to the users input
         const startListening = () => {
             recognition = new SpeechRecognition();
             recognition.lang = language;
@@ -58,11 +64,13 @@ export default function EmmaPracticePage() {
             };
         };
 
+        // stops the microphone
         const stopListening = () => {
             recognition.stop();
             recognition = null;
         };
 
+        // if the user stops speaking the machine will stop listening
         if (listening) {
             startListening();
         } else if (recognition) {
@@ -80,6 +88,7 @@ export default function EmmaPracticePage() {
         handleWord();
     }, [transcript]);
 
+    // scrolls to the bottom of the text if a max-height has been reached
     useEffect(() => {
         if (transcript && translatedTranscript) {
             userRef.current.scrollTop = userRef.current.scrollHeight;
@@ -87,59 +96,41 @@ export default function EmmaPracticePage() {
     }, [transcript, translatedTranscript]);
 
     const handleWord = () => {
-        let languageCode;
-        let languageTranslationCode;
+        const languageCodes = {
+            French: "FR",
+            Spanish: "ES",
+            German: "DE",
+            default: "EN",
+        };
 
-        switch (currentLanguage) {
-            case "French":
-                languageCode = "FR";
-                break;
-            case "Spanish":
-                languageCode = "ES";
-                break;
-            case "German":
-                languageCode = "DE";
-                break;
-            default:
-                languageCode = "EN";
-                break;
+        // finds the language and pulls the language code in order to use it in the API call
+        const currentLanguageCode = languageCodes[currentLanguage] || languageCodes.default;
+        const currentTranslationCode = languageCodes[currentTranslation] || languageCodes.default;
+
+        // returns the API call if the translation div is not disabled
+        if (!hideTranslation) {
+            fetch(
+                `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${transcript}&target_lang=${currentTranslationCode}&source_lang=${currentLanguageCode}`
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    setTranslatedTranscript(data.translations[0].text);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         }
-
-        switch (currentTranslation) {
-            case "French":
-                languageTranslationCode = "FR";
-                break;
-            case "Spanish":
-                languageTranslationCode = "ES";
-                break;
-            case "German":
-                languageTranslationCode = "DE";
-                break;
-            default:
-                languageTranslationCode = "EN";
-                break;
-        }
-
-        fetch(
-            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${transcript}&target_lang=${languageTranslationCode}&source_lang=${languageCode}`
-        )
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setTranslatedTranscript(data.translations[0].text);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
     };
 
     let userText;
     let userTranslation;
 
+    // placeholder text in case the user hasn't started speaking
     if (!transcript) {
         userText = "Yours and the AI's speech will populate here...";
         userTranslation = "Awaiting Translation...";
@@ -161,11 +152,13 @@ export default function EmmaPracticePage() {
                                 : "emma-video__ai-translation"
                         }
                     >
-                        <LanguageFlagDropdown
-                            currentLanguage={currentLanguage}
-                            currentTranslation={currentTranslation}
-                            setCurrentTranslation={setCurrentTranslation}
-                        />
+                        <div className="emma-video__ai-translation-dropdown">
+                            <LanguageFlagDropdown
+                                currentLanguage={currentLanguage}
+                                currentTranslation={currentTranslation}
+                                setCurrentTranslation={setCurrentTranslation}
+                            />
+                        </div>
                         <p className="emma-video__ai-translation-indv" ref={userRef}>
                             {userTranslation}
                         </p>

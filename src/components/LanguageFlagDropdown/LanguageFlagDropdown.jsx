@@ -16,14 +16,10 @@ export default function LanguageFlagDropdown({
 }) {
     const [revealHover, setRevealHover] = useState(false);
 
-    console.log(currentLanguage);
-
     const languages = ["English", "French", "Spanish", "German"];
     const filteredLanguages = languages.filter(
         (item) => item !== currentTranslation && item !== currentLanguage
     );
-
-    console.log(filteredLanguages);
 
     let flag;
 

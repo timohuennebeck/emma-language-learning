@@ -8,7 +8,7 @@
     &__hover-box {
         @include flex;
         @include shadow;
-        padding: 0.75rem;
+        padding: 0.675rem;
         background-color: $prim-color-2;
         border-radius: $border-radius-default;
 
