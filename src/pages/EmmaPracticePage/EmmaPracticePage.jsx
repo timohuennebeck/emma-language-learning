@@ -17,12 +17,14 @@ import VCButton from "../../components/VCButton/VCButton";
 import { useRef, useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import LanguageFlagDropdown from "../../components/LanguageFlagDropdown/LanguageFlagDropdown";
 
 export default function EmmaPracticePage() {
     const [muteMicrophone, setMuteMicrophone] = useState(false);
     const [hideText, setHideText] = useState(false);
     const [hideTranslation, setHideTranslation] = useState(false);
     const [currentLanguage, setCurrentLanguage] = useState("None");
+    const [currentTranslation, setCurrentTranslation] = useState("English");
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
     const [transcript, setTranscript] = useState("");
@@ -86,6 +88,7 @@ export default function EmmaPracticePage() {
 
     const handleWord = () => {
         let languageCode;
+        let languageTranslationCode;
 
         switch (currentLanguage) {
             case "French":
@@ -102,8 +105,23 @@ export default function EmmaPracticePage() {
                 break;
         }
 
+        switch (currentTranslation) {
+            case "French":
+                languageTranslationCode = "FR";
+                break;
+            case "Spanish":
+                languageTranslationCode = "ES";
+                break;
+            case "German":
+                languageTranslationCode = "DE";
+                break;
+            default:
+                languageTranslationCode = "EN";
+                break;
+        }
+
         fetch(
-            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${transcript}&target_lang=EN&source_lang=${languageCode}`
+            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${transcript}&target_lang=${languageTranslationCode}&source_lang=${languageCode}`
         )
             .then((response) => {
                 if (!response.ok) {
@@ -138,22 +156,28 @@ export default function EmmaPracticePage() {
 
                     <div
                         className={
+                            hideTranslation
+                                ? "emma-video__ai-translation hide-speech"
+                                : "emma-video__ai-translation"
+                        }
+                    >
+                        <LanguageFlagDropdown
+                            currentLanguage={currentLanguage}
+                            currentTranslation={currentTranslation}
+                            setCurrentTranslation={setCurrentTranslation}
+                        />
+                        <p className="emma-video__ai-translation-indv" ref={userRef}>
+                            {userTranslation}
+                        </p>
+                    </div>
+
+                    <div
+                        className={
                             hideText ? "emma-video__ai-user hide-speech" : "emma-video__ai-user"
                         }
                         ref={userRef}
                     >
                         <p className="emma-video__ai-user-indv">{userText}</p>
-                    </div>
-
-                    <div
-                        className={
-                            hideTranslation
-                                ? "emma-video__ai-translation hide-speech"
-                                : "emma-video__ai-translation"
-                        }
-                        ref={userRef}
-                    >
-                        <p className="emma-video__ai-translation-indv">{userTranslation}</p>
                     </div>
                 </div>
                 <nav className="emma-video__nav">
@@ -199,7 +223,7 @@ export default function EmmaPracticePage() {
                     >
                         {currentLanguage === "None" ? (
                             <p className="emma-video__nav-mic-select">
-                                Microphone disabled! Awaiting language input...
+                                Microphone disabled! Input required...
                             </p>
                         ) : muteMicrophone ? (
                             <VCButton

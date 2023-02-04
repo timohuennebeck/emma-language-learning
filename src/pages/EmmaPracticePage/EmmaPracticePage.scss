@@ -4,7 +4,7 @@
 .emma-video {
     @include flex-column;
     gap: 2.75rem;
-    width: 75%;
+    width: 50%;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -21,8 +21,7 @@
             width: 27.5rem;
         }
 
-        &-user,
-        &-translation {
+        &-user {
             @include shadow;
             width: 100%;
             max-height: 5.75rem;
@@ -33,6 +32,26 @@
 
             &::-webkit-scrollbar {
                 display: none;
+            }
+        }
+
+        &-translation {
+            width: 100%;
+            display: flex;
+            gap: $gap-default;
+
+            &-indv {
+                @include shadow;
+                width: 100%;
+                max-height: 5.75rem;
+                padding: 0.75rem;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                overflow: scroll;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
             }
         }
     }
