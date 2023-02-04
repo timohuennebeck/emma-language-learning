@@ -3,12 +3,12 @@ import "./EmmaPracticePage.scss";
 // images
 import micImg from "../../assets/icons/Mic.svg";
 import mutedMicImg from "../../assets/icons/mutedMic.svg";
-import leaveImg from "../../assets/icons/Close.svg";
+import resetImg from "../../assets/icons/Close.svg";
 import hideImg from "../../assets/icons/eye-slash.svg";
 import showImg from "../../assets/icons/eye.svg";
 import hideTranslationImg from "../../assets/icons/translation-stroke.svg";
 import showTranslationImg from "../../assets/icons/Chart.svg";
-import soundsWavesImg from "../../assets/images/sound-waves.png";
+import leaveImg from "../../assets/icons/Call - Muted.svg";
 import aiFace from "../../assets/images/ai-face.gif";
 
 // components
@@ -28,29 +28,17 @@ export default function EmmaPracticePage() {
     const [currentTranslation, setCurrentTranslation] = useState("English");
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
-    const [isSpeaking, setIsSpeaking] = useState(false);
-
     // this is the text that will be shown on the screen
     const [transcript, setTranscript] = useState("");
     const [translatedTranscript, setTranslatedTranscript] = useState("");
 
     // used to set the language code for the API call
-    const [language, setLanguage] = useState("es-ES");
+    const [language, setLanguage] = useState("");
 
     // enables or disables the microphone to start listening
     const [listening, setListening] = useState(false);
 
     const userRef = useRef(null);
-
-    useEffect(() => {
-        if (listening) {
-            setIsSpeaking(true);
-        } else {
-            setIsSpeaking(false);
-        }
-    }, [listening, muteMicrophone]);
-
-    console.log(isSpeaking);
 
     useEffect(() => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -107,6 +95,19 @@ export default function EmmaPracticePage() {
             userRef.current.scrollTop = userRef.current.scrollHeight;
         }
     }, [transcript, translatedTranscript]);
+
+    const resetToDefault = () => {
+        setMuteMicrophone(false);
+        setHideText(false);
+        setHideTranslation(false);
+        setCurrentLanguage("None");
+        setCurrentTranslation("English");
+        setToggleDropdown(false);
+        setTranscript("");
+        setTranslatedTranscript("");
+        setLanguage("");
+        setListening(false);
+    };
 
     const handleWord = () => {
         const languageCodes = {
@@ -188,12 +189,16 @@ export default function EmmaPracticePage() {
                         >
                             <p className="emma-video__ai-user-indv">{userText}</p>
                         </div>
-                        
                     </div>
                     <nav className="emma-video__nav">
                         <Link to="/">
                             <VCButton img={leaveImg} hover="Leave Practice" />
                         </Link>
+                        <VCButton
+                            img={resetImg}
+                            hover="Reset To Defaults"
+                            onClick={() => resetToDefault()}
+                        />
                         <div
                             className="emma-video__nav-hide"
                             onClick={() => setHideText(!hideText)}
