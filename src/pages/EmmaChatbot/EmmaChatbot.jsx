@@ -29,15 +29,18 @@ export default function EmmaChatbot() {
         },
     ]);
     const [showMessage, setShowMessage] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
 
     const handleGPT = (userInput) => {
-        const chatLogNew = [...chatLog, { user: "me", message: `${userInput}` }];
-        setChatLog(chatLogNew);
-
-        // resets the users input in the input field
         setInput("");
-        setIsLoading(true);
+
+        const chatLogNew = [...chatLog, { user: "me", message: `${userInput}` }];
+        const chatLoading = [
+            ...chatLog,
+            { user: "me", message: `${userInput}` },
+            { user: "gpt", message: "I'm thinking..." },
+        ];
+
+        setChatLog(chatLoading);
 
         // sends the users input to the AI and then adds the answer from the AI into the chat
         axios
@@ -45,7 +48,6 @@ export default function EmmaChatbot() {
                 message: userInput,
             })
             .then(({ data }) => {
-                setIsLoading(false);
                 setChatLog([
                     ...chatLogNew,
                     {
