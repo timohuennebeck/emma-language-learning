@@ -15,9 +15,7 @@ import EmmaPracticePage from "./pages/EmmaPracticePage/EmmaPracticePage";
 import MessagesPage from "./pages/MessagesPage/MessagesPage";
 import VideoCallPage from "./pages/VideoCallPage/VideoCallPage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
-import { useState } from "react";
 import ReactModal from "react-modal";
-import ModalMessage from "./components/ModalMessage/ModalMessage";
 import FlashcardsPage from "./pages/FlashcardsPage/FlashcardsPage";
 import ReadingsPage from "./pages/ReadingsPage/ReadingsPage";
 import LoginButton from "./components/LoginButton/LoginButton";
@@ -28,12 +26,6 @@ import EmmaChatbot from "./pages/EmmaChatbot/EmmaChatbot";
 
 function App() {
     const { isAuthenticated } = useAuth0();
-
-    const [modalIsOpen, setModalIsOpen] = useState(true);
-
-    const closeModal = () => {
-        setModalIsOpen(false);
-    };
 
     if (!isAuthenticated) {
         return <LoginButton />;
@@ -47,7 +39,6 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/conversation" element={<EmmaPracticePage />} />
-                    <Route path="/chatbot" element={<EmmaChatbot />} />
                     <Route element={<NavigationInterface />}>
                         <Route path="/" element={<DashboardPage />} />
                         <Route path="/readings" element={<ReadingsPage />} />
@@ -57,6 +48,7 @@ function App() {
                             path="/flashcards/:id/revision"
                             element={<FlashcardsWritingPage />}
                         />
+                        <Route path="/chatbot" element={<EmmaChatbot />} />
                         <Route path="/settings" element={<StudentPrivateProfilePage />} />
                         <Route path="/messages" element={<MessagesPage />} />
                         <Route path="/video-call" element={<VideoCallPage />} />
@@ -69,13 +61,6 @@ function App() {
                     </Route>
                 </Routes>
             </BrowserRouter>
-            {/* <ReactModal
-                isOpen={modalIsOpen}
-                className="modal-status"
-                overlayClassName="modal-status__background"
-            >
-                <ModalMessage onRequestClose={closeModal} />
-            </ReactModal> */}
         </>
     );
 }

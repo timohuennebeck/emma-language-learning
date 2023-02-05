@@ -6,11 +6,18 @@ import LiveChatMessageDifferentUser from "../../components/LiveChatMessageDiffer
 
 // images
 import messagesImg from "../../assets/icons/send.svg";
-import moreImg from "../../assets/icons/more-v.svg";
-import { useState } from "react";
+import loadingGif from "../../assets/animations/loading-animation.gif";
+
+// languages
+import ukImg from "../../assets/languages/united kingdom.svg";
+import franceImg from "../../assets/languages/france.svg";
+import spainImg from "../../assets/languages/spain.svg";
+import germanyImg from "../../assets/languages/germany.svg";
 
 // libraries
 import axios from "axios";
+import { useState } from "react";
+import ConversationExamples from "../../components/ConversationExamples/ConversationExamples";
 
 export default function EmmaChatbot() {
     const [input, setInput] = useState("");
@@ -18,25 +25,27 @@ export default function EmmaChatbot() {
         {
             user: "gpt",
             message:
-                "Hi! Let's have a conversation in French, Spanish German or English. You start!",
+                "Hi! Let's have a conversation in English, French, Spanish or German. You start!",
         },
     ]);
+    const [showMessage, setShowMessage] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-
-        const chatLogNew = [...chatLog, { user: "me", message: `${input}` }];
+    const handleGPT = (userInput) => {
+        const chatLogNew = [...chatLog, { user: "me", message: `${userInput}` }];
         setChatLog(chatLogNew);
 
-        const newMessage = input;
-
+        // resets the users input in the input field
         setInput("");
+        setIsLoading(true);
 
+        // sends the users input to the AI and then adds the answer from the AI into the chat
         axios
             .post("http://localhost:8080/openai", {
-                message: newMessage,
+                message: userInput,
             })
             .then(({ data }) => {
+                setIsLoading(false);
                 setChatLog([
                     ...chatLogNew,
                     {
@@ -45,37 +54,69 @@ export default function EmmaChatbot() {
                     },
                 ]);
             });
-    }
+    };
+
+    // prevents the form from reloading and sends the data to the AI
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        handleGPT(input);
+    };
 
     return (
         <div className="emma-chatbot">
             <div className="emma-chatbot__container-messages">
                 {chatLog.map((item, index) => {
-                    let correctChat;
-
-                    console.log(item);
-
                     if (item.user === "me") {
-                        return <LiveChatMessage userMessage={item} />;
+                        return (
+                            <div className="emma-chatbot__container-messages-left">
+                                <LiveChatMessage userMessage={item} key={index} />
+                            </div>
+                        );
                     } else {
-                        return <LiveChatMessageDifferentUser openaiMessage={item} />;
+                        return (
+                            <div className="emma-chatbot__container-messages-right">
+                                <LiveChatMessageDifferentUser openaiMessage={item} key={index} />
+                            </div>
+                        );
                     }
                 })}
             </div>
             <div className="emma-chatbot__send">
-                <div className="emma-chatbot__send-magic">
-                    <img className="emma-chatbot__send-magic-img" src={moreImg} alt="" />
-                    <p className="emma-chatbot__send-magic-text">
-                        Melanie is creating some magic...
-                    </p>
+                <div className="emma-chatbot__send-examples">
+                    <ConversationExamples flag={ukImg} language="English" handleGPT={handleGPT} />
+                    <ConversationExamples
+                        flag={franceImg}
+                        language="French"
+                        handleGPT={handleGPT}
+                    />
+                    <ConversationExamples
+                        flag={spainImg}
+                        language="Spanish"
+                        handleGPT={handleGPT}
+                    />
+                    <ConversationExamples
+                        flag={germanyImg}
+                        language="German"
+                        handleGPT={handleGPT}
+                    />
                 </div>
+                {showMessage ? (
+                    <div className="emma-chatbot__send-magic">
+                        <img className="emma-chatbot__send-magic-img" src={loadingGif} alt="" />
+                        <p className="emma-chatbot__send-magic-text">
+                            You are creating some magic...
+                        </p>
+                    </div>
+                ) : null}
                 <form className="emma-chatbot__send-container" onSubmit={handleSubmit}>
                     <div className="emma-chatbot__send-container-input">
                         <input
                             className="emma-chatbot__send-container-input-indv"
                             placeholder="Write a message here..."
                             value={input}
-                            onChange={(e) => setInput(e.target.value)}
+                            onChange={(event) => setInput(event.target.value)}
+                            onFocus={() => setShowMessage(true)}
+                            onBlur={() => setShowMessage(false)}
                         />
                     </div>
                     <button className="emma-chatbot__send-container-button">

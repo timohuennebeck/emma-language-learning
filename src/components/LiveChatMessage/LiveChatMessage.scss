@@ -2,14 +2,15 @@
 @use "../../styles/partials/mixins" as *;
 
 .messages {
-    display: flex;
+    @include flex-vertical;
     gap: $gap-default;
+    width: 85%;
 
     &__profile {
         &-img {
             margin-top: 2.25rem;
-            max-width: 2.5rem;
-            max-height: 2.5rem;
+            max-width: 2.75rem;
+            max-height: 2.75rem;
             border-radius: 50%;
             position: relative;
         }
@@ -32,10 +33,11 @@
         }
 
         &-text {
+            @include shadow;
             background-color: $prim-color-2;
             padding: 1.25rem;
             border-radius: $border-radius-default;
-            font-size: 0.75rem;
+            font-size: 0.825rem;
             width: fit-content;
             line-height: 1.15rem;
         }

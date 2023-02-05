@@ -157,7 +157,6 @@ export default function EmmaPracticePage() {
     return (
         <>
             <div className="emma-video">
-                <GPTPrompt />
                 <div className="emma-video--bg">
                     <div className="emma-video__ai">
                         <div className="emma-video__ai-live">

@@ -1,0 +1,47 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.conversation-examples {
+    position: relative;
+
+    &__box {
+        @include flex;
+        @include shadow;
+        padding: 0.75rem;
+        border-radius: $border-radius-default;
+        background-color: $prim-color-2;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $prim-color-1;
+        }
+
+        &-img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    &__quotes {
+        @include flex-column;
+        gap: $gap-default;
+        position: absolute;
+        bottom: 3.75rem;
+        white-space: nowrap;
+
+        &-indv {
+            @include shadow;
+            border: none;
+            width: fit-content;
+            padding: 0.75rem;
+            border-radius: $border-radius-default;
+            background-color: $prim-color-2;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $prim-color-1;
+                color: $prim-color-2;
+            }
+        }
+    }
+}
