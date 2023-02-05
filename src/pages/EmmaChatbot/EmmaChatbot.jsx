@@ -37,7 +37,7 @@ export default function EmmaChatbot() {
         const chatLoading = [
             ...chatLog,
             { user: "me", message: `${userInput}` },
-            { user: "gpt", message: "I'm thinking..." },
+            { user: "gpt", message: "I'm thinking... Hold on for a second." },
         ];
 
         setChatLog(chatLoading);
