@@ -1,0 +1,79 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.emma-chatbot {
+    @include flex-column;
+    justify-content: space-between;
+    height: 100vh;
+    width: 50%;
+    margin: auto;
+    padding: 1.25rem;
+
+    @include desktop {
+        border-radius: $border-radius-default;
+    }
+
+    &__container {
+        @include flex-column;
+        gap: $gap-default;
+
+        &-messages {
+            @include flex-column;
+            gap: 2.25rem;
+            height: 81.25vh;
+            overflow-y: scroll;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    }
+
+    &__send {
+        @include flex-column;
+        gap: 0.5rem;
+
+        &-magic {
+            @include flex-vertical;
+            gap: $gap-default;
+
+            &-text {
+                opacity: 50%;
+            }
+        }
+
+        &-container {
+            display: flex;
+            gap: 0.5rem;
+
+            &-input {
+                display: flex;
+                align-items: center;
+                padding: 1rem;
+                background-color: $prim-color-2;
+                border-radius: $border-radius-default;
+                width: 100%;
+
+                &-indv {
+                    border: none;
+                    background-color: $prim-color-2;
+                    width: 100%;
+                    outline: none;
+                }
+            }
+
+            &-button {
+                @include flex;
+                border: none;
+                padding: 0.75rem;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+
+                &:hover {
+                    background-color: $prim-color-1;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

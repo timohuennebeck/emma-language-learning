@@ -19,6 +19,7 @@ import { useRef, useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import LanguageFlagDropdown from "../../components/LanguageFlagDropdown/LanguageFlagDropdown";
+import GPTPrompt from "../../components/GPTPrompt/GPTPrompt";
 
 export default function EmmaPracticePage() {
     const [muteMicrophone, setMuteMicrophone] = useState(false);
@@ -156,6 +157,7 @@ export default function EmmaPracticePage() {
     return (
         <>
             <div className="emma-video">
+                <GPTPrompt />
                 <div className="emma-video--bg">
                     <div className="emma-video__ai">
                         <div className="emma-video__ai-live">

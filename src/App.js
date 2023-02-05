@@ -24,6 +24,7 @@ import LoginButton from "./components/LoginButton/LoginButton";
 import FlashcardsDeckPage from "./pages/FlashcardsDeckPage/FlashcardsDeckPage";
 import FlashcardsRevisionPage from "./pages/FlashcardsRevisionPage/FlashcardsRevisionPage";
 import FlashcardsWritingPage from "./pages/FlashcardsWritingPage/FlashcardsWritingPage";
+import EmmaChatbot from "./pages/EmmaChatbot/EmmaChatbot";
 
 function App() {
     const { isAuthenticated } = useAuth0();
@@ -46,6 +47,7 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/conversation" element={<EmmaPracticePage />} />
+                    <Route path="/chatbot" element={<EmmaChatbot />} />
                     <Route element={<NavigationInterface />}>
                         <Route path="/" element={<DashboardPage />} />
                         <Route path="/readings" element={<ReadingsPage />} />
