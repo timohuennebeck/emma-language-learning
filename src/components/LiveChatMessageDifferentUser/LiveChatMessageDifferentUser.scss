@@ -30,13 +30,8 @@
         }
 
         &-container {
-            @include flex-column;
-            @include shadow;
-            align-items: flex-end;
-            width: 100%;
-            gap: 0.75rem;
-
             &-text {
+                @include shadow;
                 background-color: $prim-color-1;
                 color: $prim-color-2;
                 padding: 1.25rem;

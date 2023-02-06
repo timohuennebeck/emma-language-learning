@@ -2,8 +2,12 @@ import "./LiveChatMessageDifferentUser.scss";
 
 // images
 import profileImg from "../../assets/images/emma-profile.jpg";
-import { useState } from "react";
+
+// components
 import ChatbotLanguageTranslation from "../ChatbotLanguageTranslation/ChatbotLanguageTranslation";
+
+// libraries
+import { useState } from "react";
 
 export default function LiveChatMessageDifferentUser({ openaiMessage }) {
     const [showTranslation, setShowTranslation] = useState(false);
