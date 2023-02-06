@@ -1,6 +1,6 @@
 import "./LandingPage.scss";
 
-import WhiteLogo from "../../assets/icons/logo-black-bg.jpg";
+import WhiteLogo from "../../assets/images/emma-logo.png";
 import AiGif from "../../assets/images/ai-face.gif";
 import LoginButton from "../../components/LoginButton/LoginButton";
 

@@ -23,12 +23,13 @@ import FlashcardsDeckPage from "./pages/FlashcardsDeckPage/FlashcardsDeckPage";
 import FlashcardsRevisionPage from "./pages/FlashcardsRevisionPage/FlashcardsRevisionPage";
 import FlashcardsWritingPage from "./pages/FlashcardsWritingPage/FlashcardsWritingPage";
 import EmmaChatbot from "./pages/EmmaChatbot/EmmaChatbot";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 function App() {
     const { isAuthenticated } = useAuth0();
 
     if (!isAuthenticated) {
-        return <LoginButton />;
+        return <LandingPage />;
     }
 
     const rootElement = document.getElementById("root");
