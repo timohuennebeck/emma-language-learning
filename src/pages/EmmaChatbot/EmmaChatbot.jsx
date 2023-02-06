@@ -44,7 +44,7 @@ export default function EmmaChatbot() {
 
         // sends the users input to the AI and then adds the answer from the AI into the chat
         axios
-            .post("http://localhost:8080/openai", {
+            .post(`${process.env.REACT_APP_API_URL}/openai`, {
                 message: userInput,
             })
             .then(({ data }) => {

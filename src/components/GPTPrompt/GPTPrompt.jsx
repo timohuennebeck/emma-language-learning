@@ -18,7 +18,7 @@ export default function GPTPrompt() {
         setInput("");
 
         axios
-            .post("http://localhost:8080/openai", {
+            .post(`${process.env.REACT_APP_API_URL}/openai`, {
                 message: newMessage,
             })
             .then(({ data }) => {
