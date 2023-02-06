@@ -2,161 +2,132 @@
 @use "../../styles/partials/mixins" as *;
 
 .landing {
-  @include flex-column;
-  background-color: #000;
-  gap: $gap-default;
-  padding: 1.25rem;
-  height: fit-content;
-  height: 100vh;
+    background-color: #000;
 
-  &__logo {
-    display: flex;
-    flex-direction: row;
-    padding-bottom: 1rem;
-
-    &--img {
-      height: 3rem;
-      width: 3rem;
+    @include desktop {
+        @include flex;
     }
 
-    &--copy {
-      @include flex-vertical;
-      color: $prim-color-2;
-      padding-top: 0.75rem;
-    }
-  }
-
-  &__nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 2rem;
-    height: 4rem;
-
-    &--link {
-      color: $prim-color-2;
-      font-size: 0.8rem;
-      font-weight: 300;
-      text-decoration: none;
-
-      &:hover {
-        padding-bottom: 0.5rem;
-        border-bottom: solid 0.25rem rgb(128, 255, 114);
-        color: linear-gradient(
-          59deg,
-          rgba(128, 255, 114, 1) 0%,
-          rgba(128, 255, 114, 1) 26%,
-          rgba(126, 232, 250, 1) 100%
-        );
-
-        color: rgb(128, 255, 114);
-        color: linear-gradient(
-          59deg,
-          rgba(128, 255, 114, 1) 0%,
-          rgba(128, 255, 114, 1) 26%,
-          rgba(126, 232, 250, 1) 100%
-        );
-      }
-    }
-  }
-
-  &__avatar {
-    display: flex;
-    flex-direction: row;
-
-    &--gif {
-      max-width: 16rem;
-      max-height: 17.625rem;
-    }
-  }
-
-  &__title {
-    display: flex;
-    flex-direction: column;
-
-    &--text {
-      color: $prim-color-2;
-      font-size: 2rem;
-      line-height: 3rem;
-    }
-  }
-
-  &__copy {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 1.5rem;
-
-    &--text {
-      color: $prim-color-2;
-      font-size: 1rem;
-      font-weight: 100;
-      line-height: 1.25rem;
-    }
-  }
-
-  &__buttons {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-
-    &--log-in {
-      width: 8rem;
-      height: 4rem;
-      border-radius: 2rem;
-      color: $prim-color-1;
-      background: rgb(128, 255, 114);
-      background: linear-gradient(
-        90deg,
-        rgba(128, 255, 114, 1) 0%,
-        rgba(126, 232, 250, 1) 100%
-      );
+    &--bg {
+        @include desktop {
+            @include flex-vertical;
+            width: 85%;
+        }
     }
 
-    &--sign-up {
-      width: 8rem;
-      height: 4rem;
-      border-radius: 2rem;
-      color: $prim-color-2;
-      background-color: $prim-color-1;
+    &__left {
+        @include flex-column;
+        align-items: center;
+        text-align: center;
+        gap: 2.75rem;
+        height: 100vh;
+        padding: 1.5rem;
+        color: $prim-color-2;
+        background-color: #000;
 
-      border: solid 0.025rem rgb(128, 255, 114);
-      color: linear-gradient(
-        90deg,
-        rgba(128, 255, 114, 1) 0%,
-        rgba(126, 232, 250, 1) 100%
-      );
+        @include desktop {
+            justify-content: center;
+            text-align: start;
+            align-items: flex-start;
+        }
+
+        &-logo {
+            @include flex-vertical;
+            gap: $gap-default;
+
+            &-img {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+
+            &-name {
+                font-weight: 700;
+            }
+        }
+
+        &-ai {
+            &-img {
+                width: 17.5rem;
+                height: 17.5rem;
+            }
+
+            @include desktop {
+                display: none;
+            }
+        }
+
+        &-header {
+            font-size: 1.75rem;
+            line-height: 2.25rem;
+
+            @include desktop {
+                font-size: 2.25rem;
+                line-height: 3rem;
+            }
+
+            &-span {
+                background-image: linear-gradient(
+                    135deg,
+                    #ff51d7,
+                    #ff4848 37%,
+                    #1862ff 70%,
+                    #1862ff
+                );
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+
+        &-button {
+            @include flex-horizontal;
+            justify-content: space-around;
+            width: 50%;
+
+            @include desktop {
+                justify-content: flex-start;
+                gap: $gap-default;
+            }
+
+            &-signup {
+                padding: 0.75rem;
+                border: none;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                color: $prim-color-1;
+
+                &:hover {
+                    cursor: pointer;
+                    transform: scale(1.05);
+                }
+            }
+        }
     }
-  }
+
+    &__right {
+        &-ai {
+            &-img {
+                width: 27.5rem;
+                height: 27.5rem;
+            }
+        }
+    }
 }
 
-// TECXT GRADIENTS
+.new-line {
+    background-position: 50% 50%;
+    background-size: 80%;
+    background-repeat: no-repeat;
 
-.text {
-  &__green-gradient {
-    color: rgb(128, 255, 114);
-    color: linear-gradient(
-      90deg,
-      rgba(128, 255, 114, 0.8524452017134979) 94%,
-      rgba(126, 232, 250, 1) 100%
-    );
-  }
+    @include tablet {
+        background-image: url(https://assets-global.website-files.com/60e5f2de011b86acebc30db7/630a52793591b5ddf26ea695_Jasper%20Art%20Underline.svg);
+    }
+}
 
-  &__blue-gradient {
-    color: rgb(126, 232, 250);
-    color: linear-gradient(
-      90deg,
-      rgba(126, 232, 250, 0.7067869384081757) 93%,
-      rgba(128, 255, 114, 0.8524452017134979) 100%
-    );
-  }
-
-  &__mix-gradient {
-    color: rgb(128, 255, 114);
-    color: linear-gradient(
-      90deg,
-      rgba(128, 255, 114, 1) 36%,
-      rgba(126, 232, 250, 1) 67%
-    );
-  }
+.medium-line {
+    margin-right: -3rem;
+    margin-bottom: -3.5rem;
+    margin-left: -3rem;
+    padding-right: 3rem;
+    padding-bottom: 3.5rem;
+    padding-left: 3rem;
 }
