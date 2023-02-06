@@ -11,19 +11,9 @@
         order: 1;
 
         &-img {
-            margin-top: 2.25rem;
             max-width: 2.75rem;
             max-height: 2.75rem;
             border-radius: 50%;
-            position: relative;
-        }
-
-        &-status {
-            width: 0.5rem;
-            height: 0.5rem;
-            background-color: greenyellow;
-            border-radius: 50%;
-            position: absolute;
         }
     }
 
@@ -56,6 +46,11 @@
                 line-height: 1.15rem;
                 cursor: pointer;
             }
+        }
+
+        &-dropdown {
+            display: flex;
+            justify-content: flex-end;
         }
     }
 }

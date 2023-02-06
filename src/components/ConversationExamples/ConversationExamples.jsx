@@ -35,7 +35,7 @@ export default function ConversationExamples({ flag, language, handleGPT }) {
             break;
         case "German":
             exampleOne = "Welches ist der beste Ort, an den du je gereist bist, und warum?";
-            exampleTwo = "Welchen Hobbys gehst du in deiner Freizeit gerne nach?";
+            exampleTwo = "Welchen Hobbies gehst du in deiner Freizeit gerne nach?";
             exampleThree = "Welches Gericht kochst oder isst du am liebsten?";
             exampleFour =
                 "Welches ist dein Lieblingsgadget oder deine Lieblingstechnologie, ohne die du nicht leben kannst?";

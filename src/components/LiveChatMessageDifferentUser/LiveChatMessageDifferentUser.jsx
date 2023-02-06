@@ -3,14 +3,17 @@ import "./LiveChatMessageDifferentUser.scss";
 // images
 import profileImg from "../../assets/images/emma-profile.jpg";
 import { useState } from "react";
+import ChatbotLanguageTranslation from "../ChatbotLanguageTranslation/ChatbotLanguageTranslation";
 
 export default function LiveChatMessageDifferentUser({ openaiMessage }) {
     const [showTranslation, setShowTranslation] = useState(false);
     const [translatedMessage, setTranslatedMessage] = useState("");
 
-    const deepLTranslation = () => {
+    const currentUser = "AI";
+
+    const translateMessage = (newLanguageCode) => {
         fetch(
-            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${openaiMessage.message}&target_lang=EN`
+            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${openaiMessage.message}&target_lang=${newLanguageCode}`
         )
             .then((response) => {
                 if (!response.ok) {
@@ -19,7 +22,7 @@ export default function LiveChatMessageDifferentUser({ openaiMessage }) {
                 return response.json();
             })
             .then((data) => {
-                setShowTranslation(!showTranslation);
+                setShowTranslation(true);
                 setTranslatedMessage(data.translations[0].text);
             })
             .catch((error) => {
@@ -35,12 +38,15 @@ export default function LiveChatMessageDifferentUser({ openaiMessage }) {
             <div className="messages-different__content">
                 <p className="messages-different__content-name">Emma (GPT3)</p>
                 <div className="messages-different__content-container">
-                    <p
-                        className="messages-different__content-container-text"
-                        onClick={deepLTranslation}
-                    >
+                    <p className="messages-different__content-container-text">
                         {showTranslation ? translatedMessage : openaiMessage.message}
                     </p>
+                </div>
+                <div className="messages-different__content-dropdown">
+                    <ChatbotLanguageTranslation
+                        translateMessage={translateMessage}
+                        currentUser={currentUser}
+                    />
                 </div>
             </div>
         </div>

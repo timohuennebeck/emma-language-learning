@@ -1,0 +1,31 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.chatbot-translation {
+    display: flex;
+    gap: $gap-default;
+
+    &__box,
+    &__dropdown {
+        @include flex;
+        @include shadow;
+        border-radius: $border-radius-default;
+        background-color: $prim-color-2;
+        padding: 0.5rem;
+        order: 1;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $prim-color-1;
+        }
+
+        &-img {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+}
+
+.order-ai {
+    order: 0;
+}
