@@ -6,8 +6,8 @@ import mutedMicImg from "../../assets/icons/mutedMic.svg";
 import resetImg from "../../assets/icons/Close.svg";
 import hideImg from "../../assets/icons/eye-slash.svg";
 import showImg from "../../assets/icons/eye.svg";
-import hideTranslationImg from "../../assets/icons/translation-stroke.svg";
-import showTranslationImg from "../../assets/icons/Chart.svg";
+import hideTranslationImg from "../../assets/icons/stop.svg";
+import showTranslationImg from "../../assets/icons/resume.svg";
 import leaveImg from "../../assets/icons/Call - Muted.svg";
 import aiFace from "../../assets/images/ai-face.gif";
 
@@ -19,7 +19,6 @@ import { useRef, useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import LanguageFlagDropdown from "../../components/LanguageFlagDropdown/LanguageFlagDropdown";
-import GPTPrompt from "../../components/GPTPrompt/GPTPrompt";
 
 export default function EmmaPracticePage() {
     const [muteMicrophone, setMuteMicrophone] = useState(false);
