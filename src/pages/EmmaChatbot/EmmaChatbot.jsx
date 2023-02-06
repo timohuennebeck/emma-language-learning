@@ -55,6 +55,16 @@ export default function EmmaChatbot() {
                         message: data.message,
                     },
                 ]);
+            })
+            .catch((error) => {
+                console.error(error);
+                setChatLog([
+                    ...chatLogNew,
+                    {
+                        user: "gpt",
+                        message: "There has been an error. Please, reload the page.",
+                    },
+                ]);
             });
     };
 
