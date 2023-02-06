@@ -5,11 +5,14 @@ import beginnerImg from "../../assets/icons/beginner.svg";
 import intermediateImg from "../../assets/icons/intermediate.svg";
 import advancedImg from "../../assets/icons/advanced.svg";
 import finishedImg from "../../assets/icons/check-blue.svg";
+import finishedWhiteImg from "../../assets/icons/check-white.svg";
+
+// components
 import { useEffect, useState } from "react";
 import { getDictionariesWords, getReadings } from "../../utils/api";
 
 export default function SelectReadings({ readingsData, onClick }) {
-    const [selectText, setSelectText] = useState(false);
+    const [hover, setHover] = useState(false);
     const [readings, setReadings] = useState([]);
     const [flashcards, setFlashcards] = useState([]);
 
@@ -57,7 +60,12 @@ export default function SelectReadings({ readingsData, onClick }) {
     }
 
     return (
-        <div className="select-readings">
+        <div
+            className="select-readings"
+            onClick={() => onClick(readingsData)}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+        >
             <img src={readingsData.image_url} alt="" className="select-readings-img" />
             <div className="select-readings__right">
                 <h3>{readingsData.name}</h3>
@@ -65,30 +73,23 @@ export default function SelectReadings({ readingsData, onClick }) {
                 <div className="select-readings__right-box">
                     <div className="select-readings__right-box-progress">
                         <div
-                            className="select-readings__right-box-progress-bar"
+                            className={`select-readings__right-box-progress-bar ${
+                                hover ? "color-bar" : ""
+                            }`}
                             style={{ width: progressPercentage }}
                         ></div>
                     </div>
-                    <img src={finishedImg} alt="" />
+                    <img src={hover ? finishedWhiteImg : finishedImg} alt="" />
                 </div>
-                <div
-                    className="select-readings__right-level"
-                    onMouseEnter={() => setSelectText(true)}
-                    onMouseLeave={() => setSelectText(false)}
-                    onClick={() => onClick(readingsData)}
-                >
-                    {selectText ? (
-                        <p>Yes, I want to read this.</p>
-                    ) : (
-                        <>
-                            <img
-                                src={languageLevel}
-                                alt=""
-                                className="select-readings__right-level-img"
-                            />
-                            <p>{readingsData.level}</p>
-                        </>
-                    )}
+                <div className="select-readings__right-level">
+                    <>
+                        <img
+                            src={languageLevel}
+                            alt=""
+                            className="select-readings__right-level-img"
+                        />
+                        <p className={hover ? "color-name" : ""}>{readingsData.level}</p>
+                    </>
                 </div>
             </div>
         </div>

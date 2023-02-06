@@ -9,6 +9,12 @@
     border-radius: $border-radius-default;
     padding: 1.25rem;
 
+    &:hover {
+        background-color: $prim-color-1;
+        color: #fff;
+        cursor: pointer;
+    }
+
     &-img {
         width: 8.5rem;
         height: 8.5rem;
@@ -60,4 +66,12 @@
             }
         }
     }
+}
+
+.color-name {
+    color: #000;
+}
+
+.color-bar {
+    background-color: greenyellow;
 }
