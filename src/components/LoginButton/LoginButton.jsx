@@ -1,14 +1,19 @@
 import "./LoginButton.scss";
 
-// librares
+// libraries
 import { useAuth0 } from "@auth0/auth0-react";
 
-const LoginButton = () => {
+const LoginButton = ({ name }) => {
     const { loginWithRedirect } = useAuth0();
 
+    const redirectUri = name === "Log In" ? "/login" : "/register";
+
     return (
-        <button className="login-button" onClick={() => loginWithRedirect()}>
-            Log In
+        <button
+            className="login-button"
+            onClick={() => loginWithRedirect({ redirect_uri: redirectUri })}
+        >
+            {name}
         </button>
     );
 };

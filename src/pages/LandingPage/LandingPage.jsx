@@ -29,8 +29,8 @@ export default function LandingPage() {
                         tutors from around the world.
                     </p>
                     <div className="landing__left-button">
-                        <LoginButton />
-                        <button className="landing__left-button-signup">Sign Up</button>
+                        <LoginButton name="Log In" />
+                        <LoginButton name="Sign Up" />
                     </div>
                 </div>
                 <div className="landing__right-ai">
