@@ -1,7 +1,7 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.transcription-user {
+.transcription-ai {
     @include flex-vertical;
     justify-content: flex-end;
     gap: $gap-default;

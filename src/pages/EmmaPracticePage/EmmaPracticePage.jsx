@@ -29,10 +29,6 @@ export default function EmmaPracticePage() {
     // const [currentTranslation, setCurrentTranslation] = useState("English");
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
-    // this is the text that will be shown on the screen
-    const [input, setInput] = useState("");
-    const [translatedTranscript, setTranslatedTranscript] = useState("");
-
     // enables or disables the microphone to start listening
     const [listening, setListening] = useState(false);
 
@@ -50,10 +46,12 @@ export default function EmmaPracticePage() {
     const [isRecognizing, setIsRecognizing] = useState(false);
     const [recognition, setRecognition] = useState(null);
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     useEffect(() => {
-        setRecognition(new SpeechRecognition());
+        const recognition = new speechRecognition();
+        recognition.interimResults = true;
+        setRecognition(recognition);
     }, []);
 
     useEffect(() => {
@@ -69,20 +67,20 @@ export default function EmmaPracticePage() {
             recognition.stop();
         } else {
             recognition.start();
-            recognition.interimResults = true;
         }
         setIsRecognizing(!isRecognizing);
     };
 
-    // shows
+    // shows the transcript in real-time
     useEffect(() => {
         if (recognition) {
             recognition.onresult = (event) => {
                 setTranscript(event.results[0][0].transcript);
+                handleGPT(event.results[0][0].transcript);
             };
             recognition.onend = () => {
+                setListening(false);
                 setIsRecognizing(false);
-                handleGPT();
             };
         }
     }, [isRecognizing, recognition]);
@@ -94,13 +92,24 @@ export default function EmmaPracticePage() {
     };
 
     // inserts the speech from the user into the chat log and makes an api call to receive an answer from the ai
-    const handleGPT = () => {
-        console.log("Hello");
+    const handleGPT = (userInput) => {
         // adds the users input to the state which will be used to make the API call, meanwhile shows a loading sign until a response has been received
-        const chatLogNew = [...chatLog, { user: "me", message: input }];
+
+        if (!userInput) {
+            return;
+        }
+
+        const chatLogNew = [...chatLog, { user: "me", message: userInput }];
+
+        setChatLog(chatLogNew);
+
+        if (isRecognizing) {
+            return;
+        }
+
         const chatLoading = [
             ...chatLog,
-            { user: "me", message: input },
+            { user: "me", message: userInput },
             { user: "gpt", message: "I'm thinking... Hold on for a second." },
         ];
 
@@ -109,7 +118,7 @@ export default function EmmaPracticePage() {
         // sends the users input to the AI and then adds the answer from the AI into the chat
         axios
             .post(`${process.env.REACT_APP_API_URL}/openai`, {
-                message: input,
+                message: userInput,
             })
             .then(({ data }) => {
                 setChatLog([
@@ -119,6 +128,7 @@ export default function EmmaPracticePage() {
                         message: data.message,
                     },
                 ]);
+
                 setListening(false);
             })
             .catch((error) => {
@@ -134,19 +144,7 @@ export default function EmmaPracticePage() {
             });
     };
 
-    let userText;
-    let userTranslation;
-
-    // placeholder text in case the user hasn't started speaking
-    if (!transcript) {
-        userText = "Awaiting Input...";
-        userTranslation = "Awaiting Translation...";
-    } else {
-        userText = transcript;
-        userTranslation = translatedTranscript;
-    }
-
-    // .maps through all languages which are used for the api
+    // maps through all languages which are used for the api
     const languageOptions = [
         { languageCode: "None" },
         { languageCode: "fr-FR" },
@@ -158,27 +156,23 @@ export default function EmmaPracticePage() {
     return (
         <>
             <div className="emma-video">
-                {userText ? (
-                    <TranscriptionUserMessage userMessage={userText} />
-                ) : (
-                    <div className="emma-video__messages">
-                        {chatLog.map((item, index) => {
-                            if (item.user === "me") {
-                                return (
-                                    <div className="emma-chatbot__container-messages-left">
-                                        <TranscriptionUserMessage userMessage={item} key={index} />
-                                    </div>
-                                );
-                            } else {
-                                return (
-                                    <div className="emma-chatbot__container-messages-right">
-                                        <TranscriptionAIMessage openaiMessage={item} key={index} />
-                                    </div>
-                                );
-                            }
-                        })}
-                    </div>
-                )}
+                <div className="emma-video__messages">
+                    {chatLog.map((item, index) => {
+                        if (item.user === "me") {
+                            return (
+                                <div className="emma-chatbot__container-messages-left">
+                                    <TranscriptionUserMessage userMessage={item} key={index} />
+                                </div>
+                            );
+                        } else {
+                            return (
+                                <div className="emma-chatbot__container-messages-right">
+                                    <TranscriptionAIMessage openaiMessage={item} key={index} />
+                                </div>
+                            );
+                        }
+                    })}
+                </div>
                 <nav className="emma-video__nav">
                     <div className="emma-video__nav-search">
                         <img className="emma-video__nav-search-img" src={searchImg} alt="" />
