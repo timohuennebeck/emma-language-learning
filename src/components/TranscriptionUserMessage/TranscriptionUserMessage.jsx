@@ -3,7 +3,7 @@ import "./TranscriptionUserMessage.scss";
 // images
 import profileImg from "../../assets/images/personal-profile.jpg";
 
-export default function TranscriptionUserMessage({ userMessage }) {
+export default function TranscriptionUserMessage({ userMessage, translatedMessage }) {
     return (
         <div className="transcription-user">
             <div className="transcription-user__profile">

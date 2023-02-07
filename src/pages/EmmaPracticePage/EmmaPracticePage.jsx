@@ -45,6 +45,7 @@ export default function EmmaPracticePage() {
     const [transcript, setTranscript] = useState("");
     const [isRecognizing, setIsRecognizing] = useState(false);
     const [recognition, setRecognition] = useState(null);
+    const [receiveResponse, setReceiveResponse] = useState(false);
 
     const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -81,6 +82,7 @@ export default function EmmaPracticePage() {
             recognition.onend = () => {
                 setListening(false);
                 setIsRecognizing(false);
+                setReceiveResponse(true);
             };
         }
     }, [isRecognizing, recognition]);
@@ -93,8 +95,6 @@ export default function EmmaPracticePage() {
 
     // inserts the speech from the user into the chat log and makes an api call to receive an answer from the ai
     const handleGPT = (userInput) => {
-        // adds the users input to the state which will be used to make the API call, meanwhile shows a loading sign until a response has been received
-
         if (!userInput) {
             return;
         }
@@ -102,47 +102,51 @@ export default function EmmaPracticePage() {
         const chatLogNew = [...chatLog, { user: "me", message: userInput }];
 
         setChatLog(chatLogNew);
-
-        if (isRecognizing) {
-            return;
-        }
-
-        const chatLoading = [
-            ...chatLog,
-            { user: "me", message: userInput },
-            { user: "gpt", message: "I'm thinking... Hold on for a second." },
-        ];
-
-        setChatLog(chatLoading);
-
-        // sends the users input to the AI and then adds the answer from the AI into the chat
-        axios
-            .post(`${process.env.REACT_APP_API_URL}/openai`, {
-                message: userInput,
-            })
-            .then(({ data }) => {
-                setChatLog([
-                    ...chatLogNew,
-                    {
-                        user: "gpt",
-                        message: data.message,
-                    },
-                ]);
-
-                setListening(false);
-            })
-            .catch((error) => {
-                console.error(error);
-                setChatLog([
-                    ...chatLogNew,
-                    {
-                        user: "gpt",
-                        message: "There has been an error. Please, reload the page.",
-                    },
-                ]);
-                setListening(false);
-            });
     };
+
+    console.log(chatLog);
+
+    useEffect(() => {
+        if (receiveResponse) {
+            const chatLogNew = [...chatLog];
+
+            const chatLoading = [
+                ...chatLog,
+                { user: "gpt", message: "I'm thinking... Hold on for a second." },
+            ];
+
+            setChatLog(chatLoading);
+
+            // sends the users input to the AI and then adds the answer from the AI into the chat
+            axios
+                .post(`${process.env.REACT_APP_API_URL}/openai`, {
+                    message: transcript,
+                })
+                .then(({ data }) => {
+                    setChatLog([
+                        ...chatLogNew,
+                        {
+                            user: "gpt",
+                            message: data.message,
+                        },
+                    ]);
+                    setListening(false);
+                    setReceiveResponse(false);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    setChatLog([
+                        ...chatLogNew,
+                        {
+                            user: "gpt",
+                            message: "There has been an error. Please, reload the page.",
+                        },
+                    ]);
+                    setListening(false);
+                    setReceiveResponse(false);
+                });
+        }
+    }, [receiveResponse]);
 
     // maps through all languages which are used for the api
     const languageOptions = [
@@ -150,7 +154,7 @@ export default function EmmaPracticePage() {
         { languageCode: "fr-FR" },
         { languageCode: "es-ES" },
         { languageCode: "de-DE" },
-        { languageCode: "en-US" },
+        { languageCode: "en-EN" },
     ];
 
     return (
