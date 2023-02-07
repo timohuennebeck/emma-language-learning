@@ -10,8 +10,8 @@ export default function NavLinkButton({ link, hover, img, onClick }) {
         <div className="nav-link">
             <div
                 className="nav-link__button"
-                onMouseEnter={() => setBrightness(!brightness)}
-                onMouseLeave={() => setBrightness(!brightness)}
+                onMouseEnter={() => setBrightness(true)}
+                onMouseLeave={() => setBrightness(false)}
                 onClick={onClick}
             >
                 <Link className="nav-link__button-link" to={link}>
