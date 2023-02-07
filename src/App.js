@@ -18,9 +18,7 @@ import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import ReactModal from "react-modal";
 import FlashcardsPage from "./pages/FlashcardsPage/FlashcardsPage";
 import ReadingsPage from "./pages/ReadingsPage/ReadingsPage";
-import LoginButton from "./components/LoginButton/LoginButton";
 import FlashcardsDeckPage from "./pages/FlashcardsDeckPage/FlashcardsDeckPage";
-import FlashcardsRevisionPage from "./pages/FlashcardsRevisionPage/FlashcardsRevisionPage";
 import FlashcardsWritingPage from "./pages/FlashcardsWritingPage/FlashcardsWritingPage";
 import EmmaChatbot from "./pages/EmmaChatbot/EmmaChatbot";
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -39,7 +37,6 @@ function App() {
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/conversation" element={<EmmaPracticePage />} />
                     <Route element={<NavigationInterface />}>
                         <Route path="/" element={<DashboardPage />} />
                         <Route path="/readings" element={<ReadingsPage />} />
@@ -49,6 +46,7 @@ function App() {
                             path="/flashcards/:id/revision"
                             element={<FlashcardsWritingPage />}
                         />
+                        <Route path="/conversation" element={<EmmaPracticePage />} />
                         <Route path="/chatbot" element={<EmmaChatbot />} />
                         <Route path="/settings" element={<StudentPrivateProfilePage />} />
                         <Route path="/messages" element={<MessagesPage />} />

@@ -3,33 +3,32 @@ import "./EmmaPracticePage.scss";
 // images
 import micImg from "../../assets/icons/Mic.svg";
 import mutedMicImg from "../../assets/icons/mutedMic.svg";
-import resetImg from "../../assets/icons/Close.svg";
-import hideImg from "../../assets/icons/eye-slash.svg";
-import showImg from "../../assets/icons/eye.svg";
-import hideTranslationImg from "../../assets/icons/stop.svg";
-import showTranslationImg from "../../assets/icons/resume.svg";
-import leaveImg from "../../assets/icons/Call - Muted.svg";
-import aiFace from "../../assets/images/ai-face.gif";
+import hideTranslationImg from "../../assets/icons/eye-slash.svg";
+import showTranslationImg from "../../assets/icons/eye.svg";
+import hideImg from "../../assets/icons/stop.svg";
+import showImg from "../../assets/icons/resume.svg";
+import searchImg from "../../assets/icons/search.svg";
 
 // components
 import VCButton from "../../components/VCButton/VCButton";
+import TranscriptionAIMessage from "../../components/TranscriptionAIMessage/TranscriptionAIMessage";
+import TranscriptionUserMessage from "../../components/TranscriptionUserMessage/TranscriptionUserMessage";
 
 // libraries
-import { useRef, useState } from "react";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import LanguageFlagDropdown from "../../components/LanguageFlagDropdown/LanguageFlagDropdown";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function EmmaPracticePage() {
     const [muteMicrophone, setMuteMicrophone] = useState(false);
-    const [hideText, setHideText] = useState(false);
-    const [hideTranslation, setHideTranslation] = useState(false);
+    const [disableTranscription, setDisableTranscription] = useState(false);
+    const [disableTranslation, setDisableTranslation] = useState(false);
     const [currentLanguage, setCurrentLanguage] = useState("None");
-    const [currentTranslation, setCurrentTranslation] = useState("English");
+    // const [currentTranslation, setCurrentTranslation] = useState("English");
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
     // this is the text that will be shown on the screen
     const [transcript, setTranscript] = useState("");
+    const [input, setInput] = useState("");
     const [translatedTranscript, setTranslatedTranscript] = useState("");
 
     // used to set the language code for the API call
@@ -38,116 +37,141 @@ export default function EmmaPracticePage() {
     // enables or disables the microphone to start listening
     const [listening, setListening] = useState(false);
 
-    const userRef = useRef(null);
+    // creates the chatlog which shows the users transcription in real-time
+    const [chatLog, setChatLog] = useState([
+        {
+            user: "gpt",
+            message:
+                "Hi! Let's have a conversation in English, French, Spanish or German. You start!",
+        },
+    ]);
 
     useEffect(() => {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        let recognition = null;
 
         // checks if the value is undefined or not
-        if (!SpeechRecognition) {
+        if (!speechRecognition) {
             console.error("Speech recognition is not supported in this browser.");
             return;
         }
 
-        let recognition = null;
+        recognition = new speechRecognition();
 
-        // stars the microphone and listens to the users input
+        // starts the microphone and listens to the users input
         const startListening = () => {
-            recognition = new SpeechRecognition();
+            recognition = new speechRecognition();
             recognition.lang = language;
             recognition.interimResults = true;
-            recognition.maxAlternatives = 1;
-
             recognition.start();
 
             recognition.onresult = (event) => {
                 setTranscript(event.results[0][0].transcript);
+                setInput(event.results[0][0].transcript);
             };
         };
 
-        // stops the microphone
-        const stopListening = () => {
-            recognition.stop();
-            recognition = null;
-        };
-
-        // if the user stops speaking the machine will stop listening
         if (listening) {
             startListening();
-        } else if (recognition) {
-            stopListening();
         }
 
-        return () => {
-            if (recognition) {
-                stopListening();
-            }
-        };
+        // // stops the microphone
+        // const stopListening = () => {
+        //     recognition.stop();
+        //     recognition = null;
+        //     setListening(false);
+        // };
+
+        // starts listening if the listening state is true that's triggered when clicking the microphone, stops if recognition exists
     }, [language, listening]);
 
     useEffect(() => {
-        handleWord();
+        if (transcript) {
+            return;
+        }
+
+        // adds the users input to the state which will be used to make the API call, meanwhile shows a loading sign until a response has been received
+        const chatLogNew = [...chatLog, { user: "me", message: input }];
+        const chatLoading = [
+            ...chatLog,
+            { user: "me", message: input },
+            { user: "gpt", message: "I'm thinking... Hold on for a second." },
+        ];
+
+        setChatLog(chatLoading);
+
+        // sends the users input to the AI and then adds the answer from the AI into the chat
+        axios
+            .post(`${process.env.REACT_APP_API_URL}/openai`, {
+                message: input,
+            })
+            .then(({ data }) => {
+                setChatLog([
+                    ...chatLogNew,
+                    {
+                        user: "gpt",
+                        message: data.message,
+                    },
+                ]);
+                setListening(false);
+            })
+            .catch((error) => {
+                console.error(error);
+                setChatLog([
+                    ...chatLogNew,
+                    {
+                        user: "gpt",
+                        message: "There has been an error. Please, reload the page.",
+                    },
+                ]);
+                setListening(false);
+            });
     }, [transcript]);
 
-    // scrolls to the bottom of the text if a max-height has been reached
-    useEffect(() => {
-        if (transcript && translatedTranscript) {
-            userRef.current.scrollTop = userRef.current.scrollHeight;
-        }
-    }, [transcript, translatedTranscript]);
+    // useEffect(() => {
+    //     handleWord();
+    // }, [transcript]);
 
-    const resetToDefault = () => {
-        setMuteMicrophone(false);
-        setHideText(false);
-        setHideTranslation(false);
-        setCurrentLanguage("None");
-        setCurrentTranslation("English");
-        setToggleDropdown(false);
-        setTranscript("");
-        setTranslatedTranscript("");
-        setLanguage("");
-        setListening(false);
-    };
+    // const handleWord = () => {
+    //     const languageCodes = {
+    //         French: "FR",
+    //         Spanish: "ES",
+    //         German: "DE",
+    //         default: "EN",
+    //     };
 
-    const handleWord = () => {
-        const languageCodes = {
-            French: "FR",
-            Spanish: "ES",
-            German: "DE",
-            default: "EN",
-        };
+    //     // finds the language and pulls the language code in order to use it in the API call
+    //     const currentLanguageCode = languageCodes[currentLanguage] || languageCodes.default;
+    //     const currentTranslationCode = languageCodes[currentTranslation] || languageCodes.default;
 
-        // finds the language and pulls the language code in order to use it in the API call
-        const currentLanguageCode = languageCodes[currentLanguage] || languageCodes.default;
-        const currentTranslationCode = languageCodes[currentTranslation] || languageCodes.default;
-
-        // returns the API call if the translation div is not disabled
-        if (!hideTranslation) {
-            fetch(
-                `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${transcript}&target_lang=${currentTranslationCode}&source_lang=${currentLanguageCode}`
-            )
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    setTranslatedTranscript(data.translations[0].text);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-    };
+    //     // returns the API call if the translation div is not disabled
+    //     if (!disableTranslation) {
+    //         fetch(
+    //             `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${transcript}&target_lang=${currentTranslationCode}&source_lang=${currentLanguageCode}`
+    //         )
+    //             .then((response) => {
+    //                 if (!response.ok) {
+    //                     throw new Error(`HTTP error! status: ${response.status}`);
+    //                 }
+    //                 return response.json();
+    //             })
+    //             .then((data) => {
+    //                 setTranslatedTranscript(data.translations[0].text);
+    //             })
+    //             .catch((error) => {
+    //                 console.error(error);
+    //             });
+    //     }
+    // };
 
     let userText;
     let userTranslation;
 
     // placeholder text in case the user hasn't started speaking
     if (!transcript) {
-        userText = "Users and AI's Words...";
-        userTranslation = `${currentTranslation} Translation...`;
+        userText = "Awaiting Input...";
+        userTranslation = "Awaiting Translation...";
     } else {
         userText = transcript;
         userTranslation = translatedTranscript;
@@ -156,161 +180,146 @@ export default function EmmaPracticePage() {
     return (
         <>
             <div className="emma-video">
-                <div className="emma-video--bg">
-                    <div className="emma-video__ai">
-                        <div className="emma-video__ai-live">
-                            <img className="emma-video__ai-live-img" src={aiFace} alt="" />
-                        </div>
-
-                        <div
-                            className={
-                                hideTranslation
-                                    ? "emma-video__ai-translation hide-speech"
-                                    : "emma-video__ai-translation"
+                {userText ? (
+                    <TranscriptionUserMessage userMessage={userText} />
+                ) : (
+                    <div className="emma-video__messages">
+                        {chatLog.map((item, index) => {
+                            if (item.user === "me") {
+                                return (
+                                    <div className="emma-chatbot__container-messages-left">
+                                        <TranscriptionUserMessage userMessage={item} key={index} />
+                                    </div>
+                                );
+                            } else {
+                                return (
+                                    <div className="emma-chatbot__container-messages-right">
+                                        <TranscriptionAIMessage openaiMessage={item} key={index} />
+                                    </div>
+                                );
                             }
-                        >
-                            <div className="emma-video__ai-translation-dropdown">
-                                <LanguageFlagDropdown
-                                    currentLanguage={currentLanguage}
-                                    currentTranslation={currentTranslation}
-                                    setCurrentTranslation={setCurrentTranslation}
-                                />
-                            </div>
-                            <p className="emma-video__ai-translation-indv" ref={userRef}>
-                                {userTranslation}
-                            </p>
-                        </div>
-
-                        <div
-                            className={
-                                hideText ? "emma-video__ai-user hide-speech" : "emma-video__ai-user"
-                            }
-                            ref={userRef}
-                        >
-                            <p className="emma-video__ai-user-indv">{userText}</p>
-                        </div>
+                        })}
                     </div>
-                    <nav className="emma-video__nav">
-                        <Link to="/">
-                            <VCButton img={leaveImg} hover="Leave Practice" />
-                        </Link>
-                        <VCButton
-                            img={resetImg}
-                            hover="Reset To Defaults"
-                            onClick={() => resetToDefault()}
+                )}
+                <nav className="emma-video__nav">
+                    <div className="emma-video__nav-search">
+                        <img className="emma-video__nav-search-img" src={searchImg} alt="" />
+                        <input
+                            className="emma-video__nav-search-input"
+                            placeholder="Search a username..."
                         />
-                        <div
-                            className="emma-video__nav-hide"
-                            onClick={() => setHideText(!hideText)}
-                        >
-                            {hideText ? (
-                                <VCButton
-                                    img={showImg}
-                                    hover="Enable Text"
-                                    onClick={() => setHideText(!hideText)}
-                                />
-                            ) : (
-                                <VCButton
-                                    img={hideImg}
-                                    hover="Disable Text"
-                                    onClick={() => setHideText(!hideText)}
-                                />
-                            )}
-                        </div>
-                        <div
-                            className="emma-video__nav-translation"
-                            onClick={() => setHideTranslation(!hideTranslation)}
-                        >
-                            {hideTranslation ? (
-                                <VCButton
-                                    img={showTranslationImg}
-                                    hover="Enable Translation"
-                                    onClick={() => setHideTranslation(!hideTranslation)}
-                                />
-                            ) : (
-                                <VCButton
-                                    img={hideTranslationImg}
-                                    hover="Disable Translation"
-                                    onClick={() => setHideTranslation(!hideTranslation)}
-                                />
-                            )}
-                        </div>
-                        <div
-                            className="emma-video__nav-mic"
-                            onClick={() => setMuteMicrophone(!muteMicrophone)}
-                        >
-                            {currentLanguage === "None" ? (
-                                <p className="emma-video__nav-mic-select">
-                                    Microphone disabled! Input required...
+                    </div>
+                    <div
+                        className="emma-video__nav-hide"
+                        onClick={() => setDisableTranscription(!disableTranscription)}
+                    >
+                        {disableTranscription ? (
+                            <VCButton
+                                img={showImg}
+                                hover="Enable Transcription"
+                                onClick={() => setDisableTranscription(!disableTranscription)}
+                            />
+                        ) : (
+                            <VCButton
+                                img={hideImg}
+                                hover="Disable Transcription"
+                                onClick={() => setDisableTranscription(!disableTranscription)}
+                            />
+                        )}
+                    </div>
+                    <div
+                        className="emma-video__nav-translation"
+                        onClick={() => setDisableTranslation(!disableTranslation)}
+                    >
+                        {disableTranslation ? (
+                            <VCButton
+                                img={showTranslationImg}
+                                hover="Enable Translation"
+                                onClick={() => setDisableTranslation(!disableTranslation)}
+                            />
+                        ) : (
+                            <VCButton
+                                img={hideTranslationImg}
+                                hover="Disable Translation"
+                                onClick={() => setDisableTranslation(!disableTranslation)}
+                            />
+                        )}
+                    </div>
+                    <div
+                        className="emma-video__nav-mic"
+                        onClick={() => setMuteMicrophone(!muteMicrophone)}
+                    >
+                        {currentLanguage === "None" ? (
+                            <p className="emma-video__nav-mic-select">
+                                Microphone disabled! Input required...
+                            </p>
+                        ) : muteMicrophone ? (
+                            <VCButton
+                                img={micImg}
+                                hover="Disable Microphone"
+                                onClick={() => setListening(!listening)}
+                            />
+                        ) : (
+                            <VCButton
+                                img={mutedMicImg}
+                                hover="Enable Microphone"
+                                onClick={() => setListening(!listening)}
+                            />
+                        )}
+                    </div>
+                    <div
+                        className="emma-video__nav-languages"
+                        onClick={() => setToggleDropdown(!toggleDropdown)}
+                    >
+                        <p className="emma-video__nav-languages-current">{currentLanguage}</p>
+                        {toggleDropdown ? (
+                            <div className="emma-video__nav-languages-all">
+                                <p
+                                    className="emma-video__nav-languages-all-indv"
+                                    onClick={() => setCurrentLanguage("None")}
+                                >
+                                    None
                                 </p>
-                            ) : muteMicrophone ? (
-                                <VCButton
-                                    img={micImg}
-                                    hover="Disable Microphone"
-                                    onClick={() => setListening(!listening)}
-                                />
-                            ) : (
-                                <VCButton
-                                    img={mutedMicImg}
-                                    hover="Enable Microphone"
-                                    onClick={() => setListening(!listening)}
-                                />
-                            )}
-                        </div>
-                        <div
-                            className="emma-video__nav-languages"
-                            onClick={() => setToggleDropdown(!toggleDropdown)}
-                        >
-                            <p className="emma-video__nav-languages-current">{currentLanguage}</p>
-                            {toggleDropdown ? (
-                                <div className="emma-video__nav-languages-all">
-                                    <p
-                                        className="emma-video__nav-languages-all-indv"
-                                        onClick={() => setCurrentLanguage("None")}
-                                    >
-                                        None
-                                    </p>
-                                    <p
-                                        className="emma-video__nav-languages-all-indv"
-                                        onClick={() => {
-                                            setCurrentLanguage("French");
-                                            setLanguage("fr-FR");
-                                        }}
-                                    >
-                                        French
-                                    </p>
-                                    <p
-                                        className="emma-video__nav-languages-all-indv"
-                                        onClick={() => {
-                                            setCurrentLanguage("Spanish");
-                                            setLanguage("es-ES");
-                                        }}
-                                    >
-                                        Spanish
-                                    </p>
-                                    <p
-                                        className="emma-video__nav-languages-all-indv"
-                                        onClick={() => {
-                                            setCurrentLanguage("German");
-                                            setLanguage("de-DE");
-                                        }}
-                                    >
-                                        German
-                                    </p>
-                                    <p
-                                        className="emma-video__nav-languages-all-indv"
-                                        onClick={() => {
-                                            setCurrentLanguage("English");
-                                            setLanguage("en-EN");
-                                        }}
-                                    >
-                                        English
-                                    </p>
-                                </div>
-                            ) : null}
-                        </div>
-                    </nav>
-                </div>
+                                <p
+                                    className="emma-video__nav-languages-all-indv"
+                                    onClick={() => {
+                                        setCurrentLanguage("French");
+                                        setLanguage("fr-FR");
+                                    }}
+                                >
+                                    French
+                                </p>
+                                <p
+                                    className="emma-video__nav-languages-all-indv"
+                                    onClick={() => {
+                                        setCurrentLanguage("Spanish");
+                                        setLanguage("es-ES");
+                                    }}
+                                >
+                                    Spanish
+                                </p>
+                                <p
+                                    className="emma-video__nav-languages-all-indv"
+                                    onClick={() => {
+                                        setCurrentLanguage("German");
+                                        setLanguage("de-DE");
+                                    }}
+                                >
+                                    German
+                                </p>
+                                <p
+                                    className="emma-video__nav-languages-all-indv"
+                                    onClick={() => {
+                                        setCurrentLanguage("English");
+                                        setLanguage("en-EN");
+                                    }}
+                                >
+                                    English
+                                </p>
+                            </div>
+                        ) : null}
+                    </div>
+                </nav>
             </div>
         </>
     );

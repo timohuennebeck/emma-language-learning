@@ -3,86 +3,26 @@
 
 .emma-video {
     @include flex-column;
-    background-color: #000;
-    gap: 2.75rem;
-    justify-content: center;
+    gap: $gap-default;
+    justify-content: space-between;
     align-items: center;
-    height: 100vh;
+    height: 100%;
 
-    &--bg {
-        @include flex-column;
-        align-items: center;
-        gap: 2.75rem;
-        width: 50%;
-    }
-
-    &__ai {
-        @include flex-column;
+    &__messages {
         width: 100%;
-        gap: 2.75rem;
-        align-items: center;
-        position: relative;
-
-        &-live {
-            position: relative;
-
-            &-img {
-                width: 20rem;
-                height: 20rem;
-            }
-        }
-
-        &-user {
-            @include shadow;
-            width: 100%;
-            min-height: 2.75rem;
-            max-height: 5.75rem;
-            padding: 0.75rem;
-            border-radius: $border-radius-default;
-            background-color: $prim-color-2;
-            overflow: scroll;
-
-            &::-webkit-scrollbar {
-                display: none;
-            }
-        }
-
-        &-translation {
-            width: 100%;
-            display: flex;
-            gap: $gap-default;
-            position: relative;
-
-            &-dropdown {
-                position: absolute;
-                left: -4rem;
-            }
-
-            &-indv {
-                @include shadow;
-                width: 100%;
-                min-height: 2.75rem;
-                max-height: 5.75rem;
-                padding: 0.75rem;
-                border-radius: $border-radius-default;
-                background-color: $prim-color-2;
-                overflow: scroll;
-
-                &::-webkit-scrollbar {
-                    display: none;
-                }
-            }
-        }
+        height: 100%;
     }
 
     &__nav {
         display: flex;
         gap: $gap-default;
+        width: 100%;
 
         &-mic {
             &-select {
                 @include shadow;
                 height: 100%;
+                white-space: nowrap;
                 padding: 0.75rem;
                 background-color: $prim-color-2;
                 border-radius: $border-radius-default;
@@ -114,7 +54,7 @@
                 @include flex-column;
                 gap: $gap-default;
                 position: absolute;
-                top: 0.05rem;
+                bottom: 0;
                 left: 0;
 
                 &-indv {
@@ -134,6 +74,26 @@
                         color: $prim-color-2;
                     }
                 }
+            }
+        }
+
+        &-search {
+            @include flex-vertical;
+            @include shadow;
+            gap: $gap-default;
+            width: 100%;
+            background-color: $prim-color-2;
+            padding: 0.75rem;
+            border-radius: $border-radius-default;
+
+            &-img {
+                opacity: 50%;
+            }
+
+            &-input {
+                border: none;
+                outline: none;
+                width: 100%;
             }
         }
     }

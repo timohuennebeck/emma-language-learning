@@ -33,6 +33,7 @@ export default function EmmaChatbot() {
     const handleGPT = (userInput) => {
         setInput("");
 
+        // adds the users input to the state which will be used to make the API call, meanwhile shows a loading sign until a response has been received
         const chatLogNew = [...chatLog, { user: "me", message: `${userInput}` }];
         const chatLoading = [
             ...chatLog,

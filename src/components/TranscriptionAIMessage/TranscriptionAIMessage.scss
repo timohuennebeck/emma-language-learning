@@ -1,7 +1,7 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.messages-different {
+.transcription-user {
     @include flex-vertical;
     justify-content: flex-end;
     gap: $gap-default;
@@ -40,11 +40,6 @@
                 width: fit-content;
                 line-height: 1.15rem;
             }
-        }
-
-        &-dropdown {
-            display: flex;
-            justify-content: flex-end;
         }
     }
 }
