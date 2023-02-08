@@ -52,12 +52,12 @@ export default function EmmaPracticePage() {
     const containerRef = useRef(null);
 
     useEffect(() => {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }, [chatLog]);
+
+    useEffect(() => {
         if (!transcript) {
             return;
-        }
-
-        if (containerRef.current) {
-            containerRef.current.scrollLeft = containerRef.current.scrollWidth;
         }
 
         setTranscribedText(transcript);

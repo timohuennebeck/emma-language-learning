@@ -16,7 +16,7 @@ import germanyImg from "../../assets/languages/germany.svg";
 
 // libraries
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ConversationExamples from "../../components/ConversationExamples/ConversationExamples";
 
 export default function EmmaChatbot() {
@@ -29,6 +29,12 @@ export default function EmmaChatbot() {
         },
     ]);
     const [showMessage, setShowMessage] = useState(false);
+
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }, [chatLog]);
 
     const handleGPT = (userInput) => {
         setInput("");
@@ -77,7 +83,7 @@ export default function EmmaChatbot() {
 
     return (
         <div className="emma-chatbot">
-            <div className="emma-chatbot__container-messages">
+            <div className="emma-chatbot__container-messages" ref={containerRef}>
                 {chatLog.map((item, index) => {
                     if (item.user === "me") {
                         return (
