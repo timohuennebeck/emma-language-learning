@@ -9,6 +9,7 @@ import hideImg from "../../assets/icons/stop.svg";
 import showImg from "../../assets/icons/resume.svg";
 import searchImg from "../../assets/icons/search.svg";
 import loadingImg from "../../assets/icons/Loading.svg";
+import aiImg from "../../assets/images/ai-face.gif";
 
 // components
 import VCButton from "../../components/VCButton/VCButton";
@@ -41,6 +42,8 @@ export default function EmmaPracticePage() {
     ]);
     const [transcribedText, setTranscribedText] = useState("");
     const [isSpinning, setIsSpinning] = useState(false);
+    const [message, setMessage] = useState("");
+
     const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
         useSpeechRecognition();
 
@@ -57,6 +60,29 @@ export default function EmmaPracticePage() {
 
         setTranscribedText(transcript);
     }, [transcript]);
+
+    useEffect(() => {
+        speechSynthesis.cancel();
+
+        const msg = new SpeechSynthesisUtterance();
+        const voices = window.speechSynthesis.getVoices();
+
+        let languageVoice;
+
+        if (currentLanguage === "fr-FR") {
+            languageVoice = voices.find((voice) => voice.name === "Google français");
+        } else if (currentLanguage === "es-ES") {
+            languageVoice = voices.find((voice) => voice.name === "Google español");
+        } else if (currentLanguage === "de-DE") {
+            languageVoice = voices.find((voice) => voice.name === "Google Deutsch");
+        } else {
+            languageVoice = voices.find((voice) => voice.name === "Google US English");
+        }
+
+        msg.voice = languageVoice;
+        msg.text = message;
+        speechSynthesis.speak(msg);
+    }, [message]);
 
     if (!browserSupportsSpeechRecognition) {
         return <span>Browser doesn't support speech recognition.</span>;
@@ -84,6 +110,7 @@ export default function EmmaPracticePage() {
                 message: userInput,
             })
             .then(({ data }) => {
+                setMessage(data.message);
                 setChatLog([
                     ...chatLogNew,
                     {
@@ -102,8 +129,6 @@ export default function EmmaPracticePage() {
                     },
                 ]);
             });
-
-        
     };
 
     // maps through all languages which are used for the api
@@ -116,24 +141,30 @@ export default function EmmaPracticePage() {
 
     return (
         <>
-            <div className="emma-video">
-                <div className="emma-video__messages">
-                    {chatLog.map((item, index) => {
-                        if (item.user === "me") {
-                            return (
-                                <div className="emma-chatbot__container-messages-left">
-                                    <TranscriptionUserMessage userMessage={item} key={index} />
-                                </div>
-                            );
-                        } else {
-                            return (
-                                <div className="emma-chatbot__container-messages-right">
-                                    <TranscriptionAIMessage openaiMessage={item} key={index} />
-                                </div>
-                            );
-                        }
-                    })}
-                </div>
+            <div className={`emma-video ${disableTranscription ? "" : "black-bg"}`}>
+                {disableTranscription ? (
+                    <div className="emma-video__messages">
+                        {chatLog.map((item, index) => {
+                            if (item.user === "me") {
+                                return (
+                                    <div className="emma-chatbot__container-messages-left">
+                                        <TranscriptionUserMessage userMessage={item} key={index} />
+                                    </div>
+                                );
+                            } else {
+                                return (
+                                    <div className="emma-chatbot__container-messages-right">
+                                        <TranscriptionAIMessage openaiMessage={item} key={index} />
+                                    </div>
+                                );
+                            }
+                        })}
+                    </div>
+                ) : (
+                    <div className="emma-video__ai">
+                        <img className="emma-video__ai-img" src={aiImg} alt="" />
+                    </div>
+                )}
                 <nav className="emma-video__nav">
                     {/* <div className="emma-video__nav-search">
                         <img className="emma-video__nav-search-img" src={searchImg} alt="" />

@@ -6,7 +6,17 @@
     gap: $gap-default;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
+    height: 100vh;
+    padding: 1.25rem;
+
+    &__ai {
+        height: 85%;
+        @include flex;
+
+        &-img {
+            width: 50%;
+        }
+    }
 
     &__transcription {
         &-img {
@@ -125,6 +135,10 @@
 
 .black {
     color: #000;
+}
+
+.black-bg {
+    background-color: #000;
 }
 
 .loading-animation {
