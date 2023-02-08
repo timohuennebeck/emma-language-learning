@@ -1,13 +1,15 @@
 import { useState } from "react";
 import "./VCButton.scss";
 
-export default function VCButton({ img, hover, onClick }) {
+export default function VCButton({ img, hover, onClick, onMouseDown, onMouseUp }) {
     const [revealHover, setRevealHover] = useState(false);
 
     return (
         <div
             className="vc-button"
             onClick={onClick}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
             onMouseEnter={() => setRevealHover(true)}
             onMouseLeave={() => setRevealHover(false)}
         >

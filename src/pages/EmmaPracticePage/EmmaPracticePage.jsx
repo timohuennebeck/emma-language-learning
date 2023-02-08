@@ -2,12 +2,13 @@ import "./EmmaPracticePage.scss";
 
 // images
 import micImg from "../../assets/icons/Mic.svg";
-import mutedMicImg from "../../assets/icons/mutedMic.svg";
+import resetImg from "../../assets/icons/Shield - vulnerable.svg";
 import hideTranslationImg from "../../assets/icons/eye-slash.svg";
 import showTranslationImg from "../../assets/icons/eye.svg";
 import hideImg from "../../assets/icons/stop.svg";
 import showImg from "../../assets/icons/resume.svg";
 import searchImg from "../../assets/icons/search.svg";
+import loadingImg from "../../assets/icons/Loading.svg";
 
 // components
 import VCButton from "../../components/VCButton/VCButton";
@@ -15,7 +16,7 @@ import TranscriptionAIMessage from "../../components/TranscriptionAIMessage/Tran
 import TranscriptionUserMessage from "../../components/TranscriptionUserMessage/TranscriptionUserMessage";
 
 // libraries
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
@@ -25,32 +26,38 @@ export default function EmmaPracticePage() {
     const [disableTranslation, setDisableTranslation] = useState(false);
 
     // sets the current language that's used for the speech-to-text api
-    const [currentLanguage, setCurrentLanguage] = useState("None");
+    const [currentLanguage, setCurrentLanguage] = useState("en-EN");
 
     // const [currentTranslation, setCurrentTranslation] = useState("English");
     const [toggleDropdown, setToggleDropdown] = useState(false);
-    const [isListening, setIsListening] = useState(false);
 
     // creates the chatlog which shows the users transcription in real-time
     const [chatLog, setChatLog] = useState([
         {
             user: "gpt",
             message:
-                "Hi! Let's have a conversation in English, French, Spanish or German. You start!",
+                "Hi! Let's have a conversation in English, French, Spanish or German. You start! P.S. In order to talk to me, please hold the microphone while speaking.",
         },
     ]);
-    const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } =
+    const [transcribedText, setTranscribedText] = useState("");
+    const [isSpinning, setIsSpinning] = useState(false);
+    const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
         useSpeechRecognition();
 
-    // inserts the speech from the user into the chat log and makes an api call to receive an answer from the ai
+    const containerRef = useRef(null);
+
     useEffect(() => {
         if (!transcript) {
             return;
         }
 
-        const chatLogNew = [...chatLog, { user: "me", message: transcript }];
+        setTranscribedText(transcript);
+    }, [transcript]);
 
-        setChatLog(chatLogNew);
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.scrollLeft = containerRef.current.scrollWidth;
+        }
     }, [transcript]);
 
     if (!browserSupportsSpeechRecognition) {
@@ -63,10 +70,11 @@ export default function EmmaPracticePage() {
     };
 
     const handleGPT = (userInput) => {
-        const chatLogNew = [...chatLog];
-
+        // adds the users input to the state which will be used to make the API call, meanwhile shows a loading sign until a response has been received
+        const chatLogNew = [...chatLog, { user: "me", message: userInput }];
         const chatLoading = [
             ...chatLog,
+            { user: "me", message: userInput },
             { user: "gpt", message: "I'm thinking... Hold on for a second." },
         ];
 
@@ -75,7 +83,7 @@ export default function EmmaPracticePage() {
         // sends the users input to the AI and then adds the answer from the AI into the chat
         axios
             .post(`${process.env.REACT_APP_API_URL}/openai`, {
-                message: transcript,
+                message: userInput,
             })
             .then(({ data }) => {
                 setChatLog([
@@ -114,11 +122,7 @@ export default function EmmaPracticePage() {
                         if (item.user === "me") {
                             return (
                                 <div className="emma-chatbot__container-messages-left">
-                                    <TranscriptionUserMessage
-                                        userMessage={item}
-                                        transcript={transcript}
-                                        key={index}
-                                    />
+                                    <TranscriptionUserMessage userMessage={item} key={index} />
                                 </div>
                             );
                         } else {
@@ -138,6 +142,22 @@ export default function EmmaPracticePage() {
                             placeholder="Search a username..."
                         />
                     </div>
+                    <div className="emma-video__nav-transcription">
+                        <img
+                            className={`emma-video__nav-transcription-img ${
+                                isSpinning ? "loading-animation" : ""
+                            }`}
+                            src={loadingImg}
+                            alt=""
+                        />
+                        <input
+                            ref={containerRef}
+                            className="emma-video__nav-transcription-input"
+                            placeholder="Search a username..."
+                            value={transcribedText ? transcribedText : "Transcribing..."}
+                            disabled
+                        />
+                    </div>
 
                     <VCButton
                         img={disableTranscription ? showImg : hideImg}
@@ -152,23 +172,27 @@ export default function EmmaPracticePage() {
                         onClick={() => setDisableTranslation(!disableTranslation)}
                     />
                     <VCButton
-                        img={isListening ? micImg : mutedMicImg}
-                        hover={isListening ? "Disable Microphone" : "Enable Microphone"}
-                        onClick={() => {
-                            if (!isListening) {
-                                SpeechRecognition.startListening({
-                                    continuous: true,
-                                    language: currentLanguage,
-                                });
-                                setIsListening(!isListening);
-                            } else {
-                                SpeechRecognition.stopListening();
-                                handleGPT(transcript);
-                                setIsListening(!isListening);
-                            }
+                        img={micImg}
+                        hover="Hold to Talk"
+                        onMouseDown={() => {
+                            setIsSpinning(true);
+                            SpeechRecognition.startListening({
+                                continuous: true,
+                                language: currentLanguage,
+                            });
+                        }}
+                        onMouseUp={() => {
+                            setIsSpinning(false);
+                            resetTranscript();
+                            SpeechRecognition.stopListening();
+                            handleGPT(transcribedText);
                         }}
                     />
-                    <VCButton img={micImg} hover="Reset" onClick={() => resetTranscript()} />
+                    <VCButton
+                        img={resetImg}
+                        hover="Reset Defaults"
+                        onClick={() => resetTranscript()}
+                    />
                     <div
                         className="emma-video__nav-languages"
                         onClick={() => setToggleDropdown(!toggleDropdown)}
