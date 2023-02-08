@@ -17,6 +17,7 @@ import TranscriptionUserMessage from "../../components/TranscriptionUserMessage/
 // libraries
 import { useState, useEffect } from "react";
 import axios from "axios";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
 export default function EmmaPracticePage() {
     // shows or hides the text on the screen
@@ -28,9 +29,7 @@ export default function EmmaPracticePage() {
 
     // const [currentTranslation, setCurrentTranslation] = useState("English");
     const [toggleDropdown, setToggleDropdown] = useState(false);
-
-    // enables or disables the microphone to start listening
-    const [listening, setListening] = useState(false);
+    const [isListening, setIsListening] = useState(false);
 
     // creates the chatlog which shows the users transcription in real-time
     const [chatLog, setChatLog] = useState([
@@ -40,117 +39,67 @@ export default function EmmaPracticePage() {
                 "Hi! Let's have a conversation in English, French, Spanish or German. You start!",
         },
     ]);
+    const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } =
+        useSpeechRecognition();
 
-    // used for the real-time transcriptions
-    const [transcript, setTranscript] = useState("");
-    const [isRecognizing, setIsRecognizing] = useState(false);
-    const [recognition, setRecognition] = useState(null);
-    const [receiveResponse, setReceiveResponse] = useState(false);
-
-    const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
+    // inserts the speech from the user into the chat log and makes an api call to receive an answer from the ai
     useEffect(() => {
-        const recognition = new speechRecognition();
-        recognition.interimResults = true;
-        setRecognition(recognition);
-    }, []);
-
-    useEffect(() => {
-        return () => {
-            if (recognition) {
-                recognition.stop();
-            }
-        };
-    }, [recognition]);
-
-    const toggleRecognition = () => {
-        if (isRecognizing) {
-            recognition.stop();
-        } else {
-            recognition.start();
+        if (!transcript) {
+            return;
         }
-        setIsRecognizing(!isRecognizing);
-    };
 
-    // shows the transcript in real-time
-    useEffect(() => {
-        if (recognition) {
-            recognition.onresult = (event) => {
-                setTranscript(event.results[0][0].transcript);
-                handleGPT(event.results[0][0].transcript);
-            };
-            recognition.onend = () => {
-                setListening(false);
-                setIsRecognizing(false);
-                setReceiveResponse(true);
-            };
-        }
-    }, [isRecognizing, recognition]);
+        const chatLogNew = [...chatLog, { user: "me", message: transcript }];
+
+        setChatLog(chatLogNew);
+    }, [transcript]);
+
+    if (!browserSupportsSpeechRecognition) {
+        return <span>Browser doesn't support speech recognition.</span>;
+    }
 
     // changes the language code in order to use the correct api
     const changeLanguage = (language) => {
         setCurrentLanguage(language);
-        recognition.lang = language;
     };
 
-    // inserts the speech from the user into the chat log and makes an api call to receive an answer from the ai
     const handleGPT = (userInput) => {
-        if (!userInput) {
-            return;
-        }
+        const chatLogNew = [...chatLog];
 
-        const chatLogNew = [...chatLog, { user: "me", message: userInput }];
+        const chatLoading = [
+            ...chatLog,
+            { user: "gpt", message: "I'm thinking... Hold on for a second." },
+        ];
 
-        setChatLog(chatLogNew);
+        setChatLog(chatLoading);
+
+        // sends the users input to the AI and then adds the answer from the AI into the chat
+        axios
+            .post(`${process.env.REACT_APP_API_URL}/openai`, {
+                message: transcript,
+            })
+            .then(({ data }) => {
+                setChatLog([
+                    ...chatLogNew,
+                    {
+                        user: "gpt",
+                        message: data.message,
+                    },
+                ]);
+            })
+            .catch((error) => {
+                console.error(error);
+                setChatLog([
+                    ...chatLogNew,
+                    {
+                        user: "gpt",
+                        message: "There has been an error. Please, reload the page.",
+                    },
+                ]);
+            });
     };
-
-    console.log(chatLog);
-
-    useEffect(() => {
-        if (receiveResponse) {
-            const chatLogNew = [...chatLog];
-
-            const chatLoading = [
-                ...chatLog,
-                { user: "gpt", message: "I'm thinking... Hold on for a second." },
-            ];
-
-            setChatLog(chatLoading);
-
-            // sends the users input to the AI and then adds the answer from the AI into the chat
-            axios
-                .post(`${process.env.REACT_APP_API_URL}/openai`, {
-                    message: transcript,
-                })
-                .then(({ data }) => {
-                    setChatLog([
-                        ...chatLogNew,
-                        {
-                            user: "gpt",
-                            message: data.message,
-                        },
-                    ]);
-                    setListening(false);
-                    setReceiveResponse(false);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    setChatLog([
-                        ...chatLogNew,
-                        {
-                            user: "gpt",
-                            message: "There has been an error. Please, reload the page.",
-                        },
-                    ]);
-                    setListening(false);
-                    setReceiveResponse(false);
-                });
-        }
-    }, [receiveResponse]);
 
     // maps through all languages which are used for the api
     const languageOptions = [
-        { languageCode: "None" },
         { languageCode: "fr-FR" },
         { languageCode: "es-ES" },
         { languageCode: "de-DE" },
@@ -165,7 +114,11 @@ export default function EmmaPracticePage() {
                         if (item.user === "me") {
                             return (
                                 <div className="emma-chatbot__container-messages-left">
-                                    <TranscriptionUserMessage userMessage={item} key={index} />
+                                    <TranscriptionUserMessage
+                                        userMessage={item}
+                                        transcript={transcript}
+                                        key={index}
+                                    />
                                 </div>
                             );
                         } else {
@@ -199,13 +152,23 @@ export default function EmmaPracticePage() {
                         onClick={() => setDisableTranslation(!disableTranslation)}
                     />
                     <VCButton
-                        img={listening ? micImg : mutedMicImg}
-                        hover={listening ? "Disable Microphone" : "Enable Microphone"}
+                        img={isListening ? micImg : mutedMicImg}
+                        hover={isListening ? "Disable Microphone" : "Enable Microphone"}
                         onClick={() => {
-                            setListening(!listening);
-                            toggleRecognition();
+                            if (!isListening) {
+                                SpeechRecognition.startListening({
+                                    continuous: true,
+                                    language: currentLanguage,
+                                });
+                                setIsListening(!isListening);
+                            } else {
+                                SpeechRecognition.stopListening();
+                                handleGPT(transcript);
+                                setIsListening(!isListening);
+                            }
                         }}
                     />
+                    <VCButton img={micImg} hover="Reset" onClick={() => resetTranscript()} />
                     <div
                         className="emma-video__nav-languages"
                         onClick={() => setToggleDropdown(!toggleDropdown)}
