@@ -51,13 +51,11 @@ export default function EmmaPracticePage() {
             return;
         }
 
-        setTranscribedText(transcript);
-    }, [transcript]);
-
-    useEffect(() => {
         if (containerRef.current) {
             containerRef.current.scrollLeft = containerRef.current.scrollWidth;
         }
+
+        setTranscribedText(transcript);
     }, [transcript]);
 
     if (!browserSupportsSpeechRecognition) {
@@ -104,6 +102,8 @@ export default function EmmaPracticePage() {
                     },
                 ]);
             });
+
+        
     };
 
     // maps through all languages which are used for the api
@@ -135,13 +135,13 @@ export default function EmmaPracticePage() {
                     })}
                 </div>
                 <nav className="emma-video__nav">
-                    <div className="emma-video__nav-search">
+                    {/* <div className="emma-video__nav-search">
                         <img className="emma-video__nav-search-img" src={searchImg} alt="" />
                         <input
                             className="emma-video__nav-search-input"
                             placeholder="Search a username..."
                         />
-                    </div>
+                    </div> */}
                     <div className="emma-video__nav-transcription">
                         <img
                             className={`emma-video__nav-transcription-img ${
