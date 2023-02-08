@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+# `Emma`
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Emma, an AI-powered language learning platform that utilises AI to simulate real-life conversation with native speakers to empower individuals in less developed, financially disadvantaged countries to acquire foreign language for free.
 
-## Available Scripts
+[![Emma Mockup](https://user-images.githubusercontent.com/107037151/217581785-3e5e5106-262d-4306-b699-42109596082a.jpg)](https://emma-language-learning.herokuapp.com)
 
-In the project directory, you can run:
 
-### `npm start`
+<br />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## `Installing Emma`
 
-### `npm test`
+### `Step 1`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Download ['emma-language-learning'](https://github.com/timohuennebeck/emma-language-learning) and ['emma-language-learning-api'](https://github.com/timohuennebeck/emma-language-learning-api) and make sure to create a .env file on the client side which includes a port where the server can run. Emma was running on port 8080 in production, therefore, we recommend using the same.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `Step 2`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Run `npm install` on the client and server side to download all dependencies.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### `Step 3`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Run `npm run migrate` and `npm run seed` on the server side to populate the SQL database.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### `Step 4`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+You're almost done! On the client side run `npm run dev` to launch the application and `npx nodemon` on the server side to start the server. Welcome to Emma!
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Have fun! 🌻
