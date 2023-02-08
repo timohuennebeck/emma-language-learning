@@ -2,7 +2,6 @@ import "./EmmaPracticePage.scss";
 
 // images
 import micImg from "../../assets/icons/Mic.svg";
-import resetImg from "../../assets/icons/Shield - vulnerable.svg";
 import hideTranslationImg from "../../assets/icons/eye-slash.svg";
 import showTranslationImg from "../../assets/icons/eye.svg";
 import hideImg from "../../assets/icons/stop.svg";
@@ -10,6 +9,7 @@ import showImg from "../../assets/icons/resume.svg";
 import searchImg from "../../assets/icons/search.svg";
 import loadingImg from "../../assets/icons/Loading.svg";
 import aiImg from "../../assets/images/ai-face.gif";
+import leaveImg from "../../assets/icons/Arrow - Left.svg";
 
 // components
 import VCButton from "../../components/VCButton/VCButton";
@@ -20,6 +20,7 @@ import TranscriptionUserMessage from "../../components/TranscriptionUserMessage/
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import { Link } from "react-router-dom";
 
 export default function EmmaPracticePage() {
     // shows or hides the text on the screen
@@ -43,6 +44,7 @@ export default function EmmaPracticePage() {
     const [transcribedText, setTranscribedText] = useState("");
     const [isSpinning, setIsSpinning] = useState(false);
     const [message, setMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
         useSpeechRecognition();
@@ -103,6 +105,7 @@ export default function EmmaPracticePage() {
         ];
 
         setChatLog(chatLoading);
+        setIsLoading(true);
 
         // sends the users input to the AI and then adds the answer from the AI into the chat
         axios
@@ -111,6 +114,9 @@ export default function EmmaPracticePage() {
             })
             .then(({ data }) => {
                 setMessage(data.message);
+                setIsLoading(false);
+                setTranscribedText("");
+                resetTranscript();
                 setChatLog([
                     ...chatLogNew,
                     {
@@ -163,6 +169,15 @@ export default function EmmaPracticePage() {
                 ) : (
                     <div className="emma-video__ai">
                         <img className="emma-video__ai-img" src={aiImg} alt="" />
+                        {isLoading && (
+                            <img
+                                className={`emma-video__ai-loading ${
+                                    isLoading ? "loading-animation" : ""
+                                }`}
+                                src={loadingImg}
+                                alt=""
+                            />
+                        )}
                     </div>
                 )}
                 <nav className="emma-video__nav">
@@ -189,17 +204,20 @@ export default function EmmaPracticePage() {
                             disabled
                         />
                     </div>
+                    <Link to="/">
+                        <VCButton img={leaveImg} hover="Leave Practice" />
+                    </Link>
 
                     <VCButton
-                        img={disableTranscription ? showImg : hideImg}
+                        img={disableTranscription ? hideImg : showImg}
                         hover={
-                            disableTranscription ? "Enable Transcription" : "Disable Transcription"
+                            disableTranscription ? "Disable Transcription" : "Enable Transcription"
                         }
                         onClick={() => setDisableTranscription(!disableTranscription)}
                     />
                     <VCButton
-                        img={disableTranslation ? showTranslationImg : hideTranslationImg}
-                        hover={disableTranslation ? "Enable Translation" : "Disable Translation"}
+                        img={disableTranslation ? hideTranslationImg : showTranslationImg}
+                        hover={disableTranslation ? "Disable Translation" : "Enable Translation"}
                         onClick={() => setDisableTranslation(!disableTranslation)}
                     />
                     <VCButton
@@ -213,16 +231,11 @@ export default function EmmaPracticePage() {
                             });
                         }}
                         onMouseUp={() => {
+                            SpeechRecognition.stopListening();
                             setIsSpinning(false);
                             resetTranscript();
-                            SpeechRecognition.stopListening();
                             handleGPT(transcribedText);
                         }}
-                    />
-                    <VCButton
-                        img={resetImg}
-                        hover="Reset Defaults"
-                        onClick={() => resetTranscript()}
                     />
                     <div
                         className="emma-video__nav-languages"

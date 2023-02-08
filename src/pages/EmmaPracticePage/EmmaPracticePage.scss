@@ -12,9 +12,15 @@
     &__ai {
         height: 85%;
         @include flex;
+        flex-direction: column;
 
         &-img {
-            width: 50%;
+            width: 17.5rem;
+            height: 17.5rem;
+        }
+
+        &-loading {
+            filter: brightness(0) invert(1);
         }
     }
 
@@ -82,7 +88,7 @@
                 &-indv {
                     @include flex;
                     @include shadow;
-                    padding: 0.75rem;
+                    padding: 0.8rem;
                     border-radius: $border-radius-default;
                     background-color: $prim-color-2;
                     min-width: 6.5rem;
