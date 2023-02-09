@@ -45,10 +45,12 @@ export default function NavigationInterface() {
                     </div>
                 </div>
                 <div>
-                    <NavLinkButton link="/messages" hover="Messages" img={messagesImg} />
-                    <NavLinkButton link="/settings" hover="Settings" img={settingsImg} />
+                    {/* <NavLinkButton link="/messages" hover="Messages" img={messagesImg} /> */}
+                    {/* <NavLinkButton link="/settings" hover="Settings" img={settingsImg} /> */}
                     <NavLinkButton
-                        onClick={() => logout({ returnTo: window.location.origin })}
+                        onClick={() =>
+                            logout({ returnTo: "https://emma-language-learning.herokuapp.com" })
+                        }
                         hover="Log Out"
                         img={logOutImg}
                     />

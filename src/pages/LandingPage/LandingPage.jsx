@@ -32,6 +32,8 @@ export default function LandingPage() {
                         <LoginButton name="Log In" />
                         <LoginButton name="Sign Up" />
                     </div>
+                    <p>Don't have an account? Log in using a sample account:</p>
+                    <p>Email: beta@emma.com and PW: !8n3Map7fYQ</p>
                 </div>
                 <div className="landing__right-ai">
                     <img className="landing__right-ai-img" src={aiImg} alt="" />
