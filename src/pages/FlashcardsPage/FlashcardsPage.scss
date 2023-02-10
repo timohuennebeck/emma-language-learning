@@ -4,19 +4,33 @@
 .flashcards-page {
     @include flex-column;
     gap: $gap-default;
+    flex: 1 1 0;
 
     &__nav {
-        display: flex;
-        justify-content: space-between;
+        @include flex-column;
+        gap: $gap-default;
+
+        @include desktop {
+            flex-direction: row;
+            justify-content: space-between;
+        }
 
         &-left {
-            display: flex;
+            @include flex-column;
             gap: $gap-default;
-            width: 75%;
+
+            @include desktop {
+                width: 75%;
+                flex-direction: row;
+            }
 
             &-languages {
-                @include flex-vertical;
+                @include flex-column;
                 gap: $gap-default;
+
+                @include tablet {
+                    flex-direction: row;
+                }
 
                 &-indv {
                     @include flex-vertical;
@@ -75,8 +89,12 @@
 
     &__items {
         display: flex;
+        justify-content: center;
         flex-wrap: wrap;
-        justify-content: flex-start;
         gap: $gap-default;
+
+        @include desktop {
+            justify-content: flex-start;
+        }
     }
 }

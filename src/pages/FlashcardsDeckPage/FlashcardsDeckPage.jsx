@@ -6,9 +6,9 @@ import InputField from "../../components/InputField/InputField";
 import NewFlashcard from "../../components/NewFlashcard/NewFlashcard";
 
 // libraries
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { getDictionariesId, getDictionariesWords, updateDictionaries } from "../../utils/api";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 
 // flags
@@ -19,11 +19,14 @@ import germanyImg from "../../assets/languages/germany.svg";
 // images
 import unfilledStarImg from "../../assets/icons/Star.svg";
 import starsFilledImg from "../../assets/icons/star-filled.svg";
+import SlideInFromTop from "../../components/SlideInFromTop/SlideInFromTop";
 
 export default function FlashcardsDeckPage() {
     const [deck, setDeck] = useState({ name: "", description: "", rating: 0 });
     const [words, setWords] = useState([]);
     const [rating, setRating] = useState(0);
+    const [updateList, setUpdateList] = useState(false);
+    const [toggleUpload, setToggleUpload] = useState(false);
 
     const { id } = useParams();
 
@@ -60,9 +63,9 @@ export default function FlashcardsDeckPage() {
 
         // individual words that are shown on the flashcards
         getDictionariesWords().then(({ data }) => {
-            setWords(data.filter((item) => item.dictionaries_id === Number(id)));
+            setWords(data.filter((item) => item.dictionaries_id === Number(id)).reverse());
         });
-    }, []);
+    }, [updateList]);
 
     // loops throught the ratings and inserts the amount of filled out stars as the rating
     const ratingStars = [];
@@ -90,6 +93,12 @@ export default function FlashcardsDeckPage() {
 
     return (
         <div className="deck-page">
+            {toggleUpload && <SlideInFromTop name="+ Flashcard has been added" />}
+            <div className="deck-page__back">
+                <Link className="deck-page__back-link" to="/flashcards">
+                    Back To Decks
+                </Link>
+            </div>
             <form className="deck-page__form" onSubmit={handleSubmit}>
                 <div className="deck-page__form-indv">
                     <div className="deck-page__form-indv-name">
@@ -124,13 +133,19 @@ export default function FlashcardsDeckPage() {
                     <button className="deck-page__form-box-button">Save Changes</button>
                 </div>
             </form>
-            {/* <NewFlashcard flags={flag} />
+            <NewFlashcard
+                flags={flag}
+                deckData={deck}
+                updateList={updateList}
+                setUpdateList={setUpdateList}
+                setToggleUpload={setToggleUpload}
+            />
 
             <div className="deck-page__edit">
                 {words.map((item) => {
-                    return <EditFlashcard indvWords={item} flag={flag} key={item.id}/>;
+                    return <EditFlashcard indvWords={item} flag={flag} key={item.id} />;
                 })}
-            </div> */}
+            </div>
         </div>
     );
 }

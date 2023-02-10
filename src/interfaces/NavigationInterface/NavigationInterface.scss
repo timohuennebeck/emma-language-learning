@@ -37,7 +37,11 @@
         height: 100%;
         width: 100%;
         overflow: scroll;
-        padding: $padding-default $padding-default $padding-default 0;
+        padding: $padding-default;
+        
+        @include desktop {
+            padding: $padding-default $padding-default $padding-default 0;
+        }
 
         &::-webkit-scrollbar {
             display: none;

@@ -191,7 +191,7 @@ export default function UploadNewWord({
                     </button>
                     {selectLevel ? (
                         <button className="upload-word__nav-buttons-save" onClick={uploadWord}>
-                            SAVE
+                            Save Changes
                         </button>
                     ) : null}
                 </div>

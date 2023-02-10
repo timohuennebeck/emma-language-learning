@@ -92,16 +92,6 @@ export default function EditFlashcard({ indvWords, flag }) {
                             value={englishWord}
                         />
                     </div>
-                    <div
-                        className="edit-flashcard__languages-foreign-speak"
-                        onClick={() => englishLanguage(englishWord)}
-                    >
-                        <img
-                            className="edit-flashcard__languages-foreign-speak-img"
-                            src={speakImg}
-                            alt=""
-                        />
-                    </div>
                 </div>
 
                 <div className="edit-flashcard__languages-foreign">
@@ -118,16 +108,6 @@ export default function EditFlashcard({ indvWords, flag }) {
                             className="edit-flashcard__languages-foreign-input-indv"
                             placeholder="Insert Term..."
                             value={foreignWord}
-                        />
-                    </div>
-                    <div
-                        className="edit-flashcard__languages-foreign-speak"
-                        onClick={() => foreignLanguage(foreignWord)}
-                    >
-                        <img
-                            className="edit-flashcard__languages-foreign-speak-img"
-                            src={speakImg}
-                            alt=""
                         />
                     </div>
                 </div>
@@ -189,7 +169,7 @@ export default function EditFlashcard({ indvWords, flag }) {
                 </div>
 
                 <div className="edit-flashcard__nav-buttons">
-                    <button className="edit-flashcard__nav-buttons-save">SAVE</button>
+                    <button className="edit-flashcard__nav-buttons-save">Save Changes</button>
                 </div>
             </div>
         </div>
