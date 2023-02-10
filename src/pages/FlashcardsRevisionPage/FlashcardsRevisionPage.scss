@@ -1,7 +1,0 @@
-@use "../../styles/partials/variables" as *;
-@use "../../styles/partials/mixins" as *;
-
-.flashcards-revision {
-    @include flex;
-    height: 100%;
-}

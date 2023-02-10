@@ -48,53 +48,55 @@ export default function FlashcardsPage() {
     };
 
     return (
-        <div className="flashcards-page">
-            <nav className="flashcards-page__nav">
-                <div className="flashcards-page__nav-left">
-                    <div className="flashcards-page__nav-left-languages">
-                        <SelectLanguage
-                            name="French"
-                            flag={franceImg}
-                            onClick={handleClick}
-                            currentLanguage={currentLanguage}
-                        />
-                        <SelectLanguage
-                            name="Spanish"
-                            flag={spainImg}
-                            onClick={handleClick}
-                            currentLanguage={currentLanguage}
-                        />
-                        <SelectLanguage
-                            name="German"
-                            flag={germanyImg}
-                            onClick={handleClick}
-                            currentLanguage={currentLanguage}
-                        />
+        <div>
+            <div className="flashcards-page">
+                <nav className="flashcards-page__nav">
+                    <div className="flashcards-page__nav-left">
+                        <div className="flashcards-page__nav-left-languages">
+                            <SelectLanguage
+                                name="French"
+                                flag={franceImg}
+                                onClick={handleClick}
+                                currentLanguage={currentLanguage}
+                            />
+                            <SelectLanguage
+                                name="Spanish"
+                                flag={spainImg}
+                                onClick={handleClick}
+                                currentLanguage={currentLanguage}
+                            />
+                            <SelectLanguage
+                                name="German"
+                                flag={germanyImg}
+                                onClick={handleClick}
+                                currentLanguage={currentLanguage}
+                            />
+                        </div>
+
+                        <div className="flashcards-page__nav-left-search">
+                            <img
+                                className="flashcards-page__nav-left-search-img"
+                                src={searchImg}
+                                alt=""
+                            />
+                            <input
+                                className="flashcards-page__nav-left-search-input"
+                                placeholder="Search..."
+                                onChange={(e) => handleSearch(e.target.value)}
+                            />
+                        </div>
                     </div>
 
-                    <div className="flashcards-page__nav-left-search">
-                        <img
-                            className="flashcards-page__nav-left-search-img"
-                            src={searchImg}
-                            alt=""
-                        />
-                        <input
-                            className="flashcards-page__nav-left-search-input"
-                            placeholder="Search..."
-                            onChange={(e) => handleSearch(e.target.value)}
-                        />
-                    </div>
+                    <Link className="flashcards-page__nav-link">
+                        <img className="flashcards-page__nav-link-img" src={addImg} alt="" />
+                        <p>New List</p>
+                    </Link>
+                </nav>
+                <div className="flashcards-page__items">
+                    {filteredLanguages.map((item) => {
+                        return <FlashcardsDeck flashcardsData={item} key={item.id} />;
+                    })}
                 </div>
-
-                <Link className="flashcards-page__nav-link">
-                    <img className="flashcards-page__nav-link-img" src={addImg} alt="" />
-                    <p>New List</p>
-                </Link>
-            </nav>
-            <div className="flashcards-page__items">
-                {filteredLanguages.map((item) => {
-                    return <FlashcardsDeck flashcardsData={item} key={item.id} />;
-                })}
             </div>
         </div>
     );

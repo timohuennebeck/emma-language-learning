@@ -94,4 +94,24 @@
             }
         }
     }
+
+    &__error {
+        @include flex-vertical;
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+
+        &-img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        &-message {
+            font-size: 0.875rem;
+            color: #c94515;
+        }
+    }
+}
+
+.new-hover {
+    filter: brightness(0) invert(1);
 }

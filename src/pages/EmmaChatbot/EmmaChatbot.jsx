@@ -7,6 +7,7 @@ import LiveChatMessageDifferentUser from "../../components/LiveChatMessageDiffer
 // images
 import messagesImg from "../../assets/icons/send.svg";
 import loadingGif from "../../assets/animations/loading-animation.gif";
+import infoImg from "../../assets/icons/Info.svg";
 
 // languages
 import ukImg from "../../assets/languages/united kingdom.svg";
@@ -16,7 +17,11 @@ import germanyImg from "../../assets/languages/germany.svg";
 
 // libraries
 import axios from "axios";
+<<<<<<< HEAD
 import { useEffect, useRef, useState } from "react";
+=======
+import { useEffect, useState } from "react";
+>>>>>>> develop
 import ConversationExamples from "../../components/ConversationExamples/ConversationExamples";
 
 export default function EmmaChatbot() {
@@ -29,6 +34,14 @@ export default function EmmaChatbot() {
         },
     ]);
     const [showMessage, setShowMessage] = useState(false);
+    const [hover, setHover] = useState(false);
+    const [triggerError, setTriggerError] = useState(false);
+
+    useEffect(() => {
+        if (input !== "") {
+            setTriggerError(false);
+        }
+    }, [input]);
 
     const containerRef = useRef(null);
 
@@ -77,8 +90,13 @@ export default function EmmaChatbot() {
 
     // prevents the form from reloading and sends the data to the AI
     const handleSubmit = (event) => {
-        event.preventDefault();
-        handleGPT(input);
+        if (input === "") {
+            event.preventDefault();
+            setTriggerError(true);
+        } else {
+            event.preventDefault();
+            handleGPT(input);
+        }
     };
 
     return (
@@ -127,8 +145,18 @@ export default function EmmaChatbot() {
                         </p>
                     </div>
                 ) : null}
+                {triggerError && (
+                    <div className="emma-chatbot__error">
+                        <img className="emma-chatbot__error-img" src={infoImg} alt="" />
+                        <p className="emma-chatbot__error-message">
+                            Whoops! We can't do that. Insert a message to continue...
+                        </p>
+                    </div>
+                )}
                 <form className="emma-chatbot__send-container" onSubmit={handleSubmit}>
-                    <div className="emma-chatbot__send-container-input">
+                    <div
+                        className={`emma-chatbot__send-container-input ${triggerError && "error"}`}
+                    >
                         <input
                             className="emma-chatbot__send-container-input-indv"
                             placeholder="Write a message here..."
@@ -138,9 +166,15 @@ export default function EmmaChatbot() {
                             onBlur={() => setShowMessage(false)}
                         />
                     </div>
-                    <button className="emma-chatbot__send-container-button">
+                    <button
+                        className="emma-chatbot__send-container-button"
+                        onMouseEnter={() => setHover(true)}
+                        onMouseLeave={() => setHover(false)}
+                    >
                         <img
-                            className="emma-chatbot__send-container-button-img"
+                            className={`emma-chatbot__send-container-button-img ${
+                                hover && "new-hover"
+                            }`}
                             src={messagesImg}
                             alt=""
                         />

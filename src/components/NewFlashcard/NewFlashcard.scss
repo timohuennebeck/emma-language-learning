@@ -3,7 +3,11 @@
 
 .new-flashcard {
     @include flex-column;
+    @include shadow;
     gap: $gap-default;
+    background-color: $prim-color-2;
+    padding: $padding-default;
+    border-radius: $border-radius-default;
 
     &__languages {
         @include flex-column;
@@ -14,9 +18,8 @@
             gap: $gap-default;
 
             &-indv {
-                @include shadow;
                 @include flex;
-                background-color: $prim-color-2;
+                background-color: $prim-color-3;
                 padding: $padding-default;
                 border-radius: $border-radius-default;
 
@@ -37,9 +40,8 @@
             gap: $gap-default;
 
             &-indv {
-                @include shadow;
                 @include flex;
-                background-color: $prim-color-2;
+                background-color: $prim-color-3;
                 padding: 0.75rem;
                 border-radius: $border-radius-default;
 
@@ -61,6 +63,23 @@
 
             @include tablet {
                 flex-direction: row;
+                align-items: center;
+            }
+
+            &-error {
+                @include flex-vertical;
+                gap: 0.5rem;
+                margin-left: 0.5rem;
+
+                &-img {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+
+                &-message {
+                    font-size: 0.875rem;
+                    color: #c94515;
+                }
             }
 
             &-indv {

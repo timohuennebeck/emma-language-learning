@@ -1,0 +1,29 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.slide-in {
+    @include flex;
+    @include shadow;
+    position: absolute;
+    justify-content: center;
+    z-index: 1;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #e3f09b;
+    border-radius: $border-radius-default;
+    padding: 1.25rem;
+    min-width: 10rem;
+    min-height: 5rem;
+    animation: slide 1s ease;
+}
+
+@keyframes slide {
+    from {
+        top: -50%;
+    }
+
+    to {
+        top: 0;
+    }
+}

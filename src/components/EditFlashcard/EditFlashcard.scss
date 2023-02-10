@@ -2,21 +2,25 @@
 @use "../../styles/partials/mixins" as *;
 
 .edit-flashcard {
+    @include shadow;
     @include flex-column;
     gap: $gap-default;
+    background-color: $prim-color-2;
+    padding: $padding-default;
+    border-radius: $border-radius-default;
 
     &__languages {
-        @include flex-column;
+        display: flex;
         gap: $gap-default;
 
         &-foreign {
             @include flex-vertical;
             gap: $gap-default;
+            width: 100%;
 
             &-indv {
-                @include shadow;
                 @include flex;
-                background-color: $prim-color-2;
+                background-color: $prim-color-3;
                 padding: $padding-default;
                 border-radius: $border-radius-default;
 
@@ -28,11 +32,10 @@
 
             &-input {
                 @include flex-column;
-                @include shadow;
                 width: 100%;
                 gap: 0.25rem;
                 border-radius: $border-radius-default;
-                background-color: $prim-color-2;
+                background-color: $prim-color-3;
                 padding: 0.75rem;
 
                 &-title {
@@ -41,27 +44,10 @@
                 }
 
                 &-indv {
+                    background-color: $prim-color-3;
                     // font-size: 0.925rem;
                     border: none;
                     outline: none;
-                }
-            }
-
-            &-speak {
-                @include shadow;
-                @include flex;
-                background-color: $prim-color-2;
-                padding: $padding-default;
-                border-radius: $border-radius-default;
-
-                &:hover {
-                    cursor: pointer;
-                    transform: scale(1.05);
-                }
-
-                &-img {
-                    width: 1.25rem;
-                    height: 1.25rem;
                 }
             }
         }
@@ -78,7 +64,7 @@
             &-indv {
                 @include shadow;
                 @include flex;
-                background-color: $prim-color-2;
+                background-color: $prim-color-3;
                 padding: 0.75rem;
                 border-radius: $border-radius-default;
                 cursor: pointer;
