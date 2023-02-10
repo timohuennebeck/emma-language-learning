@@ -17,11 +17,7 @@ import germanyImg from "../../assets/languages/germany.svg";
 
 // libraries
 import axios from "axios";
-<<<<<<< HEAD
 import { useEffect, useRef, useState } from "react";
-=======
-import { useEffect, useState } from "react";
->>>>>>> develop
 import ConversationExamples from "../../components/ConversationExamples/ConversationExamples";
 
 export default function EmmaChatbot() {
