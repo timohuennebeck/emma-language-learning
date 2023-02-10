@@ -13,7 +13,7 @@ import finishedImg from "../../assets/icons/check-blue.svg";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getDictionaries, getDictionariesWords } from "../../utils/api";
+import { getDictionariesWords } from "../../utils/api";
 
 export default function FlashcardsDeck({ flashcardsData }) {
     const [rating, setRating] = useState(0);

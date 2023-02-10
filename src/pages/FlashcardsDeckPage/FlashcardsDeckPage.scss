@@ -8,11 +8,74 @@
     max-width: 52.5rem;
     margin: auto;
 
-    &__indv {
-        display: flex;
+    &__form {
+        @include flex-column;
         gap: $gap-default;
 
-        &-name {
+        &-indv {
+            display: flex;
+            gap: $gap-default;
+
+            &-name {
+                @include flex-column;
+                @include shadow;
+                width: 100%;
+                gap: 0.25rem;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+
+                &-title {
+                    font-size: 0.75rem;
+                    opacity: 50%;
+                }
+
+                &-input {
+                    font-size: 0.875rem;
+                    border: none;
+                    outline: none;
+                }
+            }
+
+            &-rating {
+                @include flex-column;
+                @include shadow;
+                gap: 0.25rem;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+
+                &-title {
+                    font-size: 0.75rem;
+                    opacity: 50%;
+                }
+
+                &-stars {
+                    @include flex-vertical;
+                    gap: 0.5rem;
+
+                    &-img {
+                        width: 1.25rem;
+                        height: 1.25rem;
+                    }
+                }
+            }
+
+            &-flag {
+                @include flex;
+                @include shadow;
+                padding: $padding-default;
+                background-color: $prim-color-2;
+                border-radius: $border-radius-default;
+
+                &-img {
+                    width: 2rem;
+                    height: 2rem;
+                }
+            }
+        }
+
+        &-description {
             @include flex-column;
             @include shadow;
             width: 100%;
@@ -27,70 +90,30 @@
             }
 
             &-input {
+                min-height: 4.25rem;
+                resize: none;
                 font-size: 0.875rem;
                 border: none;
                 outline: none;
             }
         }
 
-        &-rating {
-            @include flex-column;
-            @include shadow;
-            gap: 0.25rem;
-            border-radius: $border-radius-default;
-            background-color: $prim-color-2;
-            padding: 0.75rem;
+        &-box {
+            display: flex;
+            justify-content: flex-end;
 
-            &-title {
-                font-size: 0.75rem;
-                opacity: 50%;
-            }
+            &-button {
+                background-color: $prim-color-1;
+                color: $prim-color-2;
+                border: none;
+                border-radius: $border-radius-default;
+                padding: 0.75rem;
 
-            &-stars {
-                @include flex-vertical;
-                gap: 0.5rem;
-
-                &-img {
-                    width: 1.25rem;
-                    height: 1.25rem;
+                &:hover {
+                    cursor: pointer;
+                    transform: scale(1.05);
                 }
             }
-        }
-
-        &-flag {
-            @include flex;
-            @include shadow;
-            padding: $padding-default;
-            background-color: $prim-color-2;
-            border-radius: $border-radius-default;
-
-            &-img {
-                width: 2rem;
-                height: 2rem;
-            }
-        }
-    }
-
-    &__description {
-        @include flex-column;
-        @include shadow;
-        width: 100%;
-        gap: 0.25rem;
-        border-radius: $border-radius-default;
-        background-color: $prim-color-2;
-        padding: 0.75rem;
-
-        &-title {
-            font-size: 0.75rem;
-            opacity: 50%;
-        }
-
-        &-input {
-            min-height: 4.25rem;
-            resize: none;
-            font-size: 0.875rem;
-            border: none;
-            outline: none;
         }
     }
 
