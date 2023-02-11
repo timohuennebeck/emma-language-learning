@@ -4,6 +4,7 @@
 .edit-flashcard {
     @include shadow;
     @include flex-column;
+    position: relative;
     gap: $gap-default;
     background-color: $prim-color-2;
     padding: $padding-default;

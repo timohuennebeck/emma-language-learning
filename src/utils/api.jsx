@@ -45,3 +45,7 @@ export const getDictionariesWords = () => {
 export const addDictionariesWords = ({ userWord }) => {
     return axios.post(`${API_URL}/dictionaries_words`, userWord);
 };
+
+export const updateDictionariesWords = ({ userWord }) => {
+    return axios.put(`${API_URL}/dictionaries_words`, userWord);
+};

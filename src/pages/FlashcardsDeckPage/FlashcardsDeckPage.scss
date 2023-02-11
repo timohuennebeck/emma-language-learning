@@ -79,15 +79,53 @@
             }
 
             &-flag {
-                @include flex;
-                @include shadow;
-                padding: $padding-default;
-                background-color: $prim-color-2;
-                border-radius: $border-radius-default;
+                @include flex-column;
+                gap: 0.75rem;
+                position: relative;
 
-                &-img {
-                    width: 2rem;
-                    height: 2rem;
+                &-box {
+                    @include flex;
+                    @include shadow;
+                    height: 100%;
+                    padding: $padding-default;
+                    background-color: $prim-color-2;
+                    border-radius: $border-radius-default;
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $prim-color-1;
+                    }
+
+                    &-img {
+                        width: 2rem;
+                        height: 2rem;
+                    }
+                }
+
+                &-languages {
+                    @include flex-column;
+                    gap: 0.75rem;
+                    position: absolute;
+                    top: 5.75rem;
+
+                    &-box {
+                        @include flex;
+                        @include shadow;
+                        height: 100%;
+                        padding: $padding-default;
+                        background-color: $prim-color-2;
+                        border-radius: $border-radius-default;
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: $prim-color-1;
+                        }
+
+                        &-img {
+                            width: 2rem;
+                            height: 2rem;
+                        }
+                    }
                 }
             }
         }

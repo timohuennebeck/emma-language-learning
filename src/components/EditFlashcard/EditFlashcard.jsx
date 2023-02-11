@@ -1,7 +1,5 @@
 import "./EditFlashcard.scss";
 
-import speakImg from "../../assets/icons/Volume - High.svg";
-
 import ukImg from "../../assets/languages/united kingdom.svg";
 
 import beginnerImg from "../../assets/icons/beginner.svg";
@@ -16,65 +14,61 @@ import advancedWhiteImg from "../../assets/icons/advanced-white.svg";
 // libraries
 import { useState } from "react";
 
-export default function EditFlashcard({ indvWords, flag }) {
-    const [selectLevel, setSelectLevel] = useState("");
+// api calls
+import { updateDictionariesWords } from "../../utils/api";
+
+export default function EditFlashcard({ indvWords, currentLanguage, setToggleMessage }) {
     const [highlightLevel, setHiglightLevel] = useState(indvWords.level);
 
-    const [englishWord, setEnglishWord] = useState(indvWords.english);
-    const [foreignWord, setForeignWord] = useState(indvWords.foreign_translation);
+    const [flashcardWord, setFlashcardWord] = useState({
+        id: indvWords.level,
+        dictionaries_id: indvWords.dictionaries_id,
+        english: indvWords.english,
+        foreign_translation: indvWords.foreign_translation,
+        level: indvWords.level,
+    });
 
-    // contains all text-to-speech APIs for all foreign languages
-    const foreignLanguage = (event) => {
-        speechSynthesis.cancel();
+    const changeLevel = (event) => {
+        setFlashcardWord({ ...flashcardWord, level: event });
+        setHiglightLevel(event);
+    };
 
-        const msg = new SpeechSynthesisUtterance();
-        const voices = window.speechSynthesis.getVoices();
+    // allows the user to change the words
+    const handleChange = (event) => {
+        setFlashcardWord({ ...flashcardWord, [event.target.name]: event.target.value });
+    };
 
-        // finds the right text to speech API for each language
-        let languageVoice;
+    // receives all values on submission and then sends them to the sql database
+    const handleSubmit = (event) => {
+        event.preventDefault();
 
-        switch (indvWords.language) {
-            case "French":
-                languageVoice = voices.find((voice) => voice.name === "Google français");
-                break;
-            case "Spanish":
-                languageVoice = voices.find((voice) => voice.name === "Google español");
-                break;
-            case "German":
-                languageVoice = voices.find((voice) => voice.name === "Google Deutsch");
-                break;
-            default:
-                languageVoice = voices.find((voice) => voice.name === "Google US English");
-                break;
+        if (!indvWords) {
+            return;
         }
 
-        // assigns the to-be-spoken text to the API
-        msg.voice = languageVoice;
-        msg.text = event;
-        speechSynthesis.speak(msg);
+        const userWord = {
+            id: indvWords.id,
+            dictionaries_id: flashcardWord.dictionaries_id,
+            english: flashcardWord.english,
+            foreign_translation: flashcardWord.foreign_translation,
+            level: flashcardWord.level,
+        };
+
+        updateDictionariesWords({ userWord })
+            .then(() => {
+                setToggleMessage(true);
+
+                setTimeout(() => {
+                    setToggleMessage(false);
+                }, [2500]);
+            })
+            .catch((err) => {
+                console.error(`There has been an error! ${err}`);
+            });
     };
-
-    // contains the text-to-speech API for all english words
-    const englishLanguage = (event) => {
-        speechSynthesis.cancel();
-
-        // creates a new instance
-        const msg = new SpeechSynthesisUtterance();
-        const voices = window.speechSynthesis.getVoices();
-
-        // sets the voice to the english API and inputs the words into it
-        msg.voice = voices.find((voice) => voice.name === "Google US English");
-        msg.text = event;
-        speechSynthesis.speak(msg);
-    };
-
-    // stops the code from executing if the data from indvWords is undefined
-    if (!indvWords) {
-        return;
-    }
 
     return (
-        <div className="edit-flashcard">
+        <form className="edit-flashcard" onSubmit={handleSubmit}>
             <div className="edit-flashcard__languages">
                 <div className="edit-flashcard__languages-foreign">
                     <div className="edit-flashcard__languages-foreign-indv">
@@ -89,7 +83,9 @@ export default function EditFlashcard({ indvWords, flag }) {
                         <input
                             className="edit-flashcard__languages-foreign-input-indv"
                             placeholder="Insert Term..."
-                            value={englishWord}
+                            name="english"
+                            value={flashcardWord.english}
+                            onChange={handleChange}
                         />
                     </div>
                 </div>
@@ -98,7 +94,7 @@ export default function EditFlashcard({ indvWords, flag }) {
                     <div className="edit-flashcard__languages-foreign-indv">
                         <img
                             className="edit-flashcard__languages-foreign-indv-img"
-                            src={flag}
+                            src={currentLanguage}
                             alt=""
                         />
                     </div>
@@ -107,7 +103,9 @@ export default function EditFlashcard({ indvWords, flag }) {
                         <input
                             className="edit-flashcard__languages-foreign-input-indv"
                             placeholder="Insert Term..."
-                            value={foreignWord}
+                            name="foreign_translation"
+                            value={flashcardWord.foreign_translation}
+                            onChange={handleChange}
                         />
                     </div>
                 </div>
@@ -121,10 +119,7 @@ export default function EditFlashcard({ indvWords, flag }) {
                                 ? "edit-flashcard__nav-level-indv active-level"
                                 : "edit-flashcard__nav-level-indv"
                         }
-                        onClick={() => {
-                            setSelectLevel(1);
-                            setHiglightLevel(1);
-                        }}
+                        onClick={() => changeLevel(1)}
                     >
                         <img
                             className="edit-flashcard__nav-level-indv-img"
@@ -138,10 +133,7 @@ export default function EditFlashcard({ indvWords, flag }) {
                                 ? "edit-flashcard__nav-level-indv active-level"
                                 : "edit-flashcard__nav-level-indv"
                         }
-                        onClick={() => {
-                            setSelectLevel(1);
-                            setHiglightLevel(2);
-                        }}
+                        onClick={() => changeLevel(2)}
                     >
                         <img
                             className="edit-flashcard__nav-level-indv-img"
@@ -155,10 +147,7 @@ export default function EditFlashcard({ indvWords, flag }) {
                                 ? "edit-flashcard__nav-level-indv active-level"
                                 : "edit-flashcard__nav-level-indv"
                         }
-                        onClick={() => {
-                            setSelectLevel(1);
-                            setHiglightLevel(3);
-                        }}
+                        onClick={() => changeLevel(3)}
                     >
                         <img
                             className="edit-flashcard__nav-level-indv-img"
@@ -172,6 +161,6 @@ export default function EditFlashcard({ indvWords, flag }) {
                     <button className="edit-flashcard__nav-buttons-save">Save Changes</button>
                 </div>
             </div>
-        </div>
+        </form>
     );
 }

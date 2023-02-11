@@ -23,7 +23,7 @@ import { addDictionariesWords } from "../../utils/api";
 import { useParams } from "react-router-dom";
 
 export default function NewFlashcard({
-    flags,
+    currentLanguage,
     deckData,
     updateList,
     setUpdateList,
@@ -101,7 +101,7 @@ export default function NewFlashcard({
                     <div className="new-flashcard__languages-foreign-indv">
                         <img
                             className="new-flashcard__languages-foreign-indv-img"
-                            src={flags}
+                            src={currentLanguage}
                             alt=""
                         />
                     </div>
