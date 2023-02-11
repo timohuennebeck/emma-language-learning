@@ -41,7 +41,9 @@ export default function EmmaPracticePage() {
         {
             user: "gpt",
             message:
-                "Hi! Let's have a conversation in English, French, Spanish or German. You start! P.S. In order to talk to me, please hold the microphone while speaking. Also, 'Input' is used for the users language and translation for what to translate it to. ",
+                "Hi! Let's have a conversation in English, French, Spanish or German. You start! P.S. In order to talk to me, please hold the microphone while speaking. Also, 'Input' is used for the users language and translation for the target translation language. ",
+            messageTranslated:
+                "Your translation in English, Frecnh, Spanish or German will be shown here.",
         },
     ]);
     const [transcribedText, setTranscribedText] = useState("");
@@ -115,7 +117,11 @@ export default function EmmaPracticePage() {
             const chatLoading = [
                 ...chatLog,
                 { user: "me", message: userInput },
-                { user: "gpt", message: "I'm thinking... Hold on for a second." },
+                {
+                    user: "gpt",
+                    message: "I'm thinking... Hold on for a second.",
+                    messageTranslated: "Translating...",
+                },
             ];
 
             setChatLog(chatLoading);
@@ -139,23 +145,25 @@ export default function EmmaPracticePage() {
                         },
                     ]);
 
-                    fetch(
-                        `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${data.message}&target_lang=${languageTranslation}`
-                    )
-                        .then((response) => response.json())
-                        .then(({ translations }) => {
-                            setChatLog([
-                                ...chatLogNew,
-                                {
-                                    user: "gpt",
-                                    message: data.message,
-                                    messageTranslated: translations[0].text,
-                                },
-                            ]);
-                        })
-                        .catch((error) => {
-                            console.error(error);
-                        });
+                    if (!enableTranslations) {
+                        fetch(
+                            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${data.message}&target_lang=${languageTranslation}`
+                        )
+                            .then((response) => response.json())
+                            .then(({ translations }) => {
+                                setChatLog([
+                                    ...chatLogNew,
+                                    {
+                                        user: "gpt",
+                                        message: data.message,
+                                        messageTranslated: translations[0].text,
+                                    },
+                                ]);
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            });
+                    }
                 })
                 .catch((error) => {
                     console.error(error);

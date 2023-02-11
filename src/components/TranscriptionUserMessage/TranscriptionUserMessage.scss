@@ -2,11 +2,13 @@
 @use "../../styles/partials/mixins" as *;
 
 .transcription-user {
-    @include flex-vertical;
+    display: flex;
     gap: $gap-default;
     width: 85%;
 
     &__profile {
+        padding-top: 2.5rem;
+
         &-img {
             max-width: 2.75rem;
             max-height: 2.75rem;

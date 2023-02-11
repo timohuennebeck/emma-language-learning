@@ -2,13 +2,14 @@
 @use "../../styles/partials/mixins" as *;
 
 .transcription-ai {
-    @include flex-vertical;
+    display: flex;
     justify-content: flex-end;
     gap: $gap-default;
     width: 85%;
 
     &__profile {
         order: 1;
+        padding-top: 2.75rem;
 
         &-img {
             max-width: 2.75rem;
