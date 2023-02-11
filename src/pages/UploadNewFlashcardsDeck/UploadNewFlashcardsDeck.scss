@@ -1,0 +1,171 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.new-deck {
+    @include flex-column;
+    gap: 3.25rem;
+    position: relative;
+
+    &__back {
+        display: flex;
+        margin-bottom: 1rem;
+
+        &-link {
+            background-color: $prim-color-1;
+            color: $prim-color-2;
+            border: none;
+            border-radius: $border-radius-default;
+            padding: 0.75rem;
+            text-decoration: none;
+            font-size: 0.85rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__form {
+        @include flex-column;
+        gap: $gap-default;
+
+        &-indv {
+            display: flex;
+            gap: $gap-default;
+
+            &-name {
+                @include flex-column;
+                @include shadow;
+                width: 100%;
+                gap: 0.25rem;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+
+                &-title {
+                    font-size: 0.75rem;
+                    opacity: 50%;
+                }
+
+                &-input {
+                    font-size: 0.875rem;
+                    border: none;
+                    outline: none;
+                }
+            }
+
+            &-rating {
+                @include flex-column;
+                @include shadow;
+                gap: 0.25rem;
+                border-radius: $border-radius-default;
+                background-color: $prim-color-2;
+                padding: 0.75rem;
+
+                &-title {
+                    font-size: 0.75rem;
+                    opacity: 50%;
+                }
+
+                &-stars {
+                    @include flex-vertical;
+                    gap: 0.5rem;
+
+                    &-img {
+                        width: 1.25rem;
+                        height: 1.25rem;
+                    }
+                }
+            }
+
+            &-flag {
+                position: relative;
+
+                &-box {
+                    @include flex;
+                    @include shadow;
+                    padding: $padding-default;
+                    background-color: $prim-color-2;
+                    border-radius: $border-radius-default;
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $prim-color-1;
+                    }
+
+                    &-img {
+                        width: 2rem;
+                        height: 2rem;
+                    }
+                }
+
+                &-dropdown {
+                    @include flex-column;
+                    position: absolute;
+                    gap: 0.75rem;
+                    top: 4.75rem;
+                    left: 0;
+
+                    &-box {
+                        @include flex;
+                        @include shadow;
+                        padding: $padding-default;
+                        background-color: $prim-color-2;
+                        border-radius: $border-radius-default;
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: $prim-color-1;
+                        }
+
+                        &-img {
+                            width: 2rem;
+                            height: 2rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        &-description {
+            @include flex-column;
+            @include shadow;
+            width: 100%;
+            gap: 0.25rem;
+            border-radius: $border-radius-default;
+            background-color: $prim-color-2;
+            padding: 0.75rem;
+
+            &-title {
+                font-size: 0.75rem;
+                opacity: 50%;
+            }
+
+            &-input {
+                min-height: 4.25rem;
+                resize: none;
+                font-size: 0.875rem;
+                border: none;
+                outline: none;
+            }
+        }
+
+        &-box {
+            display: flex;
+            justify-content: flex-end;
+
+            &-button {
+                background-color: $prim-color-1;
+                color: $prim-color-2;
+                border: none;
+                border-radius: $border-radius-default;
+                padding: 0.75rem;
+
+                &:hover {
+                    cursor: pointer;
+                    transform: scale(1.05);
+                }
+            }
+        }
+    }
+}

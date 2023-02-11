@@ -22,6 +22,7 @@ import FlashcardsDeckPage from "./pages/FlashcardsDeckPage/FlashcardsDeckPage";
 import FlashcardsWritingPage from "./pages/FlashcardsWritingPage/FlashcardsWritingPage";
 import EmmaChatbot from "./pages/EmmaChatbot/EmmaChatbot";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import UploadNewFlashcardsDeck from "./pages/UploadNewFlashcardsDeck/UploadNewFlashcardsDeck";
 
 function App() {
     const { isAuthenticated } = useAuth0();
@@ -42,6 +43,7 @@ function App() {
                         <Route path="/" element={<DashboardPage />} />
                         <Route path="/readings" element={<ReadingsPage />} />
                         <Route path="/flashcards" element={<FlashcardsPage />} />
+                        <Route path="/flashcards/add" element={<UploadNewFlashcardsDeck />} />
                         <Route path="/flashcards/:id" element={<FlashcardsDeckPage />} />
                         <Route
                             path="/flashcards/:id/revision"
