@@ -145,7 +145,7 @@ export default function EmmaChatbot() {
                     <div className="emma-chatbot__error">
                         <img className="emma-chatbot__error-img" src={infoImg} alt="" />
                         <p className="emma-chatbot__error-message">
-                            Whoops! We can't do that. Insert a message to continue...
+                            Please, insert a message to continue...
                         </p>
                     </div>
                 )}

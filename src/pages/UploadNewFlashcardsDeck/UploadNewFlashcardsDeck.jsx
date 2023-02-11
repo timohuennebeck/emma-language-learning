@@ -51,7 +51,7 @@ export default function UploadNewFlashcardsDeck() {
                 setSelectedStars(0);
 
                 setTimeout(() => {
-                    navigate("/");
+                    navigate("/flashcards");
                 }, [2000]);
             })
             .catch((err) => {

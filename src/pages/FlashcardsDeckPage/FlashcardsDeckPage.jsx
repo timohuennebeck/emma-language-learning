@@ -7,7 +7,7 @@ import NewFlashcard from "../../components/NewFlashcard/NewFlashcard";
 // libraries
 import { useEffect } from "react";
 import { getDictionariesId, getDictionariesWords, updateDictionaries } from "../../utils/api";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 // flags
@@ -18,13 +18,12 @@ import germanyImg from "../../assets/languages/germany.svg";
 
 // images
 import unfilledStarImg from "../../assets/icons/Star.svg";
-import starsFilledImg from "../../assets/icons/star-filled.svg";
+import filledStarImg from "../../assets/icons/star-filled.svg";
 import SlideInFromTop from "../../components/SlideInFromTop/SlideInFromTop";
 
 export default function FlashcardsDeckPage() {
     const [deck, setDeck] = useState({ name: "", description: "", rating: 0 });
     const [words, setWords] = useState([]);
-    const [rating, setRating] = useState(0);
 
     // refreshs the page upon adding a new flashcard
     const [updateList, setUpdateList] = useState(false);
@@ -32,8 +31,10 @@ export default function FlashcardsDeckPage() {
     const [toggleMessage, setToggleMessage] = useState(false);
     const [currentLanguage, setCurrentLanguage] = useState("");
     const [toggleDropdown, setToggleDropdown] = useState(false);
+    const [selectedStars, setSelectedStars] = useState(0);
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
     // pulls the values from the input fields and updates them
     const handleInputChange = (event) => {
@@ -50,6 +51,7 @@ export default function FlashcardsDeckPage() {
                 name: deck.name,
                 description: deck.description,
                 language: deck.language,
+                rating: deck.rating,
             },
         })
             .then(() => {
@@ -57,6 +59,7 @@ export default function FlashcardsDeckPage() {
 
                 setTimeout(() => {
                     setToggleMessage(false);
+                    navigate("/flashcards");
                 }, [2000]);
             })
             .catch((err) => {
@@ -71,12 +74,17 @@ export default function FlashcardsDeckPage() {
         setToggleDropdown(!toggleDropdown);
     };
 
+    const handleStars = (index) => {
+        setSelectedStars(index + 1);
+        setDeck({ ...deck, rating: index + 1 });
+    };
+
     // receives the data from the api and sets it to the corresponding values
     useEffect(() => {
         // finds the right flashcard deck based on the url
         getDictionariesId({ id }).then(({ data }) => {
             setDeck(data[0]);
-            setRating(data[0].rating);
+            setSelectedStars(data[0].rating);
 
             let languageFlag;
 
@@ -98,19 +106,6 @@ export default function FlashcardsDeckPage() {
             setWords(data.filter((item) => item.dictionaries_id === Number(id)).reverse());
         });
     }, [updateList]);
-
-    // loops throught the ratings and inserts the amount of filled out stars as the rating
-    const ratingStars = [];
-
-    for (let i = 0; i < 5; i++) {
-        ratingStars.push(
-            <img
-                src={i < rating ? starsFilledImg : unfilledStarImg}
-                alt=""
-                className="deck-page__indv-rating-stars-img"
-            />
-        );
-    }
 
     // languages for the dropdown menu
     const chooseLanguage = [
@@ -150,7 +145,17 @@ export default function FlashcardsDeckPage() {
                     </div>
                     <div className="deck-page__form-indv-rating">
                         <p className="deck-page__form-indv-rating-title">Rating</p>
-                        <div className="deck-page__form-indv-rating-stars">{ratingStars}</div>
+                        <div className="deck-page__form-indv-rating-stars">
+                            {[...Array(5)].map((star, index) => (
+                                <img
+                                    key={index}
+                                    className="deck-page__form-indv-rating-stars-img"
+                                    src={selectedStars > index ? filledStarImg : unfilledStarImg}
+                                    onMouseEnter={() => handleStars(index)}
+                                    alt="star"
+                                />
+                            ))}
+                        </div>
                     </div>
                     <div className="deck-page__form-indv-flag">
                         <div
