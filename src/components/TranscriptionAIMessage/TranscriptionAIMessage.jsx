@@ -3,7 +3,7 @@ import "./TranscriptionAIMessage.scss";
 // images
 import profileImg from "../../assets/images/emma-profile.jpg";
 
-export default function TranscriptionAIMessage({ openaiMessage }) {
+export default function TranscriptionAIMessage({ openaiMessage, enableTranslations }) {
     return (
         <div className="transcription-ai">
             <div className="transcription-ai__profile">
@@ -15,6 +15,11 @@ export default function TranscriptionAIMessage({ openaiMessage }) {
                     <p className="transcription-ai__content-container-text">
                         {openaiMessage.message}
                     </p>
+                    {enableTranslations && (
+                        <p className="transcription-ai__content-container-translation">
+                            {openaiMessage.messageTranslated}
+                        </p>
+                    )}
                 </div>
             </div>
         </div>

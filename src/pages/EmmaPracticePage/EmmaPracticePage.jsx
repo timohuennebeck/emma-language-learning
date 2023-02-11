@@ -26,13 +26,13 @@ import { Link } from "react-router-dom";
 export default function EmmaPracticePage() {
     // shows or hides the text on the screen
     const [disableTranscription, setDisableTranscription] = useState(false);
-    const [disableTranslation, setDisableTranslation] = useState(false);
+    const [enableTranslations, setEnableTranslations] = useState(false);
 
     // sets the current language that's used for the speech-to-text api
     const [languageInput, setLanguageInput] = useState("Input");
     const [languageTranslation, setLanguageTranslation] = useState("Translation");
 
-    // const [currentTranslation, setCurrentTranslation] = useState("English");
+    // these are used for the dropdown and language codes
     const [toggleLanguages, setToggleLanguages] = useState(false);
     const [toggleTranslations, setToggleTranslations] = useState(false);
 
@@ -84,14 +84,19 @@ export default function EmmaPracticePage() {
 
         let languageVoice;
 
-        if (languageInput === "fr-FR") {
-            languageVoice = voices.find((voice) => voice.name === "Google français");
-        } else if (languageInput === "es-ES") {
-            languageVoice = voices.find((voice) => voice.name === "Google español");
-        } else if (languageInput === "de-DE") {
-            languageVoice = voices.find((voice) => voice.name === "Google Deutsch");
-        } else {
-            languageVoice = voices.find((voice) => voice.name === "Google US English");
+        switch (languageInput) {
+            case "EN":
+                languageVoice = voices.find((voice) => voice.name === "Google US English");
+                break;
+            case "FR":
+                languageVoice = voices.find((voice) => voice.name === "Google français");
+                break;
+            case "ES":
+                languageVoice = voices.find((voice) => voice.name === "Google español");
+                break;
+            default:
+                languageVoice = voices.find((voice) => voice.name === "Google Deutsch");
+                break;
         }
 
         msg.voice = languageVoice;
@@ -133,6 +138,24 @@ export default function EmmaPracticePage() {
                             message: data.message,
                         },
                     ]);
+
+                    fetch(
+                        `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${data.message}&target_lang=${languageTranslation}`
+                    )
+                        .then((response) => response.json())
+                        .then(({ translations }) => {
+                            setChatLog([
+                                ...chatLogNew,
+                                {
+                                    user: "gpt",
+                                    message: data.message,
+                                    messageTranslated: translations[0].text,
+                                },
+                            ]);
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
                 })
                 .catch((error) => {
                     console.error(error);
@@ -149,12 +172,14 @@ export default function EmmaPracticePage() {
         }
     };
 
+    console.log(chatLog);
+
     // maps through all languages which are used for the api
     const languageOptions = [
-        { languageCode: "fr-FR", languageTranslation: "fr-FR" },
-        { languageCode: "es-ES", languageTranslation: "es-ES" },
-        { languageCode: "de-DE", languageTranslation: "de-DE" },
-        { languageCode: "en-EN", languageTranslation: "en-EN" },
+        { languageCode: "FR", languageTranslation: "FR" },
+        { languageCode: "ES", languageTranslation: "ES" },
+        { languageCode: "DE", languageTranslation: "DE" },
+        { languageCode: "EN", languageTranslation: "EN" },
     ];
 
     const filteredOptions = languageOptions.filter(
@@ -177,7 +202,11 @@ export default function EmmaPracticePage() {
                             } else {
                                 return (
                                     <div className="emma-chatbot__container-messages-right">
-                                        <TranscriptionAIMessage openaiMessage={item} key={index} />
+                                        <TranscriptionAIMessage
+                                            openaiMessage={item}
+                                            enableTranslations={enableTranslations}
+                                            key={index}
+                                        />
                                     </div>
                                 );
                             }
@@ -241,9 +270,9 @@ export default function EmmaPracticePage() {
                         onClick={() => setDisableTranscription(!disableTranscription)}
                     />
                     <VCButton
-                        img={disableTranslation ? hideTranslationImg : showTranslationImg}
-                        hover={disableTranslation ? "Disable Translation" : "Enable Translation"}
-                        onClick={() => setDisableTranslation(!disableTranslation)}
+                        img={enableTranslations ? hideTranslationImg : showTranslationImg}
+                        hover={enableTranslations ? "Disable Translation" : "Enable Translation"}
+                        onClick={() => setEnableTranslations(!enableTranslations)}
                     />
                     <VCButton
                         img={micImg}

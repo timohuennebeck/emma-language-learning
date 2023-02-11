@@ -30,10 +30,24 @@
         }
 
         &-container {
+            @include flex-column;
+            gap: $gap-default;
+            align-items: flex-end;
+
             &-text {
                 @include shadow;
                 background-color: $prim-color-1;
                 color: $prim-color-2;
+                padding: 1.25rem;
+                border-radius: $border-radius-default;
+                font-size: 0.825rem;
+                width: fit-content;
+                line-height: 1.15rem;
+            }
+
+            &-translation {
+                @include shadow;
+                background-color: $prim-color-2;
                 padding: 1.25rem;
                 border-radius: $border-radius-default;
                 font-size: 0.825rem;
