@@ -5,9 +5,25 @@
     @include flex-column;
     gap: $gap-default;
     justify-content: space-between;
-    align-items: center;
     height: 100vh;
     padding: 1.25rem;
+
+    &__error {
+        @include flex-vertical;
+        justify-content: flex-start;
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+
+        &-img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        &-message {
+            font-size: 0.875rem;
+            color: #c94515;
+        }
+    }
 
     &__ai {
         height: 85%;

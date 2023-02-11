@@ -10,6 +10,7 @@ import searchImg from "../../assets/icons/search.svg";
 import loadingImg from "../../assets/icons/Loading.svg";
 import aiImg from "../../assets/images/ai-face.gif";
 import leaveImg from "../../assets/icons/Arrow - Left.svg";
+import infoImg from "../../assets/icons/Info.svg";
 
 // components
 import VCButton from "../../components/VCButton/VCButton";
@@ -45,6 +46,7 @@ export default function EmmaPracticePage() {
     const [isSpinning, setIsSpinning] = useState(false);
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [toggleError, setToggleError] = useState(false);
 
     const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
         useSpeechRecognition();
@@ -61,6 +63,12 @@ export default function EmmaPracticePage() {
         }
 
         setTranscribedText(transcript);
+    }, [transcript]);
+
+    useEffect(() => {
+        if (transcript !== "") {
+            setToggleError(false);
+        }
     }, [transcript]);
 
     useEffect(() => {
@@ -96,45 +104,49 @@ export default function EmmaPracticePage() {
     };
 
     const handleGPT = (userInput) => {
-        // adds the users input to the state which will be used to make the API call, meanwhile shows a loading sign until a response has been received
-        const chatLogNew = [...chatLog, { user: "me", message: userInput }];
-        const chatLoading = [
-            ...chatLog,
-            { user: "me", message: userInput },
-            { user: "gpt", message: "I'm thinking... Hold on for a second." },
-        ];
+        if (userInput !== "") {
+            // adds the users input to the state which will be used to make the API call, meanwhile shows a loading sign until a response has been received
+            const chatLogNew = [...chatLog, { user: "me", message: userInput }];
+            const chatLoading = [
+                ...chatLog,
+                { user: "me", message: userInput },
+                { user: "gpt", message: "I'm thinking... Hold on for a second." },
+            ];
 
-        setChatLog(chatLoading);
-        setIsLoading(true);
+            setChatLog(chatLoading);
+            setIsLoading(true);
 
-        // sends the users input to the AI and then adds the answer from the AI into the chat
-        axios
-            .post(`${process.env.REACT_APP_API_URL}/openai`, {
-                message: userInput,
-            })
-            .then(({ data }) => {
-                setMessage(data.message);
-                setIsLoading(false);
-                setTranscribedText("");
-                resetTranscript();
-                setChatLog([
-                    ...chatLogNew,
-                    {
-                        user: "gpt",
-                        message: data.message,
-                    },
-                ]);
-            })
-            .catch((error) => {
-                console.error(error);
-                setChatLog([
-                    ...chatLogNew,
-                    {
-                        user: "gpt",
-                        message: "There has been an error. Please, reload the page.",
-                    },
-                ]);
-            });
+            // sends the users input to the AI and then adds the answer from the AI into the chat
+            axios
+                .post(`${process.env.REACT_APP_API_URL}/openai`, {
+                    message: userInput,
+                })
+                .then(({ data }) => {
+                    setMessage(data.message);
+                    setIsLoading(false);
+                    setTranscribedText("");
+                    resetTranscript();
+                    setChatLog([
+                        ...chatLogNew,
+                        {
+                            user: "gpt",
+                            message: data.message,
+                        },
+                    ]);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    setChatLog([
+                        ...chatLogNew,
+                        {
+                            user: "gpt",
+                            message: "There has been an error. Please, reload the page.",
+                        },
+                    ]);
+                });
+        } else {
+            setToggleError(true);
+        }
     };
 
     // maps through all languages which are used for the api
@@ -178,6 +190,14 @@ export default function EmmaPracticePage() {
                                 alt=""
                             />
                         )}
+                    </div>
+                )}
+                {toggleError && (
+                    <div className="emma-video__error">
+                        <img className="emma-video__error-img" src={infoImg} alt="" />
+                        <p className="emma-video__error-message">
+                            Whoops! Looks like we're not able to find user input...
+                        </p>
                     </div>
                 )}
                 <nav className="emma-video__nav">
