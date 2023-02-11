@@ -29,17 +29,19 @@ export default function EmmaPracticePage() {
     const [disableTranslation, setDisableTranslation] = useState(false);
 
     // sets the current language that's used for the speech-to-text api
-    const [currentLanguage, setCurrentLanguage] = useState("en-EN");
+    const [languageInput, setLanguageInput] = useState("Input");
+    const [languageTranslation, setLanguageTranslation] = useState("Translation");
 
     // const [currentTranslation, setCurrentTranslation] = useState("English");
-    const [toggleDropdown, setToggleDropdown] = useState(false);
+    const [toggleLanguages, setToggleLanguages] = useState(false);
+    const [toggleTranslations, setToggleTranslations] = useState(false);
 
     // creates the chatlog which shows the users transcription in real-time
     const [chatLog, setChatLog] = useState([
         {
             user: "gpt",
             message:
-                "Hi! Let's have a conversation in English, French, Spanish or German. You start! P.S. In order to talk to me, please hold the microphone while speaking.",
+                "Hi! Let's have a conversation in English, French, Spanish or German. You start! P.S. In order to talk to me, please hold the microphone while speaking. Also, 'Input' is used for the users language and translation for what to translate it to. ",
         },
     ]);
     const [transcribedText, setTranscribedText] = useState("");
@@ -53,6 +55,7 @@ export default function EmmaPracticePage() {
 
     const containerRef = useRef(null);
 
+    // scrolls the chat to the bottom while the user is talking
     useEffect(() => {
         containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }, [chatLog]);
@@ -65,12 +68,14 @@ export default function EmmaPracticePage() {
         setTranscribedText(transcript);
     }, [transcript]);
 
+    // removes the error message if the user has started speaking
     useEffect(() => {
         if (transcript !== "") {
             setToggleError(false);
         }
     }, [transcript]);
 
+    // finds the correct api to use based on the users language
     useEffect(() => {
         speechSynthesis.cancel();
 
@@ -79,11 +84,11 @@ export default function EmmaPracticePage() {
 
         let languageVoice;
 
-        if (currentLanguage === "fr-FR") {
+        if (languageInput === "fr-FR") {
             languageVoice = voices.find((voice) => voice.name === "Google français");
-        } else if (currentLanguage === "es-ES") {
+        } else if (languageInput === "es-ES") {
             languageVoice = voices.find((voice) => voice.name === "Google español");
-        } else if (currentLanguage === "de-DE") {
+        } else if (languageInput === "de-DE") {
             languageVoice = voices.find((voice) => voice.name === "Google Deutsch");
         } else {
             languageVoice = voices.find((voice) => voice.name === "Google US English");
@@ -97,11 +102,6 @@ export default function EmmaPracticePage() {
     if (!browserSupportsSpeechRecognition) {
         return <span>Browser doesn't support speech recognition.</span>;
     }
-
-    // changes the language code in order to use the correct api
-    const changeLanguage = (language) => {
-        setCurrentLanguage(language);
-    };
 
     const handleGPT = (userInput) => {
         if (userInput !== "") {
@@ -151,11 +151,16 @@ export default function EmmaPracticePage() {
 
     // maps through all languages which are used for the api
     const languageOptions = [
-        { languageCode: "fr-FR" },
-        { languageCode: "es-ES" },
-        { languageCode: "de-DE" },
-        { languageCode: "en-EN" },
+        { languageCode: "fr-FR", languageTranslation: "fr-FR" },
+        { languageCode: "es-ES", languageTranslation: "es-ES" },
+        { languageCode: "de-DE", languageTranslation: "de-DE" },
+        { languageCode: "en-EN", languageTranslation: "en-EN" },
     ];
+
+    const filteredOptions = languageOptions.filter(
+        (item) =>
+            item.languageCode !== languageInput && item.languageTranslation !== languageTranslation
+    );
 
     return (
         <>
@@ -247,7 +252,7 @@ export default function EmmaPracticePage() {
                             setIsSpinning(true);
                             SpeechRecognition.startListening({
                                 continuous: true,
-                                language: currentLanguage,
+                                language: languageInput,
                             });
                         }}
                         onMouseUp={() => {
@@ -257,19 +262,41 @@ export default function EmmaPracticePage() {
                             handleGPT(transcribedText);
                         }}
                     />
+
+                    <div
+                        className="emma-video__nav-translation"
+                        onClick={() => setToggleTranslations(!toggleTranslations)}
+                    >
+                        <p className="emma-video__nav-translation-current">{languageTranslation}</p>
+
+                        {toggleTranslations ? (
+                            <div className="emma-video__nav-translation-all">
+                                {filteredOptions.map(({ languageTranslation }) => (
+                                    <p
+                                        key={languageTranslation}
+                                        className="emma-video__nav-translation-all-indv"
+                                        onClick={() => setLanguageTranslation(languageTranslation)}
+                                    >
+                                        {languageTranslation}
+                                    </p>
+                                ))}
+                            </div>
+                        ) : null}
+                    </div>
+
                     <div
                         className="emma-video__nav-languages"
-                        onClick={() => setToggleDropdown(!toggleDropdown)}
+                        onClick={() => setToggleLanguages(!toggleLanguages)}
                     >
-                        <p className="emma-video__nav-languages-current">{currentLanguage}</p>
+                        <p className="emma-video__nav-languages-current">{languageInput}</p>
 
-                        {toggleDropdown ? (
+                        {toggleLanguages ? (
                             <div className="emma-video__nav-languages-all">
-                                {languageOptions.map(({ languageCode }) => (
+                                {filteredOptions.map(({ languageCode }) => (
                                     <p
                                         key={languageCode}
                                         className="emma-video__nav-languages-all-indv"
-                                        onClick={() => changeLanguage(languageCode)}
+                                        onClick={() => setLanguageInput(languageCode)}
                                     >
                                         {languageCode}
                                     </p>
