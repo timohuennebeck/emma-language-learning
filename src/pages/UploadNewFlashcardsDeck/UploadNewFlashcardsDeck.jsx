@@ -5,7 +5,7 @@ import NewFlashcard from "../../components/NewFlashcard/NewFlashcard";
 
 // libraries
 import { addDictionaries } from "../../utils/api";
-import { Link, useParams } from "react-router-dom";
+import { Link, redirect, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 // flags
@@ -27,13 +27,12 @@ export default function UploadNewFlashcardsDeck() {
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
     // pulls the values from the input fields and updates them
     const handleInputChange = (event) => {
         setDeck({ ...deck, [event.target.name]: event.target.value });
     };
-
-    console.log(deck);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -47,7 +46,13 @@ export default function UploadNewFlashcardsDeck() {
             },
         })
             .then(() => {
-                console.log(`${id} has been updated!`);
+                setToggleUpload(true);
+                setDeck({ name: "", description: "" });
+                setSelectedStars(0);
+
+                setTimeout(() => {
+                    navigate("/");
+                }, [2000]);
             })
             .catch((err) => {
                 console.error(`There has been an error updating ${id}! ${err}`);
@@ -76,7 +81,7 @@ export default function UploadNewFlashcardsDeck() {
 
     return (
         <div className="new-deck">
-            {toggleUpload && <SlideInFromTop name="+ Flashcard has been added" />}
+            {toggleUpload && <SlideInFromTop name="+ Deck has been added" />}
             <div className="new-deck__back">
                 <Link className="new-deck__back-link" to="/flashcards">
                     Back To Decks

@@ -10,7 +10,8 @@
     top: 0%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #e3f09b;
+    background-color: $prim-color-1;
+    color: $prim-color-2;
     border-radius: $border-radius-default;
     padding: 1.25rem;
     min-width: 10rem;
