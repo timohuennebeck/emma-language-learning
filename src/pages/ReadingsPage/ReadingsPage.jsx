@@ -16,6 +16,7 @@ import UploadNewWord from "../../components/UploadNewWord/UploadNewWord";
 import speakImg from "../../assets/icons/Volume - High.svg";
 import muteImg from "../../assets/icons/Volume - Slash.svg";
 import LanguageLevelDropdown from "../../components/LanguageLevelDropdown/LanguageLevelDropdown";
+import axios from "axios";
 
 export default function ReadingsPage() {
     const [readingsData, setReadingsData] = useState([]);
@@ -60,7 +61,7 @@ export default function ReadingsPage() {
         }
     };
 
-    const handleWord = (event) => {
+    const handleWord = async (event) => {
         const word = event.currentTarget.getAttribute("name").replace(/[.,?]/g, "");
 
         setSelectedWord(word);
@@ -82,21 +83,14 @@ export default function ReadingsPage() {
                 break;
         }
 
-        fetch(
-            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${word}&target_lang=EN&source_lang=${languageCode}`
-        )
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setTranslatedWord(data.translations[0].text);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        try {
+            const { data } = await axios.get(
+                `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${word}&target_lang=EN&source_lang=${languageCode}`
+            );
+            setTranslatedWord(data.translations[0].text);
+        } catch (error) {
+            console.error(`There has been an error ${error}!`);
+        }
 
         setModalIsOpen(!modalIsOpen);
     };

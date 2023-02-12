@@ -66,7 +66,7 @@ export default function UploadNewWord({
         speechSynthesis.speak(msg);
     };
 
-    const uploadWord = () => {
+    const uploadWord = async () => {
         const highlightLevel = Number(selectLevel);
 
         if (!highlightLevel) {
@@ -81,16 +81,13 @@ export default function UploadNewWord({
             level: highlightLevel,
         };
 
-        addDictionariesWords({ userWord })
-            .then(() => {
-                console.log("Word has been uploaded!");
-            })
-            .catch((err) => {
-                console.log(`Error uploading word! ${err}`);
-            });
+        try {
+            await addDictionariesWords({ userWord });
+        } catch (error) {
+            console.error(`Error uploading word! ${error}`);
+        }
 
         setModalIsOpen(!modalIsOpen);
-
         setRefreshList(!refreshList);
     };
 

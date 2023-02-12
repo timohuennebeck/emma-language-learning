@@ -45,7 +45,7 @@ export default function EmmaChatbot() {
         containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }, [chatLog]);
 
-    const handleGPT = (userInput) => {
+    const handleGPT = async (userInput) => {
         setInput("");
 
         // adds the users input to the state which will be used to make the API call, meanwhile shows a loading sign until a response has been received
@@ -58,30 +58,28 @@ export default function EmmaChatbot() {
 
         setChatLog(chatLoading);
 
-        // sends the users input to the AI and then adds the answer from the AI into the chat
-        axios
-            .post(`${process.env.REACT_APP_API_URL}/openai`, {
+        try {
+            const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/openai`, {
                 message: userInput,
-            })
-            .then(({ data }) => {
-                setChatLog([
-                    ...chatLogNew,
-                    {
-                        user: "gpt",
-                        message: data.message,
-                    },
-                ]);
-            })
-            .catch((error) => {
-                console.error(error);
-                setChatLog([
-                    ...chatLogNew,
-                    {
-                        user: "gpt",
-                        message: "There has been an error. Please, reload the page.",
-                    },
-                ]);
             });
+
+            setChatLog([
+                ...chatLogNew,
+                {
+                    user: "gpt",
+                    message: data.message,
+                },
+            ]);
+        } catch (error) {
+            console.error(error);
+            setChatLog([
+                ...chatLogNew,
+                {
+                    user: "gpt",
+                    message: "There has been an error. Please, reload the page.",
+                },
+            ]);
+        }
     };
 
     // prevents the form from reloading and sends the data to the AI

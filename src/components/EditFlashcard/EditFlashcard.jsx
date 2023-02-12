@@ -39,7 +39,7 @@ export default function EditFlashcard({ indvWords, currentLanguage, setToggleMes
     };
 
     // receives all values on submission and then sends them to the sql database
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (!indvWords) {
@@ -53,18 +53,16 @@ export default function EditFlashcard({ indvWords, currentLanguage, setToggleMes
             foreign_translation: flashcardWord.foreign_translation,
             level: flashcardWord.level,
         };
+        try {
+            await updateDictionariesWords({ userWord });
+            setToggleMessage(true);
 
-        updateDictionariesWords({ userWord })
-            .then(() => {
-                setToggleMessage(true);
-
-                setTimeout(() => {
-                    setToggleMessage(false);
-                }, [2500]);
-            })
-            .catch((err) => {
-                console.error(`There has been an error! ${err}`);
-            });
+            setTimeout(() => {
+                setToggleMessage(false);
+            }, [2500]);
+        } catch (error) {
+            console.error(`There has been an error! ${error}`);
+        }
     };
 
     return (

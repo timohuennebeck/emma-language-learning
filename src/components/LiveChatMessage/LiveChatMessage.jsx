@@ -6,6 +6,7 @@ import profileImg from "../../assets/images/personal-profile.jpg";
 // libraries
 import { useState } from "react";
 import ChatbotLanguageTranslation from "../ChatbotLanguageTranslation/ChatbotLanguageTranslation";
+import axios from "axios";
 
 export default function LiveChatMessage({ userMessage }) {
     const [showTranslation, setShowTranslation] = useState(false);
@@ -13,23 +14,17 @@ export default function LiveChatMessage({ userMessage }) {
 
     const currentUser = "currentUser";
 
-    const translateMessage = (newLanguageCode) => {
-        fetch(
-            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${userMessage.message}&target_lang=${newLanguageCode}`
-        )
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setShowTranslation(true);
-                setTranslatedMessage(data.translations[0].text);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+    const translateMessage = async (newLanguageCode) => {
+        try {
+            const { data } = await axios.get(
+                `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${userMessage.message}&target_lang=${newLanguageCode}`
+            );
+
+            setShowTranslation(true);
+            setTranslatedMessage(data.translations[0].text);
+        } catch (error) {
+            console.error(`There has been an error! ${error}`);
+        }
     };
 
     return (

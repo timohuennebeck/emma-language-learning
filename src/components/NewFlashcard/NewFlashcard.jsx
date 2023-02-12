@@ -49,7 +49,7 @@ export default function NewFlashcard({
     };
 
     // brings all required values together and uploads them to the sql database
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const userWord = {
@@ -69,17 +69,21 @@ export default function NewFlashcard({
                 setTriggerError(false);
             }, [3000]);
         } else {
-            // makes the api post request to the sql database
-            addDictionariesWords({ userWord }).then(() => {
+            try {
+                // makes the api post request to the sql database
+                await addDictionariesWords({ userWord });
+
                 setUpdateList(!updateList);
                 setFlashcard({ english: "", foreign_translation: "", level: "" });
                 setHiglightLevel("");
                 setToggleUpload(true);
 
                 setTimeout(() => {
-                    setToggleUpload(false); 
+                    setToggleUpload(false);
                 }, [3000]);
-            });
+            } catch (error) {
+                console.error(`There has been an error ${error}!`);
+            }
         }
     };
 

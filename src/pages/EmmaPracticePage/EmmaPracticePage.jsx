@@ -110,77 +110,67 @@ export default function EmmaPracticePage() {
         return <span>Browser doesn't support speech recognition.</span>;
     }
 
-    const handleGPT = (userInput) => {
-        if (userInput !== "") {
-            // adds the users input to the state which will be used to make the API call, meanwhile shows a loading sign until a response has been received
-            const chatLogNew = [...chatLog, { user: "me", message: userInput }];
-            const chatLoading = [
-                ...chatLog,
-                { user: "me", message: userInput },
-                {
-                    user: "gpt",
-                    message: "I'm thinking... Hold on for a second.",
-                    messageTranslated: "Translating...",
-                },
-            ];
+    const handleGPT = async (userInput) => {
+        try {
+            if (userInput !== "") {
+                const chatLogNew = [...chatLog, { user: "me", message: userInput }];
+                const chatLoading = [
+                    ...chatLog,
+                    { user: "me", message: userInput },
+                    {
+                        user: "gpt",
+                        message: "I'm thinking... Hold on for a second.",
+                        messageTranslated: "Translating...",
+                    },
+                ];
 
-            setChatLog(chatLoading);
-            setIsLoading(true);
+                setChatLog(chatLoading);
+                setIsLoading(true);
 
-            // sends the users input to the AI and then adds the answer from the AI into the chat
-            axios
-                .post(`${process.env.REACT_APP_API_URL}/openai`, {
+                const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/openai`, {
                     message: userInput,
-                })
-                .then(({ data }) => {
-                    setMessage(data.message);
-                    setIsLoading(false);
-                    setTranscribedText("");
-                    resetTranscript();
+                });
+
+                setMessage(data.message);
+                setIsLoading(false);
+                setTranscribedText("");
+                resetTranscript();
+                setChatLog([
+                    ...chatLogNew,
+                    {
+                        user: "gpt",
+                        message: data.message,
+                    },
+                ]);
+
+                if (!enableTranslations) {
+                    const response = await fetch(
+                        `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${data.message}&target_lang=${languageTranslation}`
+                    );
+                    const { translations } = await response.json();
                     setChatLog([
                         ...chatLogNew,
                         {
                             user: "gpt",
                             message: data.message,
+                            messageTranslated: translations[0].text,
                         },
                     ]);
-
-                    if (!enableTranslations) {
-                        fetch(
-                            `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${data.message}&target_lang=${languageTranslation}`
-                        )
-                            .then((response) => response.json())
-                            .then(({ translations }) => {
-                                setChatLog([
-                                    ...chatLogNew,
-                                    {
-                                        user: "gpt",
-                                        message: data.message,
-                                        messageTranslated: translations[0].text,
-                                    },
-                                ]);
-                            })
-                            .catch((error) => {
-                                console.error(error);
-                            });
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                    setChatLog([
-                        ...chatLogNew,
-                        {
-                            user: "gpt",
-                            message: "There has been an error. Please, reload the page.",
-                        },
-                    ]);
-                });
-        } else {
-            setToggleError(true);
+                }
+            } else {
+                setToggleError(true);
+            }
+        } catch (error) {
+            console.error(error);
+            setChatLog([
+                ...chatLog,
+                {
+                    user: "gpt",
+                    message: "There has been an error. Please, reload the page.",
+                },
+            ]);
         }
     };
-
-    console.log(chatLog);
 
     // maps through all languages which are used for the api
     const languageOptions = [

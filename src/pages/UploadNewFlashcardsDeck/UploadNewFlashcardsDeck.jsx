@@ -34,29 +34,29 @@ export default function UploadNewFlashcardsDeck() {
         setDeck({ ...deck, [event.target.name]: event.target.value });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        addDictionaries({
-            flashcardData: {
-                name: deck.name,
-                description: deck.description,
-                language: deck.language,
-                rating: deck.rating,
-            },
-        })
-            .then(() => {
-                setToggleUpload(true);
-                setDeck({ name: "", description: "" });
-                setSelectedStars(0);
-
-                setTimeout(() => {
-                    navigate("/flashcards");
-                }, [2000]);
-            })
-            .catch((err) => {
-                console.error(`There has been an error updating ${id}! ${err}`);
+        try {
+            await addDictionaries({
+                flashcardData: {
+                    name: deck.name,
+                    description: deck.description,
+                    language: deck.language,
+                    rating: deck.rating,
+                },
             });
+
+            setToggleUpload(true);
+            setDeck({ name: "", description: "" });
+            setSelectedStars(0);
+
+            setTimeout(() => {
+                navigate("/flashcards");
+            }, [2000]);
+        } catch (error) {
+            console.error(`There has been an error updating ${id}! ${error}`);
+        }
     };
 
     const handleStars = (index) => {

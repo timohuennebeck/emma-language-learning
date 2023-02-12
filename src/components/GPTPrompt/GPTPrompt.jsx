@@ -7,7 +7,7 @@ export default function GPTPrompt() {
     const [input, setInput] = useState("");
     const [chatLog, setChatLog] = useState([]);
 
-    async function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const chatLogNew = [...chatLog, { user: "me", message: `${input}` }];
@@ -17,20 +17,22 @@ export default function GPTPrompt() {
 
         setInput("");
 
-        axios
-            .post(`${process.env.REACT_APP_API_URL}/openai`, {
+        try {
+            const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/openai`, {
                 message: newMessage,
-            })
-            .then(({ data }) => {
-                setChatLog([
-                    ...chatLogNew,
-                    {
-                        user: "gpt",
-                        message: data.message,
-                    },
-                ]);
             });
-    }
+
+            setChatLog([
+                ...chatLogNew,
+                {
+                    user: "gpt",
+                    message: data.message,
+                },
+            ]);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <div>
