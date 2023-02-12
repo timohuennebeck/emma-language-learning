@@ -8,9 +8,6 @@ import starImg from "../../assets/icons/review-star.png";
 import ButtonLink from "../ButtonLink/ButtonLink";
 
 export default function TutorMinimised({ data }) {
-
-    console.log(data);
-
     return (
         <div className="tutor">
             <div className="tutor__profile">

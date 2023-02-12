@@ -1,28 +1,26 @@
 import "./BrowseTutorsPage.scss";
 
 // components
-import TutorMinimised from "../../components/TutorMinimised/TutorMinimised";
 import CalendarElement from "../../components/CalendarElement/CalendarElement";
+import TutorMinimised from "../../components/TutorMinimised/TutorMinimised";
 
-// components
-import { useEffect, useState } from "react";
-import { getTeachers, getUsers } from "../../utils/api";
+// libraries
+import { useContext, useState } from "react";
+import { DataContext } from "../../interfaces/LoggedInInterface/LoggedInInterface";
 
 export default function BrowseTutorsPage() {
-    const [teachersData, setTeachersData] = useState([]);
     const [showSchedule, setShowSchedule] = useState(false);
 
-    // pulls all teacher profiles from the API
-    useEffect(() => {
-        getTeachers().then(({ data }) => {
-            setTeachersData(data);
-        });
-    }, []);
+    const { filteredTutors } = useContext(DataContext);
+
+    if (!filteredTutors) {
+        return;
+    }
 
     return (
         <div className="home">
             <div className="home__tutors" onMouseEnter={() => setShowSchedule(true)}>
-                {teachersData.map((item) => {
+                {filteredTutors.map((item) => {
                     return <TutorMinimised data={item} key={item.id} />;
                 })}
             </div>
@@ -37,7 +35,7 @@ export default function BrowseTutorsPage() {
                             width="100%"
                             height="360"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
+                            allowFullScreen
                         ></iframe>
                     </div>
                     <CalendarElement />

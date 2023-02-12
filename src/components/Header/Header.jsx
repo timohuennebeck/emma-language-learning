@@ -2,12 +2,8 @@ import "./Header.scss";
 
 // images
 import hamburgerImg from "../../assets/icons/hamburger-menu.svg";
-import messagesImg from "../../assets/icons/send.svg";
-import openaiImg from "../../assets/icons/open-ai-logo.png";
-import logoImg from "../../assets/icons/logo-white-bg.jpg";
 import searchImg from "../../assets/icons/search.svg";
 import filterImg from "../../assets/icons/slider-circle-h.svg";
-import profileImg from "../../assets/images/fake-profile-2.jpg";
 
 // libraries
 import { Link } from "react-router-dom";
@@ -15,7 +11,7 @@ import { Link } from "react-router-dom";
 // components
 import Dropdown from "../Dropdown/Dropdown";
 
-export default function Header() {
+export default function Header({ currentLanguage, setCurrentLanguage }) {
     return (
         <nav className="header">
             <div className="header__nav">
@@ -35,9 +31,10 @@ export default function Header() {
                     <img className="header__search-mobile-img" src={filterImg} alt="" />
                 </div>
                 <div className="header__search-desktop">
-                    <Dropdown />
-                    <Dropdown />
-                    <Dropdown />
+                    <Dropdown
+                        currentLanguage={currentLanguage}
+                        setCurrentLanguage={setCurrentLanguage}
+                    />
                 </div>
             </div>
         </nav>

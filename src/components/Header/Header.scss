@@ -58,7 +58,7 @@
     }
 
     &__search {
-        @include flex-vertical;
+        display: flex;
         gap: $gap-default;
 
         @include desktop {
