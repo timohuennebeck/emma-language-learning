@@ -22,6 +22,7 @@ export default function FlashcardsPage() {
     const [filteredLanguages, setFilteredLanguages] = useState([]);
     const [currentLanguage, setCurrentLanguage] = useState("French");
 
+    // receives data for all flashcards from the api
     useEffect(() => {
         getDictionaries().then(({ data }) => {
             setDictionariesData(data);
@@ -29,6 +30,7 @@ export default function FlashcardsPage() {
         });
     }, []);
 
+    // pulls the clicked language
     const handleClick = (event) => {
         const languageName = event.currentTarget.getAttribute("name");
         setCurrentLanguage(languageName);
@@ -36,6 +38,7 @@ export default function FlashcardsPage() {
         setFilteredLanguages(dictionariesData.filter((item) => item.language === languageName));
     };
 
+    // searches and finds the flashcards that include the users input
     const handleSearch = (e) => {
         setFilteredLanguages(
             dictionariesData.filter((item) => {
