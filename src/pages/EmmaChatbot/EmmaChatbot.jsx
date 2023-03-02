@@ -67,7 +67,7 @@ export default function EmmaChatbot() {
                 ...chatLogNew,
                 {
                     user: "gpt",
-                    message: data.message,
+                    message: data.message.content,
                 },
             ]);
         } catch (error) {

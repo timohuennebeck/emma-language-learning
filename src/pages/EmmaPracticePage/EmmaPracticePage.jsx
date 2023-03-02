@@ -131,7 +131,7 @@ export default function EmmaPracticePage() {
                     message: userInput,
                 });
 
-                setMessage(data.message);
+                setMessage(data.message.content);
                 setIsLoading(false);
                 setTranscribedText("");
                 resetTranscript();
@@ -139,29 +139,29 @@ export default function EmmaPracticePage() {
                     ...chatLogNew,
                     {
                         user: "gpt",
-                        message: data.message,
+                        message: data.message.content,
                     },
                 ]);
 
-                if (!enableTranslations) {
-                    const response = await fetch(
-                        `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${data.message}&target_lang=${languageTranslation}`
-                    );
-                    const { translations } = await response.json();
-                    setChatLog([
-                        ...chatLogNew,
-                        {
-                            user: "gpt",
-                            message: data.message,
-                            messageTranslated: translations[0].text,
-                        },
-                    ]);
-                }
+                // if (!enableTranslations) {
+                //     const response = await fetch(
+                //         `https://api-free.deepl.com/v2/translate?auth_key=${process.env.REACT_APP_DEEPL_KEY}&text=${data.message.content}&target_lang=${languageTranslation}`
+                //     );
+                //     const { translations } = await response.json();
+                //     setChatLog([
+                //         ...chatLogNew,
+                //         {
+                //             user: "gpt",
+                //             message: data.message.content,
+                //             messageTranslated: translations[0].text,
+                //         },
+                //     ]);
+                // }
             } else {
                 setToggleError(true);
             }
         } catch (error) {
-            console.error(error);
+            // console.error(error);
             setChatLog([
                 ...chatLog,
                 {

@@ -7,26 +7,34 @@ export default function GPTPrompt() {
     const [input, setInput] = useState("");
     const [chatLog, setChatLog] = useState([]);
 
+    /**
+     * When the user submits a message, the message is added to the chat log, the input is cleared, and
+     * the message is sent to the API
+     * @returns The data object is being returned.
+     */
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const chatLogNew = [...chatLog, { user: "me", message: `${input}` }];
-        setChatLog(chatLogNew);
+        if (!input) {
+            return;
+        }
 
-        const newMessage = input;
+        const chatLogNew = [...chatLog, { user: "me", message: input }];
+        setChatLog(chatLogNew);
 
         setInput("");
 
         try {
             const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/openai`, {
-                message: newMessage,
+                message: input,
             });
 
             setChatLog([
                 ...chatLogNew,
                 {
                     user: "gpt",
-                    message: data.message,
+                    message: data.message.content,
                 },
             ]);
         } catch (err) {
